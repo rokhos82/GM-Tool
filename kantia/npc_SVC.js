@@ -1,0 +1,2 @@
+kantia.npcSCV = function() {
+};
