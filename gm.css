@@ -1,0 +1,7 @@
+div.popup {
+	left: 100px;
+	top: 100px;
+	position: absolute;
+	display: none;
+	background-color: #ffffff;
+}
