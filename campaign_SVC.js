@@ -10,10 +10,10 @@ GM.campaignSVC = function(dat,frame,parent) {
 	this.activeGroup = undefined;
 	this.ui = new ui.panel(this.name);
 	this.ui.setTitleData(new db.connector(this,"name"));
-		
+	
 	var b = this.ui.addButton("New Group",new db.link(this,this.showPopup,[]));
 	var grps = this.ui.addPanel("Groups");
-	var rs = grps.addRadioSet("groups");
+	this.groupButtons = grps.addRadioSet("groups");
 	
 	var active = false;
 	for(var g in this.dat.groups) {
@@ -26,18 +26,28 @@ GM.campaignSVC = function(dat,frame,parent) {
 	}
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.initialize = function() {
+	
 	this.parent.appendChild(this.ui);
 	if(this.activeGroup != undefined)
 		this.activeGroup.initialize();
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.setData = function(dat) {
 	this.dat = dat;
 	this.name = dat.name;
 	this.refreshView();
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.showPopup = function() {
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
@@ -52,11 +62,17 @@ GM.campaignSVC.prototype.showPopup = function() {
 	popup.show();
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.hidePopup = function(popup) {
 	popup.hide();
 	this.ui.removeChild(popup);
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.addGroup = function(popup) {
 	var name = popup.dat.name;
 	if(this.dat.groups[name]) {
@@ -64,20 +80,25 @@ GM.campaignSVC.prototype.addGroup = function(popup) {
 	}
 	else {
 		this.dat.groups[name] = new GM.groupDAT(name);
-		if(this.activeGroup == undefined) {
-			this.activeGroup = new GM.groupSVC(this.dat.groups[name],this);
-			this.activeGroup.initialize();
-		}
-		else {
-		}
+		this.refreshView();
 	}
 	
 	this.hidePopup(popup);
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.selectGroup = function() {
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.refreshView = function() {
+	this.groupButtons.removeChildren();
+	for(var g in this.dat.groups) {
+		this.groupButtons.addRadioButton(g);
+	}
 	this.ui.refreshView();
 };
