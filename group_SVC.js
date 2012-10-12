@@ -3,6 +3,7 @@
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC = function(dat,parent) {
 	this.dat = dat;
+	this.name = this.dat.name;
 	this.members = {};
 	this.ui = new ui.panel("NPCs");
 	this.parent = parent;
@@ -17,6 +18,16 @@ GM.groupSVC = function(dat,parent) {
 
 GM.groupSVC.prototype.initialize = function() {
 	this.parent.ui.appendChild(this.ui);
+};
+
+GM.groupSVC.prototype.setData = function(dat) {
+	this.dat = dat;
+	this.name = this.dat.name;
+	this.refreshView();
+};
+
+GM.groupSVC.prototype.refreshView = function() {
+	this.ui.refreshView();
 };
 
 GM.groupSVC.prototype.addNPC = function() {
