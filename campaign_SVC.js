@@ -18,11 +18,13 @@ GM.campaignSVC = function(dat,frame,parent) {
 	var active = false;
 	for(var g in this.dat.groups) {
 		var group = this.dat.groups[g];
+		var b = this.groupButtons.addRadioButton(group.name);
+		b.setUpdate(this,this.selectGroup,[group.name]);
 		if(!active) {
 			active = true;
 			this.activeGroup = new GM.groupSVC(group,this);
+			b.setChecked();
 		}
-		rs.addRadioButton(group.name);
 	}
 };
 
@@ -89,7 +91,9 @@ GM.campaignSVC.prototype.addGroup = function(popup) {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.selectGroup = function() {
+GM.campaignSVC.prototype.selectGroup = function(name) {
+	this.activeGroup.setData(this.dat.groups[name]);
+	this.activeGroup.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -97,8 +101,13 @@ GM.campaignSVC.prototype.selectGroup = function() {
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.refreshView = function() {
 	this.groupButtons.removeChildren();
+	
 	for(var g in this.dat.groups) {
-		this.groupButtons.addRadioButton(g);
+		var group = this.dat.groups[g];
+		var b = this.groupButtons.addRadioButton(group.name);
+		b.setUpdate(this,this.selectGroup,[group.name]);
+		if(group.name == this.activeGroup.name)
+			b.setChecked();
 	}
 	this.ui.refreshView();
 };
