@@ -2,20 +2,19 @@
 // groupSVC - the group service object.
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC = function(dat,parent) {
-	this.dat = dat;
-	this.name = this.dat.name;
+	this.dat = {};
+	this.name = dat.name;
 	this.members = {};
 	this.ui = new ui.panel("NPCs");
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
 	
 	this.ui.addButton("New NPC",new db.link(this,this.showPopup,[]));
+	this.ui.addButton("Clone NPC");
 	
-	for(var m in dat.members) {
-		var memberSVC = new kantia.npcSVC(dat.members[m]);
-		this.members[m] = memberSVC;
-		this.ui.appendChild(memberSVC.ui);
-	}
+	this.links = this.ui.addPanel("Quick Links");
+	
+	this.setData(dat);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -26,11 +25,12 @@ GM.groupSVC.prototype.initialize = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// setData
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.setData = function(dat) {
 	this.dat = dat;
 	this.name = this.dat.name;
+	this.links.removeChildren();
 	
 	for(var m in this.members) {
 		var mem = this.members[m];
@@ -38,10 +38,20 @@ GM.groupSVC.prototype.setData = function(dat) {
 		delete this.members[m];
 	}
 	
+	var i = 0;
 	for(var m in this.dat.members) {
+		var a = this.links.addAnchor(m,null,"#" + i);
+		a.addClass("quick_link");
+		i++;
+	}
+	
+	var i = 0;
+	for(var m in this.dat.members) {
+		this.ui.addAnchor(null,i,null);
 		var svc = new kantia.npcSVC(this.dat.members[m],this);
 		this.members[m] = svc;
 		this.ui.appendChild(svc.ui);
+		i++;
 	}
 	
 	this.refreshView();
@@ -91,7 +101,7 @@ GM.groupSVC.prototype.showPopup = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// hidePopup
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.hidePopup = function(popup) {
 	this.ui.removeChild(popup);

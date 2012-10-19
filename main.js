@@ -7,6 +7,14 @@ GM.main = function(root) {
 	this.controls = new ui.panel("Controls",new lib.mainframe(this.mainframe));
 	this.controls.setParent(this.root);
 	this.root.appendChild(this.controls.dom);
+	this.panel = new ui.panel(null,new lib.mainframe(this.mainframe));
+	this.panel.setParent(this.root);
+	this.panel.addClass("panel");
+	this.root.appendChild(this.panel.dom);
+	this.sidebar = new ui.panel(null,new lib.mainframe(this.mainframe));
+	this.sidebar.setParent(this.root);
+	this.sidebar.addClass("sidebar");
+	this.root.appendChild(this.sidebar.dom);
 	
 	this.campaigns = {};
 	this.campaignList = {};
@@ -16,6 +24,10 @@ GM.main = function(root) {
 	this.templateList = {};
 	
 	this.loadData();
+	
+	// Build sidebar
+	var p = this.sidebar.addPanel("Initiative");
+	var p = this.sidebar.addPanel("Players");
 	
 	// Build the popups
 	var npcPopup = this.controls.addPopup();
@@ -93,7 +105,7 @@ GM.main.prototype.clearData = function() {
 // appendChild
 // -------------------------------------------------------------------------------------------------
 GM.main.prototype.appendChild = function(child) {
-	this.controls.appendChild(child);
+	this.panel.appendChild(child);
 };
 
 // -------------------------------------------------------------------------------------------------

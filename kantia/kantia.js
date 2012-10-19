@@ -60,6 +60,7 @@ kantia.races = {
 };
 
 kantia.race = {};
+kantia.race["npc"] = new kantia.template.race();
 kantia.race["human"] = new kantia.template.race();
 
 kantia.race["dwarf"] = new kantia.template.race();

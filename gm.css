@@ -5,3 +5,48 @@ div.popup {
 	display: none;
 	background-color: #ffffff;
 }
+
+.attr_table {
+	border: 1px solid #000000;
+	border-collapse: collapse;
+	margin: 2px;
+	padding: 2px;
+	text-align: center;
+}
+
+.attr_table > tr {
+	border: 1px solid #000000;
+	border-collapse: collapse;
+	margin: 2px;
+	padding: 2px;
+	text-align: center;
+}
+
+.attr_table > td {
+	border: 1px solid #000000;
+	border-collapse: collapse;
+	margin: 2px;
+	padding: 2px;
+	text-align: center;
+}
+
+.small {
+	display: inline;
+	vertical-align: top;
+}
+
+.panel {
+	display: inline-block;
+	vertical-align: top;
+	width: 800px;
+}
+
+.sidebar {
+	display: inline-block;
+	vertical-align: top;
+	width: 400px;
+}
+
+a.quick_link {
+	margin-right: 5px;
+}
