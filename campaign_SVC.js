@@ -2,7 +2,7 @@
 // campaignSVC
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC = function(dat,frame,parent) {
-	this.dat = dat;
+	this.dat = null;
 	this.name = dat.name + " Campaign";
 	this.mainframe = new lib.mainframe(frame);
 	this.parent = parent;
@@ -15,17 +15,7 @@ GM.campaignSVC = function(dat,frame,parent) {
 	var grps = this.ui.addPanel("Groups");
 	this.groupButtons = grps.addRadioSet("groups");
 	
-	var active = false;
-	for(var g in this.dat.groups) {
-		var group = this.dat.groups[g];
-		var b = this.groupButtons.addRadioButton(group.name);
-		b.setUpdate(this,this.selectGroup,[group.name]);
-		if(!active) {
-			active = true;
-			this.activeGroup = new GM.groupSVC(group,this);
-			b.setChecked();
-		}
-	}
+	this.setData(dat);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -43,7 +33,21 @@ GM.campaignSVC.prototype.initialize = function() {
 GM.campaignSVC.prototype.setData = function(dat) {
 	this.dat = dat;
 	this.name = dat.name;
-	this.refreshView();
+	
+	var active = false;
+	for(var g in this.dat.groups) {
+		var group = this.dat.groups[g];
+		var b = this.groupButtons.addRadioButton(group.name);
+		b.setUpdate(this,this.selectGroup,[group.name]);
+		if(!active) {
+			active = true;
+			this.activeGroup = new GM.groupSVC(group,this);
+			b.setChecked();
+		}
+	}
+	
+	if(active)
+		this.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -81,6 +85,9 @@ GM.campaignSVC.prototype.addGroup = function(popup) {
 	}
 	else {
 		this.dat.groups[name] = new GM.groupDAT(name);
+		var b = this.groupButtons.addRadioButton(name);
+		b.setUpdate(this,this.selectGroup,[name]);
+		b.setChecked();
 		if(this.activeGroup == undefined) {
 			this.activeGroup = new GM.groupSVC(this.dat.groups[name],this);
 			this.activeGroup.initialize();
@@ -106,15 +113,6 @@ GM.campaignSVC.prototype.selectGroup = function(name) {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.refreshView = function() {
-	this.groupButtons.removeChildren();
-	
-	for(var g in this.dat.groups) {
-		var group = this.dat.groups[g];
-		var b = this.groupButtons.addRadioButton(group.name);
-		b.setUpdate(this,this.selectGroup,[group.name]);
-		if(group.name == this.activeGroup.name)
-			b.setChecked();
-	}
 	this.activeGroup.refreshView();
 	this.ui.refreshView();
 };
