@@ -25,6 +25,7 @@ GM.main = function(root) {
 	
 	// Build sidebar
 	var p = this.sidebar.addPanel("Initiative");
+	var b = p.addButton("Roll",new db.link(this,this.rollIntiative,[p]));
 	var p = this.sidebar.addPanel("Players");
 	
 	// Build the popups
@@ -169,5 +170,32 @@ GM.main.prototype.selectCampaign = function(cb,conf) {
 			}
 			this.mainframe.trigger("campaignChange");
 		}
+	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// rollInitiative
+// -------------------------------------------------------------------------------------------------
+GM.main.prototype.rollIntiative = function(panel) {
+	panel.removeChildren();
+	var init = new Array();
+	
+	for(var m in this.activeCampaign.activeGroup.members) {
+		var member = this.activeCampaign.activeGroup.members[m];
+		var roll = GM.utility.d10() + member.dat.attributes.reflexes.score;
+		init.push({"name":member.dat.name,"roll":roll});
+	}
+	
+	init.sort(function(a,b) {
+		if(a.roll < b.roll)
+			return -1;
+		else if(a.roll > b.roll)
+			return 1;
+		else
+			return 0;
+	});
+	
+	for(var i in init) {
+		panel.addAnchor(init[i].name + " - " + init[i].roll);
 	}
 };
