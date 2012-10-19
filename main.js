@@ -4,13 +4,11 @@
 GM.main = function(root) {
 	this.root = root;
 	this.mainframe = new lib.mainframe();
-	this.controls = new ui.panel("Controls",new lib.mainframe(this.mainframe));
-	this.controls.setParent(this.root);
-	this.root.appendChild(this.controls.dom);
 	this.panel = new ui.panel(null,new lib.mainframe(this.mainframe));
 	this.panel.setParent(this.root);
 	this.panel.addClass("panel");
 	this.root.appendChild(this.panel.dom);
+	this.controls = this.panel.addPanel("Controls");
 	this.sidebar = new ui.panel(null,new lib.mainframe(this.mainframe));
 	this.sidebar.setParent(this.root);
 	this.sidebar.addClass("sidebar");

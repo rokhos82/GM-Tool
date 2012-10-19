@@ -1,3 +1,7 @@
+body {
+	margin: 0px;
+	padding: 10px;
+}
 div.popup {
 	left: 100px;
 	top: 100px;
@@ -38,11 +42,14 @@ div.popup {
 .panel {
 	display: inline-block;
 	vertical-align: top;
-	width: 800px;
+	width: 900px;
 }
 
 .sidebar {
 	display: inline-block;
+	position: fixed;
+	right: 10px;
+	top: 10px;
 	vertical-align: top;
 	width: 400px;
 }
