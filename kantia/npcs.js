@@ -54,7 +54,7 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 		"strength": new kantia.attributeDAT("Strength",4,7,6),
 		"size": new kantia.attributeDAT("Size",3,5,4),
 		"agility": new kantia.attributeDAT("Agility",11,15,13),
-		"reflexes": new kantia.attributeDAT("Relfexes",11,15,13),
+		"reflexes": new kantia.attributeDAT("Reflexes",11,15,13),
 		"constitution": new kantia.attributeDAT("Constitution",8,12,10),
 		"fortitude": new kantia.attributeDAT("Fortitude",4,8,8),
 		"reasoning": new kantia.attributeDAT("Reasoning",8,12,10),
@@ -85,7 +85,7 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 	{
 		"strength": new kantia.attributeDAT("Strength",5,9,7),
 		"size": new kantia.attributeDAT("Size",4,7,5),
-		"agility": new kantia.attributeDAT("Agilithy",12,16,14),
+		"agility": new kantia.attributeDAT("Agility",12,16,14),
 		"reflexes": new kantia.attributeDAT("Reflexes",13,17,15),
 		"constitution": new kantia.attributeDAT("Constitution",10,14,12),
 		"fortitude": new kantia.attributeDAT("Fortitude",5,9,7),
@@ -119,7 +119,7 @@ kantia.template.npcs["Kobald, Sorcerer"] = new kantia.template.npc(
 	{
 		"strength": new kantia.attributeDAT("Strength",4,7,6),
 		"size": new kantia.attributeDAT("Size",3,5,4),
-		"agility": new kantia.attributeDAT("Agilithy",11,15,13),
+		"agility": new kantia.attributeDAT("Agility",11,15,13),
 		"reflexes": new kantia.attributeDAT("Reflexes",11,15,13),
 		"constitution": new kantia.attributeDAT("Constitution",9,13,11),
 		"fortitude": new kantia.attributeDAT("Fortitude",4,8,6),

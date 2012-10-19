@@ -6,7 +6,7 @@ div.popup {
 	background-color: #ffffff;
 }
 
-.attr_table {
+.attr_table table {
 	border: 1px solid #000000;
 	border-collapse: collapse;
 	margin: 2px;
@@ -14,7 +14,7 @@ div.popup {
 	text-align: center;
 }
 
-.attr_table > tr {
+.attr_table tr {
 	border: 1px solid #000000;
 	border-collapse: collapse;
 	margin: 2px;
@@ -22,7 +22,7 @@ div.popup {
 	text-align: center;
 }
 
-.attr_table > td {
+.attr_table td {
 	border: 1px solid #000000;
 	border-collapse: collapse;
 	margin: 2px;
