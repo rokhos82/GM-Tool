@@ -62,5 +62,5 @@ kantia.npcSVC = function(dat,parent) {
 };
 
 kantia.npcSVC.prototype.initialize = function() {
-	this.parent.ui.appendChild(this.ui);
+	this.parent.appendNPC(this);
 };

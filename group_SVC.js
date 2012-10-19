@@ -5,6 +5,7 @@ GM.groupSVC = function(dat,parent) {
 	this.dat = {};
 	this.name = dat.name;
 	this.members = {};
+	this.memberCount = 0;
 	this.ui = new ui.panel("NPCs");
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
@@ -13,6 +14,7 @@ GM.groupSVC = function(dat,parent) {
 	this.ui.addButton("Clone NPC");
 	
 	this.links = this.ui.addPanel("Quick Links");
+	this.npcs = this.ui.addPanel();
 	
 	this.setData(dat);
 };
@@ -31,26 +33,22 @@ GM.groupSVC.prototype.setData = function(dat) {
 	this.dat = dat;
 	this.name = this.dat.name;
 	this.links.removeChildren();
-	
-	for(var m in this.members) {
-		var mem = this.members[m];
-		this.ui.removeChild(mem.ui);
-		delete this.members[m];
-	}
+	this.npcs.removeChildren();
 	
 	var i = 0;
 	for(var m in this.dat.members) {
-		var a = this.links.addAnchor(m,null,"#" + i);
+		var a = this.links.addAnchor(m,null,"#" + i+1);
 		a.addClass("quick_link");
+		this.memberCount++;
 		i++;
 	}
 	
 	var i = 0;
 	for(var m in this.dat.members) {
-		this.ui.addAnchor(null,i,null);
+		this.npcs.addAnchor(null,i+1,null);
 		var svc = new kantia.npcSVC(this.dat.members[m],this);
 		this.members[m] = svc;
-		this.ui.appendChild(svc.ui);
+		this.npcs.appendChild(svc.ui);
 		i++;
 	}
 	
@@ -71,6 +69,12 @@ GM.groupSVC.prototype.addNPC = function(popup) {
 	var name = popup.dat.name;
 	var template = popup.dat.template;
 	this.hidePopup(popup);
+	
+	this.memberCount++;
+	var a  = this.links.addAnchor(name,null,"#" + this.memberCount);
+	a.addClass("quick_link");
+	this.npcs.addAnchor(null,this.memberCount,null);
+	
 	
 	this.dat.members[name] = new kantia.npcDAT(name,template);
 	this.members[name] = new kantia.npcSVC(this.dat.members[name],this);
@@ -106,4 +110,8 @@ GM.groupSVC.prototype.showPopup = function() {
 GM.groupSVC.prototype.hidePopup = function(popup) {
 	this.ui.removeChild(popup);
 	popup.hide();
+};
+
+GM.groupSVC.prototype.appendNPC = function(npc) {
+	this.npcs.appendChild(npc.ui);
 };
