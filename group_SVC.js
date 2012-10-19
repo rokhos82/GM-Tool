@@ -37,7 +37,7 @@ GM.groupSVC.prototype.setData = function(dat) {
 	
 	var i = 0;
 	for(var m in this.dat.members) {
-		var a = this.links.addAnchor(m,null,"#" + i+1);
+		var a = this.links.addAnchor(m,null,"#" + (i+1));
 		a.addClass("quick_link");
 		this.memberCount++;
 		i++;
