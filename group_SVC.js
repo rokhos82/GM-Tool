@@ -5,7 +5,6 @@ GM.groupSVC = function(dat,parent) {
 	this.dat = {};
 	this.name = dat.name;
 	this.members = {};
-	this.memberCount = 0;
 	this.ui = new ui.panel("NPCs");
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
@@ -36,21 +35,18 @@ GM.groupSVC.prototype.setData = function(dat) {
 	this.npcs.removeChildren();
 	this.members = {};
 	
-	var i = 0;
 	for(var m in this.dat.members) {
-		var a = this.links.addAnchor(m,null,"#" + (i+1));
+		var an = m.replace(/ /g,'').toLowerCase();
+		var a = this.links.addAnchor(m,null,"#" + an);
 		a.addClass("quick_link");
-		this.memberCount++;
-		i++;
 	}
 	
-	var i = 0;
 	for(var m in this.dat.members) {
-		this.npcs.addAnchor(null,i+1,null);
+		var an = m.replace(/ /g,'').toLowerCase();
+		this.npcs.addAnchor(null,an,null);
 		var svc = new kantia.npcSVC(this.dat.members[m],this);
 		this.members[m] = svc;
 		this.npcs.appendChild(svc.ui);
-		i++;
 	}
 	
 	this.refreshView();
@@ -72,9 +68,10 @@ GM.groupSVC.prototype.addNPC = function(popup) {
 	this.hidePopup(popup);
 	
 	this.memberCount++;
-	var a  = this.links.addAnchor(name,null,"#" + this.memberCount);
+	var an = name.replace(/ /g,'').toLowerCase();
+	var a  = this.links.addAnchor(name,null,"#" + an);
 	a.addClass("quick_link");
-	this.npcs.addAnchor(null,this.memberCount,null);
+	this.npcs.addAnchor(null,an,null);
 	
 	
 	this.dat.members[name] = new kantia.npcDAT(name,template);

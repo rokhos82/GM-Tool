@@ -202,6 +202,6 @@ GM.main.prototype.rollIntiative = function(list) {
 	});
 	
 	for(var i in init) {
-		list.addItem(init[i].name + " - " + init[i].roll);
+		list.addAnchorItem(init[i].name + " - " + init[i].roll,null,"#" + init[i].name.replace(/ /g,'').toLowerCase());
 	}
 };
