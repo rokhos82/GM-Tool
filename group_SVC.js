@@ -98,6 +98,7 @@ GM.groupSVC.prototype.showPopup = function() {
 	var c = new ui.comboBox("Template");
 	c.setComplexOptions(kantia.template.npcList);
 	c.setData(new db.connector(popup.dat,"template"));
+	c.updateData();
 	p.appendChild(c);
 	var b = p.addButton("Ok",new db.link(this,this.addNPC,[popup]));
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));

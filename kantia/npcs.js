@@ -58,7 +58,8 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 		"Climbing": new kantia.skillDAT("Climbing","strength",5)
 	},
 	{
-	}
+	},
+	["Leather Jerkin","Leather Vambrace","Leather Greaves"]
 );
 
 // Human Brute, Expert ------------------------------------------------------------------------------
