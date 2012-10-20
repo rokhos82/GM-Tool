@@ -37,12 +37,6 @@ GM.groupSVC.prototype.setData = function(dat) {
 	
 	for(var m in this.dat.members) {
 		var an = m.replace(/ /g,'').toLowerCase();
-		var a = this.links.addAnchor(m,null,"#" + an);
-		a.addClass("quick_link");
-	}
-	
-	for(var m in this.dat.members) {
-		var an = m.replace(/ /g,'').toLowerCase();
 		this.npcs.addAnchor(null,an,null);
 		var svc = new kantia.npcSVC(this.dat.members[m],this);
 		this.members[m] = svc;
@@ -56,6 +50,12 @@ GM.groupSVC.prototype.setData = function(dat) {
 //
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.refreshView = function() {
+	this.links.removeChildren();
+	for(var m in this.dat.members) {
+		var an = m.replace(/ /g,'').toLowerCase();
+		var a = this.links.addAnchor(m,null,"#" + an);
+		a.addClass("quick_link");
+	}
 	this.ui.refreshView();
 };
 
@@ -66,13 +66,6 @@ GM.groupSVC.prototype.addNPC = function(popup) {
 	var name = popup.dat.name;
 	var template = popup.dat.template;
 	this.hidePopup(popup);
-	
-	this.memberCount++;
-	var an = name.replace(/ /g,'').toLowerCase();
-	var a  = this.links.addAnchor(name,null,"#" + an);
-	a.addClass("quick_link");
-	this.npcs.addAnchor(null,an,null);
-	
 	
 	this.dat.members[name] = new kantia.npcDAT(name,template);
 	this.members[name] = new kantia.npcSVC(this.dat.members[name],this);
@@ -111,6 +104,21 @@ GM.groupSVC.prototype.hidePopup = function(popup) {
 	popup.hide();
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.appendNPC = function(npc) {
 	this.npcs.appendChild(npc.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// removeNPC
+// -------------------------------------------------------------------------------------------------
+GM.groupSVC.prototype.removeNPC = function(name) {
+	var member = this.members[name];
+	this.npcs.removeChild(member.ui);
+	member.destroy();
+	delete this.members[name];
+	delete this.dat.members[name];
+	this.refreshView();
 };

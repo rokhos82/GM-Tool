@@ -15,7 +15,7 @@ kantia.npcSVC = function(dat,parent) {
 	this.ui.addButton("Throwing Caution");
 	this.ui.addButton("Delay");
 	this.ui.addButton("Rush");
-	this.ui.addButton("Remove");
+	this.ui.addButton("Remove",new db.link(this.parent,this.parent.removeNPC,[this.dat.name]));
 	
 	var stats = this.dat.stats;
 	var p = this.ui.addPanel("Effects");
@@ -92,4 +92,9 @@ kantia.npcSVC = function(dat,parent) {
 
 kantia.npcSVC.prototype.initialize = function() {
 	this.parent.appendNPC(this);
+};
+
+kantia.npcSVC.prototype.destroy = function() {
+	this.ui.destroy();
+	delete this.ui;
 };
