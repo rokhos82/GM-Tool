@@ -1,8 +1,18 @@
 kantia.template.npcs = {};
 
 kantia.template.npcList = {
-	"Common Races": {
-		"Troll Brute, Basic": "Troll Brute, Basic"
+	"Human": {
+		"Human Brute, Basic": "Human Brute, Basic",
+		"Human Brute, Expert": "Human Brute, Expert",
+		"Human Brute, Master": "Human Brute, Master",
+		"Human Fighter, Basic": "Human Fighter, Basic",
+		"Human Fighter, Expert": "Human Fighter, Expert",
+		"Human Fighter, Master": "Human Fighter, Master"
+	},
+	"Troll": {
+		"Troll Brute, Basic": "Troll Brute, Basic",
+		"Troll Brute, Expert": "Troll Brute, Expert",
+		"Troll Brute, Master": "Troll Brute, Master"
 	},
 	"Kobald": {
 		"Kobald, Common": "Kobald, Common",
@@ -11,18 +21,172 @@ kantia.template.npcList = {
 	}
 };
 
-kantia.template.npc = function(name,race,attributes,skills,traits) {
+kantia.template.npc = function(name,race,attributes,skills,traits,armor) {
 	this.race = race;
 	this.name = name;
 	this.skills = skills;
 	this.attributes = attributes;
-	this.armor;
+	this.armor = armor;
 	this.weapons;
 	this.traits = traits;
 	this.hc;
 	this.categories;
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Human NPC Templates
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Human Brute, Basic ------------------------------------------------------------------------------
+kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
+	"Human Brute, Basic",
+	"Human",
+	{
+		"strength": new kantia.attributeDAT("Strength",13,15,14),
+		"size": new kantia.attributeDAT("Size",13,15,14),
+		"agility": new kantia.attributeDAT("Agility",8,12,10),
+		"reflexes": new kantia.attributeDAT("Reflexes",8,12,10),
+		"constitution": new kantia.attributeDAT("Constitution",13,15,14),
+		"fortitude": new kantia.attributeDAT("Fortitude",13,15,14),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,7),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,8),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,8),
+		"perception": new kantia.attributeDAT("Perception",6,12,10)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",8),
+		"Climbing": new kantia.skillDAT("Climbing","strength",5)
+	},
+	{
+	},
+	["Leather Jerkin","Leather Vambrace","Leather Greaves"]
+);
+
+// Human Brute, Expert ------------------------------------------------------------------------------
+kantia.template.npcs["Human Brute, Expert"] = new kantia.template.npc(
+	"Human Brute, Expert",
+	"Human",
+	{
+		"strength": new kantia.attributeDAT("Strength",13,15,15),
+		"size": new kantia.attributeDAT("Size",13,15,15),
+		"agility": new kantia.attributeDAT("Agility",8,12,10),
+		"reflexes": new kantia.attributeDAT("Reflexes",8,12,10),
+		"constitution": new kantia.attributeDAT("Constitution",13,15,15),
+		"fortitude": new kantia.attributeDAT("Fortitude",13,15,15),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,8),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,8),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,8),
+		"perception": new kantia.attributeDAT("Perception",6,12,10)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",12),
+		"Climbing": new kantia.skillDAT("Climbing","strength",6)
+	},
+	{
+	}
+);
+
+// Human Brute, Master ------------------------------------------------------------------------------
+kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
+	"Human Brute, Master",
+	"Human",
+	{
+		"strength": new kantia.attributeDAT("Strength",13,15,16),
+		"size": new kantia.attributeDAT("Size",13,15,15),
+		"agility": new kantia.attributeDAT("Agility",8,12,10),
+		"reflexes": new kantia.attributeDAT("Reflexes",8,12,10),
+		"constitution": new kantia.attributeDAT("Constitution",13,15,15),
+		"fortitude": new kantia.attributeDAT("Fortitude",13,15,16),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,9),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,8),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,8),
+		"perception": new kantia.attributeDAT("Perception",6,12,10)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",12),
+		"Climbing": new kantia.skillDAT("Climbing","strength",6)
+	},
+	{
+	}
+);
+
+// Human Fighter, Basic ------------------------------------------------------------------------------
+kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
+	"Human Fighter, Basic",
+	"Human",
+	{
+		"strength": new kantia.attributeDAT("Strength",10,15,13),
+		"size": new kantia.attributeDAT("Size",9,14,12),
+		"agility": new kantia.attributeDAT("Agility",9,14,12),
+		"reflexes": new kantia.attributeDAT("Reflexes",9,14,12),
+		"constitution": new kantia.attributeDAT("Constitution",6,12,10),
+		"fortitude": new kantia.attributeDAT("Fortitude",9,14,12),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,9),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,9),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,9),
+		"perception": new kantia.attributeDAT("Perception",6,12,10)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",6),
+		"Climbing": new kantia.skillDAT("Climbing","strength",4)
+	},
+	{
+	}
+);
+
+// Human Fighter, Expert ------------------------------------------------------------------------------
+kantia.template.npcs["Human Fighter, Expert"] = new kantia.template.npc(
+	"Human Fighter, Expert",
+	"Human",
+	{
+		"strength": new kantia.attributeDAT("Strength",10,15,14),
+		"size": new kantia.attributeDAT("Size",9,14,12),
+		"agility": new kantia.attributeDAT("Agility",9,14,12),
+		"reflexes": new kantia.attributeDAT("Reflexes",9,14,12),
+		"constitution": new kantia.attributeDAT("Constitution",6,12,11),
+		"fortitude": new kantia.attributeDAT("Fortitude",9,14,13),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,10),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,10),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,9),
+		"perception": new kantia.attributeDAT("Perception",6,12,10)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",8),
+		"Climbing": new kantia.skillDAT("Climbing","strength",6)
+	},
+	{
+	}
+);
+
+// Human Fighter, Master ------------------------------------------------------------------------------
+kantia.template.npcs["Human Fighter, Master"] = new kantia.template.npc(
+	"Human Fighter, Master",
+	"Human",
+	{
+		"strength": new kantia.attributeDAT("Strength",10,15,14),
+		"size": new kantia.attributeDAT("Size",9,14,12),
+		"agility": new kantia.attributeDAT("Agility",9,14,13),
+		"reflexes": new kantia.attributeDAT("Reflexes",9,14,12),
+		"constitution": new kantia.attributeDAT("Constitution",6,12,12),
+		"fortitude": new kantia.attributeDAT("Fortitude",9,14,14),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,11),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,10),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,9),
+		"perception": new kantia.attributeDAT("Perception",6,12,10)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",10),
+		"Climbing": new kantia.skillDAT("Climbing","strength",8)
+	},
+	{
+	}
+);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Troll NPC Templates
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Troll Brute, Basic ------------------------------------------------------------------------------
 kantia.template.npcs["Troll Brute, Basic"] = new kantia.template.npc(
 	"Troll Brute, Basic",
 	"Troll",
@@ -41,12 +205,66 @@ kantia.template.npcs["Troll Brute, Basic"] = new kantia.template.npc(
 	{
 		"Brawling": new kantia.skillDAT("Brawling","agility",8),
 		"Climbing": new kantia.skillDAT("Climbing","strength",4),
-		"Determine Motivation": new kantia.skillDAT("Determine Motivation","reasoning",4)
+		"Determine Motivation": new kantia.skillDAT("Determine Motivation","reasoning",4),
+		"Dodge": new kantia.skillDAT("Dodge","reflexes",5)
 	},
 	{
 	}
 );
 
+// Troll Brute, Expert -----------------------------------------------------------------------------
+kantia.template.npcs["Troll Brute, Expert"] = new kantia.template.npc(
+	"Troll Brute, Expert",
+	"Troll",
+	{
+		"strength": new kantia.attributeDAT("Strength",15,20,19),
+		"size": new kantia.attributeDAT("Size",15,20,19),
+		"agility": new kantia.attributeDAT("Agility",10,14,12),
+		"reflexes": new kantia.attributeDAT("Reflexes",10,14,12),
+		"constitution": new kantia.attributeDAT("Constitution",20,30,25),
+		"fortitude": new kantia.attributeDAT("Fortitude",13,16,15),
+		"reasoning": new kantia.attributeDAT("Reasoning",3,10,5),
+		"willpower": new kantia.attributeDAT("Willpower",5,12,6),
+		"spirit": new kantia.attributeDAT("Spirit",5,12,6),
+		"perception": new kantia.attributeDAT("Perception",10,18,14)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",12),
+		"Climbing": new kantia.skillDAT("Climbing","strength",6)
+	},
+	{
+	}
+);
+
+// Troll Brute, Master -----------------------------------------------------------------------------
+kantia.template.npcs["Troll Brute, Master"] = new kantia.template.npc(
+	"Troll Brute, Master",
+	"Troll",
+	{
+		"strength": new kantia.attributeDAT("Strength",15,20,20),
+		"size": new kantia.attributeDAT("Size",15,20,19),
+		"agility": new kantia.attributeDAT("Agility",10,14,12),
+		"reflexes": new kantia.attributeDAT("Reflexes",10,14,12),
+		"constitution": new kantia.attributeDAT("Constitution",20,30,26),
+		"fortitude": new kantia.attributeDAT("Fortitude",13,16,16),
+		"reasoning": new kantia.attributeDAT("Reasoning",3,10,5),
+		"willpower": new kantia.attributeDAT("Willpower",5,12,6),
+		"spirit": new kantia.attributeDAT("Spirit",5,12,6),
+		"perception": new kantia.attributeDAT("Perception",10,18,14)
+	},
+	{
+		"Brawling": new kantia.skillDAT("Brawling","agility",12),
+		"Climbing": new kantia.skillDAT("Climbing","strength",6)
+	},
+	{
+	}
+);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Kobald NPC Templates
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Kobald, Common ----------------------------------------------------------------------------------
 kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 	"Kobald, Common",
 	"Kobald",
@@ -79,6 +297,7 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 	}
 );
 
+// Kobald, Warrior----------------------------------------------------------------------------------
 kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 	"Kobald, Warrior",
 	"Kobald",
@@ -110,9 +329,11 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 		"Psychic Void": "Psychic Void",
 		"Photosensitive": "Photosensitive",
 		"Darkvision": "Darkvision"
-	}
+	},
+	["Leather Jerkin","Leather Vambrace","Leather Greaves","Medium Shield","Light Helm"]
 );
 
+// Kobald, Sorcerer --------------------------------------------------------------------------------
 kantia.template.npcs["Kobald, Sorcerer"] = new kantia.template.npc(
 	"Kobald, Sorcerer",
 	"Kobald",

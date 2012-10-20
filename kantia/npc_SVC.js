@@ -13,6 +13,8 @@ kantia.npcSVC = function(dat,parent) {
 	this.ui.addButton("Bound/Helpless");
 	this.ui.addButton("Fight Defensively");
 	this.ui.addButton("Throwing Caution");
+	this.ui.addButton("Delay");
+	this.ui.addButton("Rush");
 	this.ui.addButton("Remove");
 	
 	var stats = this.dat.stats;
@@ -59,6 +61,15 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Sprint",stats.movement.sprint]);
 	
 	var skills = this.ui.addPanel("Skills");
+	
+	var armor = this.ui.addPanel("Armor");
+	var t = armor.addTable();
+	t.addClass("attr_table");
+	t.addRow(["Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
+	for(var a in this.dat.armor) {
+		var armor = this.dat.armor[a];
+		t.addRow([armor.name,armor.deflect,armor.calledshot,armor.staging,armor.absorb,armor.bypass]);
+	}
 };
 
 kantia.npcSVC.prototype.initialize = function() {
