@@ -25,7 +25,8 @@ GM.main = function(root) {
 	
 	// Build sidebar
 	var p = this.sidebar.addPanel("Initiative");
-	var b = p.addButton("Roll",new db.link(this,this.rollIntiative,[p]));
+	var l = p.addList();
+	var b = p.addButton("Roll",new db.link(this,this.rollIntiative,[l]));
 	var p = this.sidebar.addPanel("Players");
 	
 	// Build the popups
@@ -176,26 +177,31 @@ GM.main.prototype.selectCampaign = function(cb,conf) {
 // -------------------------------------------------------------------------------------------------
 // rollInitiative
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.rollIntiative = function(panel) {
-	panel.removeChildren();
+GM.main.prototype.rollIntiative = function(list) {
+	list.removeChildren();
 	var init = new Array();
 	
 	for(var m in this.activeCampaign.activeGroup.members) {
 		var member = this.activeCampaign.activeGroup.members[m];
 		var roll = GM.utility.d10() + member.dat.attributes.reflexes.score;
+		for(var a in member.dat.armor) {
+			var armor = member.dat.armor[a];
+			if(armor.penalties.i)
+				roll += parseInt(armor.penalties.i);
+		}
 		init.push({"name":member.dat.name,"roll":roll});
 	}
 	
 	init.sort(function(a,b) {
 		if(a.roll < b.roll)
-			return -1;
-		else if(a.roll > b.roll)
 			return 1;
+		else if(a.roll > b.roll)
+			return -1;
 		else
 			return 0;
 	});
 	
 	for(var i in init) {
-		panel.addAnchor(init[i].name + " - " + init[i].roll);
+		list.addItem(init[i].name + " - " + init[i].roll);
 	}
 };

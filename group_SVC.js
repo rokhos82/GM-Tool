@@ -34,6 +34,7 @@ GM.groupSVC.prototype.setData = function(dat) {
 	this.name = this.dat.name;
 	this.links.removeChildren();
 	this.npcs.removeChildren();
+	this.members = {};
 	
 	var i = 0;
 	for(var m in this.dat.members) {
