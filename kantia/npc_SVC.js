@@ -41,6 +41,7 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Stamina",stats.stamina.max]);
 	t.addRow(["Wind",stats.wind.max]);
 	
+	// Build the defense section
 	var defense = this.ui.addPanel("Defense");
 	defense.addClass("small");
 	var t = defense.addTable();
@@ -50,9 +51,11 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Staging",stats.defense.staging]);
 	t.addRow(["Absorb",stats.defense.absorb]);
 	
+	// Build the offense section
 	var offense = this.ui.addPanel("Offense");
 	offense.addClass("small");
 	
+	// Build the other section
 	var other = this.ui.addPanel("Other");
 	other.addClass("small");
 	var p = other.addPanel("Movement");
@@ -66,6 +69,15 @@ kantia.npcSVC = function(dat,parent) {
 	var t = skills.addTable();
 	t.addClass("attr_table");
 	t.addRow(["Skill","AV","Adjust","Total"]);
+	for(var s in this.dat.skills) {
+		var skill = this.dat.skills[s];
+		var av = skill.rank * 5;
+		var a = skill.attribute;
+		var adj = 0;
+		if(a != "special")
+			adj = this.dat.attributes[a].adjust;
+		t.addRow([skill.name,av,adj,av + adj]);
+	}
 	
 	// Build the armor section
 	var armor = this.ui.addPanel("Armor");
