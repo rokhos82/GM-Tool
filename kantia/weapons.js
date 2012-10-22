@@ -90,6 +90,32 @@ kantia.weapons.melee = {
 			text: "1d6",
 			roll: function() { kantia.func.d6(1); }
 		}
+	},
+	"Short Spear, 2H": {
+		difficulty: 20,
+		range: "",
+		staging: {
+			value: 10,
+			source: "strength"
+		},
+		damage: {
+			avg: 5,
+			text: "1d10",
+			roll: function() { kantia.func.d10(1); }
+		}
+	},
+	"Short Spear, 1H": {
+		difficulty: 20,
+		range: "Reach",
+		staging: {
+			value: 8,
+			source: "strength"
+		},
+		damage: {
+			avg: 5,
+			text: "1d10",
+			roll: function() { kantia.func.d10(1); }
+		}
 	}
 };
 
@@ -100,6 +126,7 @@ kantia.weapons.ranged = {
 			increment: 5
 		},
 		range: {
+			text: "4 (+2)",
 			base: 4,
 			increment: 2
 		},
@@ -119,6 +146,7 @@ kantia.weapons.ranged = {
 			increment: 5
 		},
 		range: {
+			text: "4 (+2)",
 			base: 4,
 			increment: 2
 		},

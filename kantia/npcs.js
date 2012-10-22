@@ -298,8 +298,8 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 	},
 	[],
 	{
-		"ranged": ["Dagger","Short Spear"],
-		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear"]
+		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear, 1H","Short Spear, 2H"],
+		"ranged": ["Dagger","Short Spear"]
 	}
 );
 
@@ -336,7 +336,11 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 		"Photosensitive": "Photosensitive",
 		"Darkvision": "Darkvision"
 	},
-	["Leather Jerkin","Leather Vambrace","Leather Greaves","Medium Shield","Light Helm"]
+	["Leather Jerkin","Leather Vambrace","Leather Greaves","Medium Shield","Light Helm"],
+	{
+		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear, 1H","Short Spear, 2H"],
+		"ranged": ["Dagger","Short Spear"],
+	}
 );
 
 // Kobald, Sorcerer --------------------------------------------------------------------------------

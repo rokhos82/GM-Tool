@@ -45,17 +45,6 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Stamina",stats.stamina.max]);
 	t.addRow(["Wind",stats.wind.max]);
 	
-	// Build the defense section -----------------------
-	var defense = this.ui.addPanel("Defense");
-	this.panels.defense = defense;
-	defense.addClass("small");
-	var t = defense.addTable();
-	t.addRow(["Normal DR",stats.defense.dr]);
-	t.addRow(["No Agility DR",stats.defense.noagldr]);
-	t.addRow(["Touch DR",stats.defense.touchdr]);
-	t.addRow(["Staging",stats.defense.staging]);
-	t.addRow(["Absorb",stats.defense.absorb]);
-	
 	// Build the other section -------------------------
 	var other = this.ui.addPanel("Other");
 	this.panels.other = other;
@@ -67,10 +56,20 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Sprint",stats.movement.sprint]);
 	
 	// Build the offense section -----------------------
-	var offense = this.ui.addPanel("Offense");
-	this.panels.offense = offense;
+	var combat = this.ui.addPanel("Combat");
+	
+	var defense = combat.addPanel("Defense");
+	this.panels.defense = defense;
+	defense.addClass("small");
+	var t = defense.addTable();
+	t.addRow(["Normal DR",stats.defense.dr]);
+	t.addRow(["No Agility DR",stats.defense.noagldr]);
+	t.addRow(["Touch DR",stats.defense.touchdr]);
+	t.addRow(["Staging",stats.defense.staging]);
+	t.addRow(["Absorb",stats.defense.absorb]);
 		
-	var melee = offense.addPanel("Melee");
+	var melee = combat.addPanel("Melee");
+	this.panels.melee = melee;
 	melee.addClass("small");
 	melee.addButton("Select Weapon",new db.link(this,this.selectWeaponPopup,["melee"]));
 	var t = melee.addTable();
@@ -81,7 +80,8 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Attacks",new db.connector(this.dat.weapons.melee,"attacks")]);
 	t.addRow(["Damage",new db.connector(this.dat.weapons.melee,"damage")]);
 	
-	var ranged = offense.addPanel("Ranged");
+	var ranged = combat.addPanel("Ranged");
+	this.panels.ranged = ranged;
 	ranged.addClass("small");
 	ranged.addButton("Select Weapon",new db.link(this,this.selectWeaponPopup,["ranged"]));
 	var t = ranged.addTable();
@@ -100,13 +100,12 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Skill","Rank","AV","Adjust","Total"]);
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
-		var rank = skill.rank;
 		var av = skill.rank * 5;
 		var a = skill.attribute;
 		var adj = 0;
 		if(a != "special")
 			adj = this.dat.attributes[a].adjust;
-		t.addRow([skill.name,rank,av,adj,av + adj]);
+		t.addRow([skill.name,new db.connector(skill,"rank"),av,adj,av + adj]);
 	}
 	
 	// Build the armor section
