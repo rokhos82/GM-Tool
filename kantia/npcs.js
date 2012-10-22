@@ -21,13 +21,13 @@ kantia.template.npcList = {
 	}
 };
 
-kantia.template.npc = function(name,race,attributes,skills,traits,armor) {
+kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons) {
 	this.race = race;
 	this.name = name;
 	this.skills = skills;
 	this.attributes = attributes;
 	this.armor = armor;
-	this.weapons;
+	this.weapons = weapons;
 	this.traits = traits;
 	this.hc;
 	this.categories;
@@ -295,6 +295,11 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 		"Psychic Void": "Psychic Void",
 		"Photosensitive": "Photosensitive",
 		"Darkvision": "Darkvision"
+	},
+	[],
+	{
+		"ranged": ["Dagger","Short Spear"],
+		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear"]
 	}
 );
 

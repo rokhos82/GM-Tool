@@ -4,8 +4,20 @@ kantia.npcDAT = function(name,template) {
 	
 	var temp = kantia.template.npcs[template];
 	
-	this.skills = temp.skills;
 	this.attributes = temp.attributes;
+	
+	this.skills = temp.skills;
+	this.skillList = [];
+	for(var s in this.skills) {
+		var attr = this.skills[s].attribute;
+		var adj = 0;
+		if(this.attributes[attr])
+			adj = this.attributes[attr].adjust;
+		var av = (this.skills[s].rank * 5) + adj;
+		this.skills[s].av = av;
+		this.skillList.push(s);
+	}
+	
 	this.stats = {
 		"health": new kantia.healthDAT(this.attributes,"npc"),
 		"stamina": new kantia.staminaDAT(this.attributes,"npc"),
@@ -26,4 +38,28 @@ kantia.npcDAT = function(name,template) {
 			this.stats.defense.absorb += this.armor[armor].absorb;
 		}
 	}
+	
+	this.weapons = {
+		melee: {
+			name: "",
+			skill: "",
+			av: "",
+			attacks: "",
+			staging: "",
+			damage: "",
+			list: temp.weapons.melee
+		},
+		ranged: {
+			name: "",
+			skill: "",
+			av: "",
+			attacks: "",
+			staging: "",
+			damage: "",
+			list: temp.weapons.ranged
+		}
+	};
+	
+	this.effects = {
+	};
 };

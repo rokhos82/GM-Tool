@@ -45,11 +45,18 @@ kantia.weapon.groups = {
 	}
 };
 
-kantia.weapons = {
-	"Hatchet": {
+kantia.weapons = {};
+kantia.weapons.melee = {
+	"Hand Axe": {
+		difficulty: 20,
 		staging: {
-			value: 2,
+			value: 12,
 			source: "strength"
+		},
+		damage: {
+			avg: 5,
+			text: "1d6 + 2",
+			roll: function() { kantia.func.d6(1) + 2; }
 		}
 	},
 	"Medium Club": {
@@ -57,6 +64,72 @@ kantia.weapons = {
 		staging: {
 			value: 6,
 			source: "strength"
+		}
+	},
+	"Short Sword": {
+		difficulty: 15,
+		staging: {
+			value: 8,
+			source: "strength"
+		},
+		damage: {
+			avg: 5,
+			text: "1d8 + 1",
+			roll: function() { kantia.func.d8(1) + 1; }
+		}
+	},
+	"Dagger": {
+		difficulty: 10,
+		range: "Standard",
+		staging: {
+			value: 4,
+			source: "strength"
+		},
+		damage: {
+			avg: 3,
+			text: "1d6",
+			roll: function() { kantia.func.d6(1); }
+		}
+	}
+};
+
+kantia.weapons.ranged = {
+	"Dagger": {
+		difficulty: {
+			base: 10,
+			increment: 5
+		},
+		range: {
+			base: 4,
+			increment: 2
+		},
+		staging: {
+			value: 4,
+			source: "strength"
+		},
+		damage: {
+			avg: 3,
+			text: "1d6",
+			roll: function() { kantia.func.d6(1); }
+		}
+	},
+	"Short Spear": {
+		difficulty: {
+			base: 20,
+			increment: 5
+		},
+		range: {
+			base: 4,
+			increment: 2
+		},
+		staging: {
+			value: 8,
+			source: "strength"
+		},
+		damage: {
+			avg: 5,
+			text: "1d10",
+			roll: function() { kantia.func.d10(1); }
 		}
 	}
 };
