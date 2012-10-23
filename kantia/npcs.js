@@ -26,16 +26,11 @@ kantia.template.spell = function(name,rank) {
 	this.rank = rank;
 };
 
-kantia.template.magic = function(discipline,drank,casting,crank,cattr,spells) {
+kantia.template.magic = function(discipline,drank,casting,crank,cattr) {
 	this.discipline = discipline;
 	this.rank = drank;
 	this.casting = new kantia.skillDAT(casting,cattr,crank);
 	this.spells = {};
-	for(var s in spells) {
-		var name = spells[s][0];
-		var rank = spells[s][1];
-		this.spells[name] = new kantia.template.spell(name,rank);
-	}
 };
 
 kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,magic) {

@@ -127,8 +127,11 @@ kantia.npcSVC = function(dat,parent) {
 	var spell = this.ui.addPanel("Magic");
 	var t = spell.addText(this.dat.magic.text);
 	t.addClass("block");
-	var b = spell.addButton("Add Discipline");
-	var disc = spell.addPanel("Discplines");
+	var b = spell.addButton("Add Discipline",new db.link(this,this.addDisciplinePopup,[]));
+	var disc = spell.addPanel();
+	this.panels.disciplines = disc;
+	this.mainframe.addHandler("disc_update","disc_table",disc.refreshView,disc,[]);
+	this.updateDisciplines();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -249,21 +252,49 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addDisciplinePopup = function() {
 	var popup = this.ui.addPopup();
+	popup.addClass("popup");
 	popup.dat = {
 		name: "",
-		rank: 0
+		rank: 0,
+		attr: ""
 	};
 	var p = popup.addPanel("Add Discipline");
 	p.addTextField("Discpline",new db.connector(popup.dat,"name"));
+	p.addTextField("Attribute",new db.connector(popup.dat,"attr"));
 	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
 	p.addButton("Ok",new db.link(this,this.addDiscipline,[popup]));
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 	
-	p.show();
+	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addDiscipline = function(popup) {
+	var name = popup.dat.name;
+	var rank = popup.dat.rank;
+	var attr = popup.dat.attr;
+	this.hidePopup(popup);
+	
+	var disc = new kantia.template.magic(name,rank,name + " - Casting",rank,attr);
+	this.dat.magic.disciplines[name] = disc;
+	this.updateDisciplines();
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateDisciplines = function() {
+	this.panels.disciplines.removeChildren();
+	
+	for(var d in this.dat.magic.disciplines) {
+		var panel = this.panels.disciplines.addPanel(d);
+		var disc = this.dat.magic.disciplines[d];
+		var t = panel.addTable();
+		t.addRow(["Disc Rank",new db.connector(disc,"rank")]);
+		t.addRow(["Casting",new db.connector(disc.casting,"rank"),new db.connector(disc.casting,"total")]);
+	}
+	
+	this.mainframe.trigger("disc_update");
 };
