@@ -5,7 +5,7 @@ body {
 div.popup {
 	left: 100px;
 	top: 100px;
-	position: absolute;
+	position: fixed;
 	display: none;
 	background-color: #ffffff;
 }

@@ -21,13 +21,13 @@ kantia.template.npcList = {
 	}
 };
 
-kantia.template.npc = function(name,race,attributes,skills,traits,armor) {
+kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons) {
 	this.race = race;
 	this.name = name;
 	this.skills = skills;
 	this.attributes = attributes;
 	this.armor = armor;
-	this.weapons;
+	this.weapons = weapons;
 	this.traits = traits;
 	this.hc;
 	this.categories;
@@ -281,19 +281,25 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 		"perception": new kantia.attributeDAT("Perception",12,16,14)
 	},
 	{
-		"Simple Weapons": new kantia.skillDAT("Simple Weapons","agility",6),
+		"Simple Weapons": new kantia.skillDAT("Simple Weapons","agility",2),
 		"Dodge": new kantia.skillDAT("Dodge","reflexes",6),
 		"Brawling": new kantia.skillDAT("Brawling","agility",2),
 		"Hide": new kantia.skillDAT("Hide","special",8),
 		"Move Silently": new kantia.skillDAT("Move Silently","special",4),
 		"Resist Fear": new kantia.skillDAT("Resist Fear","spirit",2),
 		"Resist Magic": new kantia.skillDAT("Resist Magic","spirit",2),
-		"Resist Mental": new kantia.skillDAT("Resist Mental","willpower",2)
+		"Resist Mental": new kantia.skillDAT("Resist Mental","willpower",2),
+		"Throw": new kantia.skillDAT("Throw","agility",4)
 	},
 	{
 		"Psychic Void": "Psychic Void",
 		"Photosensitive": "Photosensitive",
 		"Darkvision": "Darkvision"
+	},
+	[],
+	{
+		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear, 1H","Short Spear, 2H"],
+		"ranged": ["Dagger","Short Spear"]
 	}
 );
 
@@ -314,8 +320,9 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 		"perception": new kantia.attributeDAT("Perception",12,16,14)
 	},
 	{
-		"Simple Weapons": new kantia.skillDAT("Simple Weapons","agility",7),
+		"Melee Weapon": new kantia.skillDAT("Melee Weapon","agility",7),
 		"Dodge": new kantia.skillDAT("Dodge","reflexes",7),
+		"Archery": new kantia.skillDAT("Archery","agility",6),
 		"Crossbow": new kantia.skillDAT("Crossbow","perception",6),
 		"Brawling": new kantia.skillDAT("Brawling","agility",5),
 		"Throw": new kantia.skillDAT("Throw","agility",9),
@@ -330,7 +337,11 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 		"Photosensitive": "Photosensitive",
 		"Darkvision": "Darkvision"
 	},
-	["Leather Jerkin","Leather Vambrace","Leather Greaves","Medium Shield","Light Helm"]
+	["Leather Jerkin","Leather Vambrace","Leather Greaves","Medium Shield","Light Helm"],
+	{
+		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear, 1H","Short Spear, 2H"],
+		"ranged": ["Dagger","Short Spear","Light Crossbow"],
+	}
 );
 
 // Kobald, Sorcerer --------------------------------------------------------------------------------

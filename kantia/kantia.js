@@ -536,3 +536,49 @@ kantia.func.skillArray = function(skills) {
 	};
 	return arr;
 };
+
+kantia.func.armorPenalties = function(armor_array,pen_array) {
+	var pen = {
+		i: 0,
+		r: 0,
+		p: 0,
+		ar: 0,
+		sp: 0
+	};
+	for(var x in armor_array) {
+		var a = armor_array[x];
+		for(var y in pen_array) {
+			var p = pen_array[y];
+			if(pen[p])
+				pen[p] += kantia.armor[a].penalties[p];
+		}
+	}
+	return pen;
+};
+
+kantia.func.d10 = function(x) {
+	var total = 0;
+	for(var i = 0;i < x;i++) {
+		var r = Math.random();
+		total += Math.round(r * 10);
+	}
+	return total;
+};
+
+kantia.func.d8 = function(x) {
+	var total = 0;
+	for(var i = 0;i < x;i++) {
+		var r = Math.random();
+		total += Math.round(r * 8);
+	}
+	return total;
+};
+
+kantia.func.d6 = function(x) {
+	var total = 0;
+	for(var i = 0;i < x;i++) {
+		var r = Math.random();
+		total += Math.round(r * 6);
+	}
+	return total;
+};
