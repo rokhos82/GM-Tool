@@ -26,7 +26,8 @@ GM.main = function(root) {
 	// Build sidebar
 	var p = this.sidebar.addPanel("Initiative");
 	var l = p.addList();
-	var b = p.addButton("Roll",new db.link(this,this.rollIntiative,[l]));
+	var b = p.addButton("Indiv. Roll",new db.link(this,this.rollInitiative,[l]));
+	var b = p.addButton("Group Roll", new db.link(this,this.rollGroupInitiative,[l]));
 	var p = this.sidebar.addPanel("Players");
 	
 	// Build the popups
@@ -177,7 +178,7 @@ GM.main.prototype.selectCampaign = function(cb,conf) {
 // -------------------------------------------------------------------------------------------------
 // rollInitiative
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.rollIntiative = function(list) {
+GM.main.prototype.rollInitiative = function(list) {
 	list.removeChildren();
 	var init = new Array();
 	
@@ -204,4 +205,22 @@ GM.main.prototype.rollIntiative = function(list) {
 	for(var i in init) {
 		list.addAnchorItem(init[i].name + " - " + init[i].roll,null,"#" + init[i].name.replace(/ /g,'').toLowerCase());
 	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// rollGroupInitiative
+// -------------------------------------------------------------------------------------------------
+GM.main.prototype.rollGroupInitiative = function(list) {
+	list.removeChildren();
+	var sum = 0;
+	var cnt = 0;
+	for(var m in this.activeCampaign.activeGroup.members) {
+		var member = this.activeCampaign.activeGroup.members[m];
+		sum += member.dat.attributes.reflexes.score;
+		cnt++;
+	}
+	var avg = Math.round(sum/cnt);
+	var roll = kantia.func.d10(1) + avg;
+	
+	list.addItem("Group - " + roll);
 };

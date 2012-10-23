@@ -2,6 +2,11 @@ body {
 	margin: 0px;
 	padding: 10px;
 }
+
+.block {
+	display: block;
+}
+
 div.popup {
 	left: 100px;
 	top: 100px;

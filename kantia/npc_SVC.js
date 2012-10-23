@@ -122,6 +122,13 @@ kantia.npcSVC = function(dat,parent) {
 		var armor = this.dat.armor[a];
 		t.addRow([armor.name,armor.deflect,armor.calledshot,armor.staging,armor.absorb,armor.bypass]);
 	}
+	
+	// Build the spell section
+	var spell = this.ui.addPanel("Magic");
+	var t = spell.addText(this.dat.magic.text);
+	t.addClass("block");
+	var b = spell.addButton("Add Discipline");
+	var disc = spell.addPanel("Discplines");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -235,4 +242,28 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 		}
 	}
 	this.mainframe.trigger("weapon_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+// addDisciplinePopup
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addDisciplinePopup = function() {
+	var popup = this.ui.addPopup();
+	popup.dat = {
+		name: "",
+		rank: 0
+	};
+	var p = popup.addPanel("Add Discipline");
+	p.addTextField("Discpline",new db.connector(popup.dat,"name"));
+	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
+	p.addButton("Ok",new db.link(this,this.addDiscipline,[popup]));
+	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+	
+	p.show();
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addDiscipline = function(popup) {
 };

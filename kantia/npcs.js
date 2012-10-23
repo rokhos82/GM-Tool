@@ -21,7 +21,24 @@ kantia.template.npcList = {
 	}
 };
 
-kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons) {
+kantia.template.spell = function(name,rank) {
+	this.name = name;
+	this.rank = rank;
+};
+
+kantia.template.magic = function(discipline,drank,casting,crank,cattr,spells) {
+	this.discipline = discipline;
+	this.rank = drank;
+	this.casting = new kantia.skillDAT(casting,cattr,crank);
+	this.spells = {};
+	for(var s in spells) {
+		var name = spells[s][0];
+		var rank = spells[s][1];
+		this.spells[name] = new kantia.template.spell(name,rank);
+	}
+};
+
+kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,magic) {
 	this.race = race;
 	this.name = name;
 	this.skills = skills;
@@ -31,6 +48,7 @@ kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons)
 	this.traits = traits;
 	this.hc;
 	this.categories;
+	this.magic = magic;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -361,6 +379,7 @@ kantia.template.npcs["Kobald, Sorcerer"] = new kantia.template.npc(
 		"perception": new kantia.attributeDAT("Perception",12,16,14)
 	},
 	{
+		"Archery": new kantia.skillDAT("Archery","agility",2),
 		"Crossbow": new kantia.skillDAT("Crossbow","perception",2),
 		"Dodge": new kantia.skillDAT("Dodge","reflexes",6),
 		"Hide": new kantia.skillDAT("Hide","special",8),
@@ -376,12 +395,18 @@ kantia.template.npcs["Kobald, Sorcerer"] = new kantia.template.npc(
 		"Smell": new kantia.skillDAT("Smell","perception",5),
 		"Spellcraft": new kantia.skillDAT("Spellcraft","reasoning",5),
 		"Throw": new kantia.skillDAT("Throw","agility",4),
-		"Tracking": new kantia.skillDAT("Tracking","perception",4)
+		"Tracking": new kantia.skillDAT("Tracking","perception",4),
 	},
 	{
 		"Psychic Void": "Psychic Void",
 		"Photosensitive": "Photosensitive",
 		"Darkvision": "Darkvision",
 		"Thaumaturge": "Thaumaturge"
-	}
+	},
+	[],
+	{
+		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear, 1H","Short Spear, 2H"],
+		"ranged": ["Dagger","Short Spear"]
+	},
+	"Only female kobalds are capable of sorcery. If a thaumaturge is born, she is capable of learning any discipline, although most prefer enchantment, earth elementalism, transmutation, shadowmancy, and illusion. Typically a kobald sorcerer will have between 4 and 16 ranks in her primary discipline and each of the individual spell skills. Her discipline casting rank is typically equal to her discipline rank. Multi-disciplinary sorcerers are uncommon, but not unheard of."
 );
