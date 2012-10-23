@@ -5,6 +5,7 @@ kantia.skillDAT = function(name,attr,rank) {
 	else
 		this.rank = 0;
 	this.adjust = 0;
-	this.av = 0;
+	this.av = rank * 5;
 	this.attribute = attr;
+	this.total = this.av + this.adjust;
 };
