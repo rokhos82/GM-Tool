@@ -13,8 +13,10 @@ kantia.npcDAT = function(name,template) {
 		var adj = 0;
 		if(this.attributes[attr])
 			adj = this.attributes[attr].adjust;
-		var av = (this.skills[s].rank * 5) + adj;
+		var av = (this.skills[s].rank * 5);
 		this.skills[s].av = av;
+		this.skills[s].adj = adj;
+		this.skills[s].total = av + adj;
 		this.skillList.push(s);
 	}
 	
@@ -41,6 +43,7 @@ kantia.npcDAT = function(name,template) {
 	
 	this.weapons = {
 		melee: {
+			type: "",
 			name: "",
 			skill: "",
 			av: "",
@@ -50,6 +53,7 @@ kantia.npcDAT = function(name,template) {
 			list: temp.weapons.melee
 		},
 		ranged: {
+			type: "",
 			name: "",
 			skill: "",
 			av: "",

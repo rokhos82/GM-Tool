@@ -48,7 +48,9 @@ kantia.weapon.groups = {
 kantia.weapons = {};
 kantia.weapons.melee = {
 	"Hand Axe": {
-		difficulty: 20,
+		difficulty: {
+			base: 20
+		},
 		staging: {
 			value: 12,
 			source: "strength"
@@ -60,14 +62,18 @@ kantia.weapons.melee = {
 		}
 	},
 	"Medium Club": {
-		difficulty: 15,
+		difficulty: {
+			base: 15
+		},
 		staging: {
 			value: 6,
 			source: "strength"
 		}
 	},
 	"Short Sword": {
-		difficulty: 15,
+		difficulty: {
+			base: 15
+		},
 		staging: {
 			value: 8,
 			source: "strength"
@@ -79,7 +85,9 @@ kantia.weapons.melee = {
 		}
 	},
 	"Dagger": {
-		difficulty: 10,
+		difficulty: {
+			base: 10
+		},
 		range: "Standard",
 		staging: {
 			value: 4,
@@ -92,7 +100,9 @@ kantia.weapons.melee = {
 		}
 	},
 	"Short Spear, 2H": {
-		difficulty: 20,
+		difficulty: {
+			base: 20
+		},
 		range: "",
 		staging: {
 			value: 10,
@@ -105,7 +115,9 @@ kantia.weapons.melee = {
 		}
 	},
 	"Short Spear, 1H": {
-		difficulty: 20,
+		difficulty: {
+			base: 20
+		},
 		range: "Reach",
 		staging: {
 			value: 8,
@@ -119,6 +131,7 @@ kantia.weapons.melee = {
 	}
 };
 
+// Ranged Weapons ----------------------------------------------------------------------------------
 kantia.weapons.ranged = {
 	"Dagger": {
 		difficulty: {
@@ -159,6 +172,48 @@ kantia.weapons.ranged = {
 			text: "1d10",
 			roll: function() { kantia.func.d10(1); }
 		}
+	},
+	"Light Crossbow": {
+		difficulty: {
+			base: 20,
+			increment: 10
+		},
+		range: {
+			text: "20 (+5",
+			base: 20,
+			increment: 5
+		},
+		staging: {
+			value: 22
+		},
+		damage: {
+			avg: 6,
+			text: "1d8 + 2",
+			roll: function() { kantia.func.d8(1) + 2; }
+		},
+		rof: 1
+	},
+	"Short Bow": {
+		difficulty: {
+			base: 20,
+			increment: 10
+		},
+		range: {
+			text: "20 (+5",
+			base: 20,
+			increment: 5
+		},
+		staging: {
+			value: 8,
+			source: "strength",
+			limit: 13
+		},
+		damage: {
+			avg: 5,
+			text: "1d8 + 1",
+			roll: function() { kantia.func.d8(1) + 1; }
+		},
+		rof: 2
 	}
 };
 

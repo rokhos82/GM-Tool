@@ -320,8 +320,9 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 		"perception": new kantia.attributeDAT("Perception",12,16,14)
 	},
 	{
-		"Simple Weapons": new kantia.skillDAT("Simple Weapons","agility",7),
+		"Melee Weapon": new kantia.skillDAT("Melee Weapon","agility",7),
 		"Dodge": new kantia.skillDAT("Dodge","reflexes",7),
+		"Archery": new kantia.skillDAT("Archery","agility",6),
 		"Crossbow": new kantia.skillDAT("Crossbow","perception",6),
 		"Brawling": new kantia.skillDAT("Brawling","agility",5),
 		"Throw": new kantia.skillDAT("Throw","agility",9),
@@ -339,7 +340,7 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 	["Leather Jerkin","Leather Vambrace","Leather Greaves","Medium Shield","Light Helm"],
 	{
 		"melee": ["Short Sword","Dagger","Hand Axe","Footman's Pick","Short Spear, 1H","Short Spear, 2H"],
-		"ranged": ["Dagger","Short Spear"],
+		"ranged": ["Dagger","Short Spear","Light Crossbow"],
 	}
 );
 

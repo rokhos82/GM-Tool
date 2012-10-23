@@ -1,7 +1,7 @@
 kantia.npcSVC = function(dat,parent) {
 	this.dat = dat;
 	this.parent = parent;
-	this.mainframe = parent.mainframe;
+	this.mainframe = new lib.mainframe(parent.mainframe);
 	this.children = new Array();
 	
 	this.ui = new ui.panel(dat.name + " - " + dat.template);
@@ -68,10 +68,11 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Staging",stats.defense.staging]);
 	t.addRow(["Absorb",stats.defense.absorb]);
 		
-	var melee = combat.addPanel("Melee");
-	this.panels.melee = melee;
+	var melee = combat.addPanel("Main Hand Weapon");
+	this.panels.mainhand = melee;
 	melee.addClass("small");
-	melee.addButton("Select Weapon",new db.link(this,this.selectWeaponPopup,["melee"]));
+	melee.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee"]));
+	melee.addButton("Remove");
 	var t = melee.addTable();
 	this.mainframe.addHandler("weapon_update","melee_table",t.refreshView,t,[]);
 	t.addRow(["Weapon",new db.connector(this.dat.weapons.melee,"name")]);
@@ -80,10 +81,11 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Attacks",new db.connector(this.dat.weapons.melee,"attacks")]);
 	t.addRow(["Damage",new db.connector(this.dat.weapons.melee,"damage")]);
 	
-	var ranged = combat.addPanel("Ranged");
+	var ranged = combat.addPanel("Ranged Weapon");
 	this.panels.ranged = ranged;
 	ranged.addClass("small");
-	ranged.addButton("Select Weapon",new db.link(this,this.selectWeaponPopup,["ranged"]));
+	ranged.addButton("Equip",new db.link(this,this.selectWeaponPopup,["ranged"]));
+	ranged.addButton("Remove");
 	var t = ranged.addTable();
 	this.mainframe.addHandler("weapon_update","range_table",t.refreshView,t,[]);
 	t.addRow(["Weapon",new db.connector(this.dat.weapons.ranged,"name")]);
@@ -97,7 +99,9 @@ kantia.npcSVC = function(dat,parent) {
 	this.panels.skills = skills;
 	var t = skills.addTable();
 	t.addClass("attr_table");
-	t.addRow(["Skill","Rank","AV","Adjust","Total"]);
+	t.addRow(["Skill","Rank","AV"]);
+	this.mainframe.addHandler("skill_update","skill_table",t.refreshView,t,[]);
+	this.mainframe.addHandler("skill_update","weapon_table",this.updateWeapons,this,[]);
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
 		var av = skill.rank * 5;
@@ -105,7 +109,8 @@ kantia.npcSVC = function(dat,parent) {
 		var adj = 0;
 		if(a != "special")
 			adj = this.dat.attributes[a].adjust;
-		t.addRow([skill.name,new db.connector(skill,"rank"),av,adj,av + adj]);
+		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.connector(skill,"total")]);
+		r.cells[0].setUpdate(this,this.updateSkill,[s,r.cells[0]]);
 	}
 	
 	// Build the armor section
@@ -137,7 +142,18 @@ kantia.npcSVC.prototype.destroy = function() {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-kantia.npcSVC.prototype.updateSkill = function(skill) {
+kantia.npcSVC.prototype.updateSkill = function(s,tf) {
+	var rank = tf.getValue();
+	this.dat.skills[s].rank = rank;
+	var av = rank * 5;
+	var adj = 0;
+	var attr = this.dat.skills[s].attribute;
+	if(attr != "special")
+		adj = this.dat.attributes[attr].adjust;
+	this.dat.skills[s].adjust = adj;
+	this.dat.skills[s].av = av;
+	this.dat.skills[s].total = av + adj; 
+	this.mainframe.trigger("skill_update");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -169,18 +185,13 @@ kantia.npcSVC.prototype.selectWeapon = function(popup) {
 	var name = this.dat.weapons[type].list[popup.dat.name];
 	var skill = this.dat.skillList[popup.dat.skill];
 	var weapon = kantia.weapons[type][name];
+	this.dat.weapons[type].type = type;
 	this.dat.weapons[type].name = name;
 	this.dat.weapons[type].skill = skill;
-	if(weapon.difficulty.base)
-		this.dat.weapons[type].av = this.dat.skills[skill].av - weapon.difficulty.base;
-	else
-		this.dat.weapons[type].av = this.dat.skills[skill].av - weapon.difficulty;
-	this.dat.weapons[type].attacks = Math.round(this.dat.skills[skill].rank / 3);
-	this.dat.weapons[type].staging = this.dat.attributes["strength"].score + weapon.staging.value;
-	this.dat.weapons[type].damage = weapon.damage.text;
+	
+	this.updateWeapons();
 	
 	this.hidePopup(popup);
-	this.mainframe.trigger("weapon_update");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -189,4 +200,39 @@ kantia.npcSVC.prototype.selectWeapon = function(popup) {
 kantia.npcSVC.prototype.hidePopup = function(popup) {
 	popup.hide();
 	this.ui.removeChild(popup);
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateWeapons = function() {
+	// Update equiped weapons.
+	for(var w in this.dat.weapons) {
+		var name = this.dat.weapons[w].name;
+		var sname = this.dat.weapons[w].skill;
+		
+		if(name != "" && sname != "") {
+			var dat = this.dat.weapons[w];
+			var type = dat.type;
+			var weapon = kantia.weapons[type][name];
+			var skill = this.dat.skills[sname];
+			
+			dat.av = skill.total - weapon.difficulty.base;
+			var penalties = kantia.func.armorPenalties(this.dat.armor,["ar","r"]);
+			if(type == "melee") {
+				dat.av += penalties.ar;
+			}
+			else if(type == "ranged") {
+				dat.av += penalties.r;
+			}
+			
+			if(weapon.staging.source)
+				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
+			else
+				dat.staging = weapon.staging.value;
+			dat.attacks = Math.round(skill.rank / 3);
+			dat.damage = weapon.damage.text;
+		}
+	}
+	this.mainframe.trigger("weapon_update");
 };
