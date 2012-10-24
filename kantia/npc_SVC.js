@@ -292,7 +292,7 @@ kantia.npcSVC.prototype.addDiscipline = function(popup) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// refreshDisciplines - rebuilds the UI elements for the disciplines.
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.refreshDisciplines = function() {
 	this.panels.disciplines.removeChildren();
@@ -305,15 +305,16 @@ kantia.npcSVC.prototype.refreshDisciplines = function() {
 		t.addRow(["Disc Rank",new db.connector(disc,"rank")]);
 		var r = t.addRow(["Casting Rank",new db.connector(disc.casting,"rank"),new db.connector(disc.casting,"total")]);
 		r.cells[0].setUpdate(this,this.updateDiscipline,[d,r.cells[0]]);
-		panel.addButton("Add Spell",new db.link(this,this.addSpellPopup,[d]));
+		panel.addButton("Add Spell",new db.link(this,this.addSpellPopup,[disc.discipline]));
 		var p = panel.addPanel("Spells");
+		this.refreshSpells(d,p);
 	}
 	
 	this.mainframe.trigger("disc_update");
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// updateDiscipline - recalculates casting av, etc for the specified discipline.
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.updateDiscipline = function(disc,tf) {
 	var r = tf.getValue();
@@ -338,7 +339,7 @@ kantia.npcSVC.prototype.addSpellPopup = function(disc) {
 	};
 	popup.addClass("popup");
 	var p = popup.addPanel("Add Spell - " + disc);
-	var cb = p.addComboBox("Spells",kantia.spellList[discipline],new db.connector(popup.dat,"spell"));
+	var cb = p.addComboBox("Spells",kantia.spellList[disc],new db.connector(popup.dat,"spell"));
 	cb.updateData();
 	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
 	p.addButton("Ok",new db.link(this,this.addSpell,[popup]));
@@ -360,6 +361,8 @@ kantia.npcSVC.prototype.addSpell = function(popup) {
 	var spell = new kantia.template.spell(name,rank);
 	spell.power = rank + drank;
 	this.dat.magic.disciplines[discipline].spells[name] = spell;
+
+	this.refreshDisciplines();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -367,4 +370,13 @@ kantia.npcSVC.prototype.addSpell = function(popup) {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.refreshSpells = function(disc,panel) {
 	var discipline = this.dat.magic.disciplines[disc];
+
+	panel.removeChildren();
+	var t = panel.addTable();
+	t.addClass("attr_table");
+	t.addRow(["Name","Rank","Power"]);
+	for(var s in discipline.spells) {
+		var spell = discipline.spells[s];
+		t.addRow([spell.name,spell.rank,spell.power]);
+	}
 };
