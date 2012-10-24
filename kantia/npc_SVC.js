@@ -55,6 +55,13 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Major",stats.movement.major]);
 	t.addRow(["Sprint",stats.movement.sprint]);
 	
+	var traits = other.addPanel("Traits");
+	traits.addClass("small");
+	var t = traits.addTable();
+	for(var a in this.dat.traits) {
+		t.addRow([a]);
+	}
+	
 	// Build the offense section -----------------------
 	var combat = this.ui.addPanel("Combat");
 	
@@ -131,7 +138,7 @@ kantia.npcSVC = function(dat,parent) {
 	var disc = spell.addPanel();
 	this.panels.disciplines = disc;
 	this.mainframe.addHandler("disc_update","disc_table",disc.refreshView,disc,[]);
-	this.updateDisciplines();
+	this.refreshDisciplines();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -256,11 +263,11 @@ kantia.npcSVC.prototype.addDisciplinePopup = function() {
 	popup.dat = {
 		name: "",
 		rank: 0,
-		attr: ""
 	};
 	var p = popup.addPanel("Add Discipline");
-	p.addTextField("Discpline",new db.connector(popup.dat,"name"));
-	p.addTextField("Attribute",new db.connector(popup.dat,"attr"));
+	var cb = p.addComboBox("Discipline",null,new db.connector(popup.dat,"name"));
+	cb.setComplexOptions(kantia.disciplineList);
+	cb.updateData();
 	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
 	p.addButton("Ok",new db.link(this,this.addDiscipline,[popup]));
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
@@ -274,27 +281,90 @@ kantia.npcSVC.prototype.addDisciplinePopup = function() {
 kantia.npcSVC.prototype.addDiscipline = function(popup) {
 	var name = popup.dat.name;
 	var rank = popup.dat.rank;
-	var attr = popup.dat.attr;
+	var attr = kantia.skills[name].attribute;
 	this.hidePopup(popup);
 	
 	var disc = new kantia.template.magic(name,rank,name + " - Casting",rank,attr);
+	disc.casting.adjust = this.dat.attributes[disc.casting.attribute].adjust;
+	disc.casting.total = parseInt(disc.casting.av) + parseInt(disc.casting.adjust);
 	this.dat.magic.disciplines[name] = disc;
-	this.updateDisciplines();
+	this.refreshDisciplines();
 };
 
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-kantia.npcSVC.prototype.updateDisciplines = function() {
+kantia.npcSVC.prototype.refreshDisciplines = function() {
 	this.panels.disciplines.removeChildren();
 	
 	for(var d in this.dat.magic.disciplines) {
 		var panel = this.panels.disciplines.addPanel(d);
 		var disc = this.dat.magic.disciplines[d];
+		panel.addButton("Remove");
 		var t = panel.addTable();
 		t.addRow(["Disc Rank",new db.connector(disc,"rank")]);
-		t.addRow(["Casting",new db.connector(disc.casting,"rank"),new db.connector(disc.casting,"total")]);
+		var r = t.addRow(["Casting Rank",new db.connector(disc.casting,"rank"),new db.connector(disc.casting,"total")]);
+		r.cells[0].setUpdate(this,this.updateDiscipline,[d,r.cells[0]]);
+		panel.addButton("Add Spell",new db.link(this,this.addSpellPopup,[d]));
+		var p = panel.addPanel("Spells");
 	}
 	
 	this.mainframe.trigger("disc_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateDiscipline = function(disc,tf) {
+	var r = tf.getValue();
+	var d = this.dat.magic.disciplines[disc];
+	d.casting.rank = r;
+	d.casting.av = r * 5;
+	d.casting.adjust = this.dat.attributes[d.casting.attribute].adjust;
+	d.casting.total = d.casting.av + d.casting.adjust;
+	
+	this.mainframe.trigger("disc_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+// addSpellPopup - setups and displays the popup used to add a spell to a discipline.
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addSpellPopup = function(disc) {
+	var popup = this.ui.addPopup();
+	popup.dat = {
+		discipline: disc,
+		spell: "",
+		rank: 0
+	};
+	popup.addClass("popup");
+	var p = popup.addPanel("Add Spell - " + disc);
+	var cb = p.addComboBox("Spells",kantia.spellList[discipline],new db.connector(popup.dat,"spell"));
+	cb.updateData();
+	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
+	p.addButton("Ok",new db.link(this,this.addSpell,[popup]));
+	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+	
+	popup.show();
+};
+
+// -------------------------------------------------------------------------------------------------
+// addSpell - this funciton adds a spell to a discipline.
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addSpell = function(popup) {
+	var name = popup.dat.spell;
+	var rank = popup.dat.rank;
+	var discipline = popup.dat.discipline;
+	this.hidePopup(popup);
+	
+	var drank = this.dat.magic.disciplines[discipline].rank;
+	var spell = new kantia.template.spell(name,rank);
+	spell.power = rank + drank;
+	this.dat.magic.disciplines[discipline].spells[name] = spell;
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshSpells - this function refreshes the spell listing for the specified discipline.
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.refreshSpells = function(disc,panel) {
+	var discipline = this.dat.magic.disciplines[disc];
 };

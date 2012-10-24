@@ -25,6 +25,11 @@ kantia.template.race = function() {
 	};
 };
 
+kantia.template.skill = function(name,attr) {
+	this.name = name;
+	this.attribute = attr;
+};
+
 // -------------------------------------------------------------------------------------------------
 kantia.attributes = {};
 kantia.attributes.adjust = {
@@ -229,6 +234,8 @@ kantia.race["hobgoblin"].attributes.constitution = 1;
 kantia.race["hobgoblin"].attributes.fortitude = 1;
 kantia.race["hobgoblin"].attributes.willpower = -2;
 kantia.race["hobgoblin"].attributes.spirit = -2;
+
+kantia.skills = {};
 
 /*kantia.skills = {
 	"alchemy": "Alchemy",

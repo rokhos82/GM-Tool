@@ -67,6 +67,8 @@ kantia.npcDAT = function(name,template) {
 	this.effects = {
 	};
 	
+	this.traits = temp.traits;
+	
 	this.magic = {
 		text: temp.magic ? temp.magic : "",
 		disciplines: {}

@@ -21,18 +21,6 @@ kantia.template.npcList = {
 	}
 };
 
-kantia.template.spell = function(name,rank) {
-	this.name = name;
-	this.rank = rank;
-};
-
-kantia.template.magic = function(discipline,drank,casting,crank,cattr) {
-	this.discipline = discipline;
-	this.rank = drank;
-	this.casting = new kantia.skillDAT(casting,cattr,crank);
-	this.spells = {};
-};
-
 kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,magic) {
 	this.race = race;
 	this.name = name;
