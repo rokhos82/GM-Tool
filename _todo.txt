@@ -1,0 +1,4 @@
+## For current version ##
+
+## For future versions ##
+- Add encounters between campaigns and groups.  Encounters will have notes and will serve as a mainly organizational unit.

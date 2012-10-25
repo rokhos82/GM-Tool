@@ -108,6 +108,8 @@ GM.groupSVC.prototype.hidePopup = function(popup) {
 //
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.appendNPC = function(npc) {
+	var an = npc.dat.name.replace(/ /g,'').toLowerCase();
+	this.npcs.addAnchor(null,an,null);
 	this.npcs.appendChild(npc.ui);
 };
 
