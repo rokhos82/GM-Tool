@@ -56,6 +56,17 @@ kantia.template.npcTrait = function(name,rank) {
 	this.rank = rank;
 };
 
+kantia.template.npcHC = function(name,rank) {
+	this.name = name;
+	this.rank = rank;
+};
+
+kantia.template.npcMastery = function(name,weapon,rank) {
+	this.name = name;
+	this.weapon = weapon;
+	this.rank = rank;
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Human NPC Templates
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,16 +90,16 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 	{
 		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",5),
+		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",5),
 		"Feint": new kantia.template.npcSkill("Feint","reasoning",3),
-		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Melee Weapon": new kantia.template.npcSkill("Melee Weapon","agility",8)
 	},
 	{
-		"Adrenaline": "Adrenaline",
-		"Ambidextrious": "Ambidextrious",
-		"Branded": "Branded",
-		"Combat Experience": "Combat Experience"
+		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
+		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
+		"Branded": new kantia.template.npcTrait("Branded",1),
+		"Combat Experience": new kantia.template.npcTrait("Combat Experience",1)
 	},
 	["Leather Jerkin","Leather Vambrace","Leather Greaves"],
 	{

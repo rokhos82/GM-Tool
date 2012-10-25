@@ -23,6 +23,7 @@ kantia.npcDAT = function(name,template) {
 		this.skillList.push(s);
 	}
 	
+	// Build the stats objects.
 	this.stats = {
 		"health": new kantia.healthDAT(this.attributes,"npc"),
 		"stamina": new kantia.staminaDAT(this.attributes,"npc"),
@@ -45,32 +46,19 @@ kantia.npcDAT = function(name,template) {
 	}
 	
 	this.weapons = {
-		melee: {
-			type: "",
-			name: "",
-			skill: "",
-			av: "",
-			attacks: "",
-			staging: "",
-			damage: "",
-			list: temp.weapons.melee
-		},
-		ranged: {
-			type: "",
-			name: "",
-			skill: "",
-			av: "",
-			attacks: "",
-			staging: "",
-			damage: "",
-			list: temp.weapons.ranged
-		}
+		meleeList = temp.weapons.melee;
+		rangedList = temp.weapons.ranged;
+		main: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
+		off: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
+		ranged: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""}
 	};
 	
-	this.effects = {
-	};
+	this.effects = {};
 	
-	this.traits = temp.traits;
+	this.traits = {};
+	for(var t = temp.traits) {
+		this.traits[t] = temp.traits[t].name;
+	}
 	
 	this.magic = {
 		text: temp.magic ? temp.magic : "",
