@@ -1,5 +1,7 @@
 kantia.npcSVC = function(dat,parent) {
 	this.dat = dat;
+	this.name = dat.name;
+	this.tag = this.name.replace(/ /g,'').toLowerCase();
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
 	this.children = new Array();

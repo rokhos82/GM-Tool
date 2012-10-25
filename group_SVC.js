@@ -36,10 +36,9 @@ GM.groupSVC.prototype.setData = function(dat) {
 	this.members = {};
 	
 	for(var m in this.dat.members) {
-		var an = m.replace(/ /g,'').toLowerCase();
-		this.npcs.addAnchor(null,an,null);
 		var svc = new kantia.npcSVC(this.dat.members[m],this);
 		this.members[m] = svc;
+		this.npcs.addAnchor(null,svc.tag,null);
 		this.npcs.appendChild(svc.ui);
 	}
 	
@@ -51,9 +50,8 @@ GM.groupSVC.prototype.setData = function(dat) {
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.refreshView = function() {
 	this.links.removeChildren();
-	for(var m in this.dat.members) {
-		var an = m.replace(/ /g,'').toLowerCase();
-		var a = this.links.addAnchor(m,null,"#" + an);
+	for(var m in this.members) {
+		var a = this.links.addAnchor(m,null,"#" + this.members[m].tag);
 		a.addClass("quick_link");
 	}
 	this.ui.refreshView();
@@ -108,8 +106,7 @@ GM.groupSVC.prototype.hidePopup = function(popup) {
 //
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.appendNPC = function(npc) {
-	var an = npc.dat.name.replace(/ /g,'').toLowerCase();
-	this.npcs.addAnchor(null,an,null);
+	this.npcs.addAnchor(null,npc.tag,null);
 	this.npcs.appendChild(npc.ui);
 };
 
