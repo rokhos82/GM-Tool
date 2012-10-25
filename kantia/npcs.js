@@ -42,7 +42,19 @@ kantia.template.npcSkill = function(name,attr,rank) {
 	this.name = name;
 	this.attribute = attr;
 	this.rank = rank;
-}
+};
+
+kantia.template.npcAttribute = function(name,min,max,avg) {
+	this.name = name;
+	this.min = min;
+	this.max = max;
+	this.avg = avg;
+};
+
+kantia.template.npcTrait = function(name,rank) {
+	this.name = name;
+	this.rank = rank;
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Human NPC Templates
@@ -53,24 +65,24 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 	"Human Brute, Basic",
 	"Human",
 	{
-		"strength": new kantia.attributeDAT("Strength",13,15,14),
-		"size": new kantia.attributeDAT("Size",13,15,14),
-		"agility": new kantia.attributeDAT("Agility",8,12,10),
-		"reflexes": new kantia.attributeDAT("Reflexes",8,12,10),
-		"constitution": new kantia.attributeDAT("Constitution",13,15,14),
-		"fortitude": new kantia.attributeDAT("Fortitude",13,15,14),
-		"reasoning": new kantia.attributeDAT("Reasoning",6,12,7),
-		"willpower": new kantia.attributeDAT("Willpower",6,12,8),
-		"spirit": new kantia.attributeDAT("Spirit",6,12,8),
-		"perception": new kantia.attributeDAT("Perception",6,12,10)
+		"strength": new kantia.template.npcAttribute("Strength",13,15,14),
+		"size": new kantia.template.npcAttribute("Size",13,15,14),
+		"agility": new kantia.template.npcAttribute("Agility",8,12,10),
+		"reflexes": new kantia.template.npcAttribute("Reflexes",8,12,10),
+		"constitution": new kantia.template.npcAttribute("Constitution",13,15,14),
+		"fortitude": new kantia.template.npcAttribute("Fortitude",13,15,14),
+		"reasoning": new kantia.template.npcAttribute("Reasoning",6,12,7),
+		"willpower": new kantia.template.npcAttribute("Willpower",6,12,8),
+		"spirit": new kantia.template.npcAttribute("Spirit",6,12,8),
+		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.skillDAT("Brawling","agility",8),
-		"Climbing": new kantia.skillDAT("Climbing","strength",5),
-		"Dodge": new kantia.skillDAT("Dodge","reflexes",5),
-		"Feint": new kantia.skillDAT("Feint","reasoning",3),
-		"Determine Motivation": new kantia.skillDAT("Determine Motivation","reasoning",4),
-		"Melee Weapon": new kantia.skillDAT("Melee Weapon","agility",8)
+		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",5),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",5),
+		"Feint": new kantia.template.npcSkill("Feint","reasoning",3),
+		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
+		"Melee Weapon": new kantia.template.npcSkill("Melee Weapon","agility",8)
 	},
 	{
 		"Adrenaline": "Adrenaline",

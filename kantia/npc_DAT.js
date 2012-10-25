@@ -5,19 +5,21 @@ kantia.npcDAT = function(name,template) {
 	var temp = kantia.template.npcs[template];
 	
 	this.description = temp.description;
-	this.attributes = temp.attributes;
 	
-	this.skills = temp.skills;
+	// Build the real attribute objects.
+	this.attributes = {};
+	for(var a in temp.attributes) {
+		var attr = temp.attributes[a];
+		this.attributes[a] = new kantia.attributeDAT(attr.name,attr.min,attr.max,attr.avg);
+	}
+	
+	// Build the real skill objects and the skill list.
+	this.skills = {};
 	this.skillList = [];
-	for(var s in this.skills) {
-		var attr = this.skills[s].attribute;
-		var adj = 0;
-		if(this.attributes[attr])
-			adj = this.attributes[attr].adjust;
-		var av = (this.skills[s].rank * 5);
-		this.skills[s].av = av;
-		this.skills[s].adj = adj;
-		this.skills[s].total = av + adj;
+	for(var s in temp.skills) {
+		var skill = temp.skills[s];
+		var attr = this.attributes[skill.attribute];
+		this.skills[s] = new kantia.skillDAT(skill.name,skill.attribute,skill.rank);
 		this.skillList.push(s);
 	}
 	
