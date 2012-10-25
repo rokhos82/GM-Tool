@@ -24,7 +24,7 @@ kantia.template.npcList = {
 	}
 };
 
-kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,magic) {
+kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,magic,desc) {
 	this.race = race;
 	this.name = name;
 	this.skills = skills;
@@ -35,7 +35,7 @@ kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,
 	this.hc;
 	this.categories;
 	this.magic = magic;
-	this.description = "";
+	this.description = desc;
 };
 
 kantia.template.npcSkill = function(name,attr,rank) {
@@ -66,11 +66,25 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 	},
 	{
 		"Brawling": new kantia.skillDAT("Brawling","agility",8),
-		"Climbing": new kantia.skillDAT("Climbing","strength",5)
+		"Climbing": new kantia.skillDAT("Climbing","strength",5),
+		"Dodge": new kantia.skillDAT("Dodge","reflexes",5),
+		"Feint": new kantia.skillDAT("Feint","reasoning",3),
+		"Determine Motivation": new kantia.skillDAT("Determine Motivation","reasoning",4),
+		"Melee Weapon": new kantia.skillDAT("Melee Weapon","agility",8)
 	},
 	{
+		"Adrenaline": "Adrenaline",
+		"Ambidextrious": "Ambidextrious",
+		"Branded": "Branded",
+		"Combat Experience": "Combat Experience"
 	},
-	["Leather Jerkin","Leather Vambrace","Leather Greaves"]
+	["Leather Jerkin","Leather Vambrace","Leather Greaves"],
+	{
+		"melee": ["Light Club","Medium Club","Heavy Club","Battle Axe","Great Axe","Footman's Pick","Greatsword","Wood Axe","Pick-Axe","Dagger"],
+		"ranged": []
+	},
+	"",
+	"A basic template for a large, combat oriented brute characters, barbarians, enforcers, bouncers and similar characters."
 );
 
 // Human Brute, Expert ------------------------------------------------------------------------------

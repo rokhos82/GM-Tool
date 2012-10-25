@@ -4,9 +4,14 @@
 * Clone npc
 * Mass create npc
 * All weapons tab on the equip weapon popup
-* Add description box to npcs (notable features, behaviors, habits, etc.)
+* <strike>Add description box to npcs (notable features, behaviors, habits, etc.)</strike>
 * Add player characters
 * Add opaque overlay for popup windows.
+* Convert weapons to a weapon table like the character sheet.
+* Finish human brute npc templates.
+* Finish troll brute npc templates.
+* Finish lukoi brute npc templates.
+* Get dual weilding working.
 
 
 ## For future versions ##
