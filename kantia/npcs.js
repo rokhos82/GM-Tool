@@ -9,6 +9,9 @@ kantia.template.npcList = {
 		"Human Fighter, Expert": "Human Fighter, Expert",
 		"Human Fighter, Master": "Human Fighter, Master"
 	},
+	"Lukoi": {
+		"Lukoi Brute, Basic": "Lukoi Brute, Basic"
+	}
 	"Troll": {
 		"Troll Brute, Basic": "Troll Brute, Basic",
 		"Troll Brute, Expert": "Troll Brute, Expert",
@@ -33,6 +36,12 @@ kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,
 	this.categories;
 	this.magic = magic;
 };
+
+kantia.template.npcSkill = function(name,attr,rank) {
+	this.name = name;
+	this.attribute = attr;
+	this.rank = rank;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Human NPC Templates
@@ -180,6 +189,31 @@ kantia.template.npcs["Human Fighter, Master"] = new kantia.template.npc(
 		"Climbing": new kantia.skillDAT("Climbing","strength",8)
 	},
 	{
+	}
+);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Lukoi NPC Templates
+////////////////////////////////////////////////////////////////////////////////////////////////////
+kantia.template.npcs["Lukoi Brute, Baisc"] = new kantia.template.npc(
+	"Lukoi Brute, Basic",
+	"Lukoi",
+	{
+		"strength": new kantia.attributeDAT("Strength",14,18,16),
+		"size": new kantia.attributeDAT("Size",14,17,16),
+		"agility": new kantia.attributeDAT("Agility",8,12,10),
+		"reflexes": new kantia.attributeDAT("Reflexes",8,10,10),
+		"constitution": new kantia.attributeDAT("Constitution",13,15,14),
+		"fortitude": new kantia.attributeDAT("Fortitude",14,18,16),
+		"reasoning": new kantia.attributeDAT("Reasoning",6,12,7),
+		"willpower": new kantia.attributeDAT("Willpower",6,12,8),
+		"spirit": new kantia.attributeDAT("Spirit",6,12,8),
+		"perception": new kantia.attributeDAT("Perception",8,14,12)
+	},
+	{
+		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
+		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",8),
+		"Melee Weapon": new kantia.template.npcSkill("Melee Weapon","agility",8)
 	}
 );
 
