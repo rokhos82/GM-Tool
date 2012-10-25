@@ -46,8 +46,8 @@ kantia.npcDAT = function(name,template) {
 	}
 	
 	this.weapons = {
-		meleeList = temp.weapons.melee;
-		rangedList = temp.weapons.ranged;
+		meleeList: temp.weapons.melee,
+		rangedList: temp.weapons.ranged,
 		main: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
 		off: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
 		ranged: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""}
@@ -56,7 +56,7 @@ kantia.npcDAT = function(name,template) {
 	this.effects = {};
 	
 	this.traits = {};
-	for(var t = temp.traits) {
+	for(var t in temp.traits) {
 		this.traits[t] = temp.traits[t].name;
 	}
 	

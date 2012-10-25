@@ -69,7 +69,7 @@ kantia.npcSVC = function(dat,parent) {
 		t.addRow([a]);
 	}
 	
-	// Build the offense section -----------------------
+	// Build the combat section -----------------------
 	var combat = this.ui.addPanel("Combat");
 	
 	var defense = combat.addPanel("Defense");
@@ -82,23 +82,37 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Staging",stats.defense.staging]);
 	t.addRow(["Absorb",stats.defense.absorb]);
 		
-	var melee = combat.addPanel("Main Hand Weapon");
-	this.panels.mainhand = melee;
-	melee.addClass("small");
-	melee.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee"]));
-	melee.addButton("Remove");
-	var t = melee.addTable();
-	this.mainframe.addHandler("weapon_update","melee_table",t.refreshView,t,[]);
-	t.addRow(["Weapon",new db.connector(this.dat.weapons.melee,"name")]);
-	t.addRow(["AV",new db.connector(this.dat.weapons.melee,"av")]);
-	t.addRow(["Staging",new db.connector(this.dat.weapons.melee,"staging")]);
-	t.addRow(["Attacks",new db.connector(this.dat.weapons.melee,"attacks")]);
-	t.addRow(["Damage",new db.connector(this.dat.weapons.melee,"damage")]);
+	var main = combat.addPanel("Main Hand Weapon");
+	this.panels.mainhand = main;
+	main.addClass("small");
+	main.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","main"]));
+	main.addButton("Remove");
+	var t = main.addTable();
+	this.mainframe.addHandler("weapon_update","main_table",t.refreshView,t,[]);
+	t.addRow(["Weapon",new db.connector(this.dat.weapons.main,"name")]);
+	t.addRow(["AV",new db.connector(this.dat.weapons.main,"av")]);
+	t.addRow(["Staging",new db.connector(this.dat.weapons.main,"staging")]);
+	t.addRow(["Attacks",new db.connector(this.dat.weapons.main,"attacks")]);
+	t.addRow(["Damage",new db.connector(this.dat.weapons.main,"damage")]);
+
+	var off = combat.addPanel("Off Hand Weapon");
+	this.panels.offhand = off;
+	off.addClass("small");
+	off.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","off"]));
+	off.addButton("Remove");
+	var t = off.addTable();
+	this.mainframe.addHandler("weapon_update","off_table",t.refreshView,t,[]);
+	t.addRow(["Weapon",new db.connector(this.dat.weapons.off,"name")]);
+	t.addRow(["AV",new db.connector(this.dat.weapons.off,"av")]);
+	t.addRow(["Staging",new db.connector(this.dat.weapons.off,"staging")]);
+	t.addRow(["Attacks",new db.connector(this.dat.weapons.off,"attacks")]);
+	t.addRow(["Damage",new db.connector(this.dat.weapons.off,"damage")]);
+
 	
 	var ranged = combat.addPanel("Ranged Weapon");
 	this.panels.ranged = ranged;
 	ranged.addClass("small");
-	ranged.addButton("Equip",new db.link(this,this.selectWeaponPopup,["ranged"]));
+	ranged.addButton("Equip",new db.link(this,this.selectWeaponPopup,["ranged","ranged"]));
 	ranged.addButton("Remove");
 	var t = ranged.addTable();
 	this.mainframe.addHandler("weapon_update","range_table",t.refreshView,t,[]);
@@ -181,18 +195,19 @@ kantia.npcSVC.prototype.updateSkill = function(s,tf) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// selectWeaponPopup
 // -------------------------------------------------------------------------------------------------
-kantia.npcSVC.prototype.selectWeaponPopup = function(type) {
+kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
 	popup.dat = {
 		name: "",
 		skill: "",
-		type: type
+		type: type,
+		slot: slot
 	};
 	var p = popup.addPanel("Select Weapon");
-	var cb = p.addComboBox("Weapon",this.dat.weapons[type].list,new db.connector(popup.dat,"name"));
+	var cb = p.addComboBox("Weapon",this.dat.weapons[type + "List"],new db.connector(popup.dat,"name"));
 	cb.updateData();
 	var cb = p.addComboBox("Skill",this.dat.skillList,new db.connector(popup.dat,"skill"));
 	cb.updateData();
@@ -202,24 +217,26 @@ kantia.npcSVC.prototype.selectWeaponPopup = function(type) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// selectWeapon
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.selectWeapon = function(popup) {
 	var type = popup.dat.type;
-	var name = this.dat.weapons[type].list[popup.dat.name];
-	var skill = this.dat.skillList[popup.dat.skill];
-	var weapon = kantia.weapons[type][name];
-	this.dat.weapons[type].type = type;
-	this.dat.weapons[type].name = name;
-	this.dat.weapons[type].skill = skill;
+	var slot = popup.dat.slot;
+	var iname = popup.dat.name;
+	var iskill = popup.dat.skill;
+	this.hidePopup(poup);
+
+	var name = this.dat.weapons[type + "List"][iname];
+	var skill = this.dat.skillList[iskill];
+	this.dat.weapons[slot].type = type;
+	this.dat.weapons[slot].name = name;
+	this.dat.weapons[slot].skill = skill;
 	
 	this.updateWeapons();
-	
-	this.hidePopup(popup);
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// hidePopup
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.hidePopup = function(popup) {
 	popup.hide();
@@ -227,7 +244,7 @@ kantia.npcSVC.prototype.hidePopup = function(popup) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// updateWeapons
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.updateWeapons = function() {
 	// Update equiped weapons.
@@ -283,7 +300,7 @@ kantia.npcSVC.prototype.addDisciplinePopup = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// addDiscipline
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addDiscipline = function(popup) {
 	var name = popup.dat.name;

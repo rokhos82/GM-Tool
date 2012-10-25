@@ -49,15 +49,15 @@ kantia.weapons = {};
 kantia.weapons.melee = {
 	"Hand Axe": {
 		difficulty: { base: 20 },
-		range: { text: "Standard" }
+		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
 		damage: { avg: 5, text: "1d6 + 2", roll: function() { kantia.func.d6(1) + 2; }},
 		hands: 1,
 		other: {}
-	}
+	},
 	"Short Sword": {
 		difficulty: { base: 15 },
-		range: { text: "Standard" }
+		range: { text: "Standard" },
 		staging: { value: 8, source: "strength" },
 		damage: { avg: 5, text: "1d8 + 1", roll: function() { kantia.func.d8(1) + 1; }},
 		hands: 1,
