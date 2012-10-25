@@ -1,0 +1,73 @@
+- NPCs
+	- Campaigns
+		- Allow copying groups between campaigns
+		- Allow copying npcs between campaigns
+		- Assign player characters to campaigns
+	- Groups
+		- Templates
+		- Clones
+	- Templates
+		- Race
+		- Attributes
+			- Min
+			- Max
+			- Avg
+		- Skills
+		- Weapons
+			- Common
+		- Armor
+	- Clones
+		- Clone individual templates
+		- Clone template groups
+		- Adjust skill ranks
+		- Adjust attributes
+		- Adjust HCs
+		- Custom weapon
+		- Custom armor
+		- Track damage
+		- Track stamina
+		- Track effects (stuns/prone/etc)
+		
+- GUI
+	- Group creation/selection on the left
+	- Each NPC will have a div in a div (scrollable)
+	- Widgets on the sidebar
+	
+- Tools
+	- Dungeon generator
+	- Loot generator
+	- Plot/Encounter Map (idea tree type map)
+
+- Widgets
+	- Initiative Tracker
+		- Track defensive actions
+		- Cycle through the actors
+		- Taking Careful Aim
+		- Rushed Attack
+		- Fight Defensively
+		- Throwing Caution to the Wind
+		- Prone
+		- Flanked
+		- Allow drag and drop reorder
+		- Stun/Pain Threshold
+		- Stunned/KO
+	- Weather Information
+	- Falling Damage
+	- Common Combat Actions
+		- Armor Bypass
+		- Called Shot
+		- Press the Attack
+		- Increasing Staging
+		- Increasing Damage
+		- Disarm
+		- Brawling/Martial Arts Actions
+		- Weapon Sweeps
+		- Approaching the defensive perimeter
+		- Doubles Die Effect
+	- Fear & Terror
+	- Stun & Pain Threshold
+	- Stuns & Knock Outs
+	- Comman Action Difficulties
+	- Plot/Encounter Viewer
+	- External Links
+		- Customizable

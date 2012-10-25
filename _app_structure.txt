@@ -1,0 +1,16 @@
+Overview:
+	A hybrid client/server architecture.  Most of the heavy lifting will be performed by the 
+	client.  The server will only all for persistance.  AJAX and localStorage will be heavily used
+	to keep data in sync on housed on the client side.  localStorage will allow for offline mode.
+
+Data Structure:
+Campaign
+	- Plot Points
+		- Descriptions and other resources
+		- Encounters
+			- Description
+			- Groups
+				- Description
+				- NPCs
+			- Encounter NPCs
+	- Major NPCs
