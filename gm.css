@@ -8,12 +8,23 @@ body {
 	display: block;
 }
 
-div.popup {
-	left: 100px;
-	top: 100px;
+.desc_box {
+	width: 100%;
+}
+
+.popup {
+	left: 300px;
+	top: 200px;
 	position: fixed;
 	display: none;
-	background-color: #ffffff;
+	background-color: #999999;
+	z-index: 2;
+}
+
+.fog {
+	background-color: #000000;
+	opacity: 50%;
+	z-index: 1;
 }
 
 .attr_table table {

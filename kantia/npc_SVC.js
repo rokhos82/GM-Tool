@@ -23,6 +23,11 @@ kantia.npcSVC = function(dat,parent) {
 	
 	var stats = this.dat.stats;
 	var p = this.ui.addPanel("Effects");
+
+	var p = this.ui.addPanel("Description");
+	var ta = p.addTextArea(new db.connector(this.dat,"description"));
+	ta.addClass("desc_box");
+	ta.dom.setAttribute("rows",4);
 		
 	var p = this.ui.addPanel("Attributes");
 	this.panels.attributes = p;

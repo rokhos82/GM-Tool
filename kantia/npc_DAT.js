@@ -4,6 +4,7 @@ kantia.npcDAT = function(name,template) {
 	
 	var temp = kantia.template.npcs[template];
 	
+	this.description = temp.description;
 	this.attributes = temp.attributes;
 	
 	this.skills = temp.skills;

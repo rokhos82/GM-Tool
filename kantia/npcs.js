@@ -11,7 +11,7 @@ kantia.template.npcList = {
 	},
 	"Lukoi": {
 		"Lukoi Brute, Basic": "Lukoi Brute, Basic"
-	}
+	},
 	"Troll": {
 		"Troll Brute, Basic": "Troll Brute, Basic",
 		"Troll Brute, Expert": "Troll Brute, Expert",
@@ -35,6 +35,7 @@ kantia.template.npc = function(name,race,attributes,skills,traits,armor,weapons,
 	this.hc;
 	this.categories;
 	this.magic = magic;
+	this.description = "";
 };
 
 kantia.template.npcSkill = function(name,attr,rank) {

@@ -6,6 +6,7 @@
 * All weapons tab on the equip weapon popup
 * Add description box to npcs (notable features, behaviors, habits, etc.)
 * Add player characters
+* Add opaque overlay for popup windows.
 
 
 ## For future versions ##
