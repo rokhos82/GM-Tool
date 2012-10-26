@@ -51,7 +51,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 20 },
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
-		damage: { avg: 5, text: "1d6 + 2", roll: function() { kantia.func.d6(1) + 2; }},
 		damage: { avg: 5, text: "1d6 + 2", roll: function() { return kantia.func.d6(1) + 2; }},
 		hands: 1,
 		other: {}
@@ -60,7 +59,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 15 },
 		range: { text: "Standard" },
 		staging: { value: 8, source: "strength" },
-		damage: { avg: 5, text: "1d8 + 1", roll: function() { kantia.func.d8(1) + 1; }},
 		damage: { avg: 5, text: "1d8 + 1", roll: function() { return kantia.func.d8(1) + 1; }},
 		hands: 1,
 		other: {}
@@ -69,7 +67,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 10 },
 		range: { text: "Standard" },
 		staging: { value: 4, source: "strength"	},
-		damage: { avg: 3, text: "1d6", roll: function() { kantia.func.d6(1); }},
 		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
 		hands: 1,
 		other: { "easy dual": 1	}
@@ -78,7 +75,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 20 },
 		range: { text: "Reach" },
 		staging: { value: 10,source: "strength" },
-		damage: { avg: 5, text: "1d10", roll: function() { kantia.func.d10(1); }},
 		damage: { avg: 5, text: "1d10", roll: function() { return kantia.func.d10(1); }},
 		other: {}
 	},
@@ -86,7 +82,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 20 },
 		range: { text: "Reach" },
 		staging: { value: 8,source: "strength" },
-		damage: { avg: 5, text: "1d10",	roll: function() { kantia.func.d10(1); }},
 		damage: { avg: 5, text: "1d10",	roll: function() { return kantia.func.d10(1); }},
 		other: {}
 	},
@@ -94,7 +89,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 30 },
 		range: { text: "Standard" },
 		staging: { value: 12,source: "strength" },
-		damage: { avg: 7, text: "1d10 + 2",	roll: function() { kantia.func.d10(1) + 2; }},
 		damage: { avg: 7, text: "1d10 + 2",	roll: function() { return kantia.func.d10(1) + 2; }},
 		other: {}
 	},
@@ -102,7 +96,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 30 },
 		range: { text: "Standard" },
 		staging: { value: 16, source: "strength" },
-		damage: { avg: 7, text: "1d10 + 2", roll: function() { kantia.func.d10(1) + 2; }},
 		damage: { avg: 7, text: "1d10 + 2", roll: function() { return kantia.func.d10(1) + 2; }},
 		other: {}
 	},
@@ -110,7 +103,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 30 },
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
-		damage: { avg: 8, text: "2d6 + 1", roll: function() { kantia.func.d6(2) + 1; }},
 		damage: { avg: 8, text: "2d6 + 1", roll: function() { return kantia.func.d6(2) + 1; }},
 		other: {}
 	},
@@ -118,7 +110,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 30 },
 		range: { text: "Standard" },
 		staging: { value: 16, source: "strength" },
-		damage: { avg: 8, text: "2d6 + 1", roll: function() { kantia.func.d6(2) + 1; }},
 		damage: { avg: 8, text: "2d6 + 1", roll: function() { return kantia.func.d6(2) + 1; }},
 		other: {}
 	},
@@ -126,7 +117,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 45 },
 		range: { text: "Standard" },
 		staging: { value: 20, source: "strength" },
-		damage: { avg: 9, text: "2d6 + 2", roll: function() { kantia.func.d6(2) + 1; }},
 		damage: { avg: 9, text: "2d6 + 2", roll: function() { return kantia.func.d6(2) + 1; }},
 		other: {}
 	},
@@ -134,7 +124,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 15 },
 		range: { text: "Standard" },
 		staging: { value: 8, source: "strength" },
-		damage: { avg: 4, text: "1d8", roll: function() { kantia.func.d8(1); }},
 		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
 		other: {}
 	},
@@ -142,7 +131,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 15 },
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
-		damage: { avg: 4, text: "1d8", roll: function() { kantia.func.d8(1); }},
 		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
 		other: {}
 	},
@@ -150,7 +138,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 20 },
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
-		damage: { avg: 7, text: "1d8 + 3", roll: function() { kantia.func.d8(1) + 3; }},
 		damage: { avg: 7, text: "1d8 + 3", roll: function() { return kantia.func.d8(1) + 3; }},
 		other: {}
 	},
@@ -158,7 +145,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 40 },
 		range: { text: "Standard" },
 		staging: { value: 20, source: "strength" },
-		damage: { avg: 9, text: "2d8", roll: function() { kantia.func.d8(2); }},
 		damage: { avg: 9, text: "2d8", roll: function() { return kantia.func.d8(2); }},
 		other: {}
 	},
@@ -166,7 +152,6 @@ kantia.weapons.melee = {
 		difficulty: { base: 30 },
 		range: { text: "Standard" },
 		staging: { value: 16, source: "strength" },
-		damage: { avg: 6, text: "1d8 + 2", roll: function() { kantia.func.d8() + 2; }},
 		damage: { avg: 6, text: "1d8 + 2", roll: function() { return kantia.func.d8() + 2; }},
 		other: {}
 	},
@@ -174,7 +159,14 @@ kantia.weapons.melee = {
 		difficulty: { base: 50 },
 		range: { text: "Standard" },
 		staging: { value: 20, source: "strength" },
-		damage: { avg: 10, text: "2d6 + 3", roll: function() { kantia.func.d6(2) + 3; }},
+		damage: { avg: 10, text: "2d6 + 3", roll: function() { return kantia.func.d6(2) + 3; }},
+		other: {}
+	},
+	"Light Club": {
+		difficulty: { base: 10 },
+		range: { text: "Standard" },
+		staging: { value: 6, source: "strength" },
+		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
 		other: {}
 	}
 };

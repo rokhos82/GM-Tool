@@ -12,7 +12,10 @@ kantia.npcSVC = function(dat,parent) {
 	this.ui.addButton("Remove",new db.link(this.parent,this.parent.removeNPC,[this.dat.name]));
 
 	var p = this.ui.addPanel("Actions");
-	var b = p.addButton("Stun");
+	var b = p.addButton("Attack",new db.link(this,this.combatPopup,[]));
+	var b = p.addButton("Defend",new db.link(this,this.defensiveAction,[]));
+	var b = p.addButton("End Round",new db.link(this,this.newCombatRound,[]));
+	var b = p.addButton("Stun",new db.link(this,this.addEffect,["stun",1]));
 	var b = p.addButton("Grapple");
 	var b = p.addButton("Prone");
 	var b = p.addButton("K.O.");
@@ -75,11 +78,6 @@ kantia.npcSVC = function(dat,parent) {
 	
 	// Build the combat section -----------------------
 	var combat = this.ui.addPanel("Combat");
-
-	var actions = combat.addPanel("Actions");
-	var b = actions.addButton("Attack");
-	var b = actions.addButton("Defend",new db.link(this,this.defensiveAction,[]));
-	var b = actions.addButton("End Round",new db.link(this,this.newCombatRound,[]));
 	
 	var defense = combat.addPanel("Defense");
 	this.panels.defense = defense;
@@ -166,8 +164,11 @@ kantia.npcSVC = function(dat,parent) {
 	this.refreshDisciplines();
 
 	// Mainframe handlers
-	this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
-	this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
+	//this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("defense_action","effect_refresh",this.refreshEffects,this,[]);
+	//this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("new_round","effect_refresh",this.refreshEffects,this,[]);
+	this.mainframe.addHandler("add_effect","effect_refresh",this.refreshEffects,this,[]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -286,6 +287,8 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			dat.damage = weapon.damage.text;
 		}
 	}
+	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "")
+		this.addEffect("dualwield",1);
 	this.mainframe.trigger("weapon_update");
 };
 
@@ -424,7 +427,12 @@ kantia.npcSVC.prototype.refreshSpells = function(disc,panel) {
 // refreshEffects
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.refreshEffects = function() {
+	this.panels.effects.removeChildren();
+	
 	for(var e in this.dat.effects) {
+		var name = e;
+		var value = this.dat.effects[e];
+		this.panels.effects.addButton(name + " - " + value);
 	}
 };
 
@@ -472,4 +480,91 @@ kantia.npcSVC.prototype.newCombatRound = function() {
 	this.updateEffect("defense");
 	this.updateEffect("stun");
 	this.mainframe.trigger("new_round");
+};
+
+// -------------------------------------------------------------------------------------------------
+// addEffect
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addEffect = function(cat,value) {
+	if(!this.dat.effects[cat])
+		this.dat.effects[cat] = value;
+	else
+		this.dat.effects[cat] += value;
+	this.mainframe.trigger("add_effect");
+};
+
+// -------------------------------------------------------------------------------------------------
+// combatPopup
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.combatPopup = function() {
+	var popup = this.ui.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+
+	var p = popup.addPanel("Combat");
+	var t = p.addTable();
+	t.addClass("attr_table");
+	t.addRow(["Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage","Avg Damage","Rolled Damage"]);
+	for(var w in this.dat.weapons) {
+		var weapon = this.dat.weapons[w];
+		if(weapon.name != "") {
+			var av = weapon.av - this.combatSkillPenalties(w);
+			
+			var d = weapon.damage;
+			var ad = kantia.weapons[weapon.type][weapon.name].damage.avg;
+			var rd = kantia.weapons[weapon.type][weapon.name].damage.roll();
+
+			t.addRow([weapon.name,weapon.attacks,av,av-20,av-40,weapon.staging,d,ad,rd]);
+		}
+	}
+	p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
+};
+
+kantia.npcSVC.prototype.combatSkillPenalties = function(hand) {
+	var p = 0;
+	
+	if(this.dat.effects.stun)
+		p += 20;
+	
+	if(this.dat.effects.defense)
+		p += this.dat.effects.defense * 20;
+	
+	if(this.dat.effects.dualwield) {
+		var twm = {};
+		if(this.checkHC("Two-Weapon Mastery"))
+			twm = this.getHC("Two-Weapon Mastery");
+
+		if(this.checkTrait("Ambidextrious")) {
+			if(twm.ambi)
+				p += twm.ambi
+			else
+				p += 25;
+		}
+		else {
+			if(twm[hand]) {
+				p += twm[hand];
+			}
+			else if(hand == "main") {
+				p += 30;
+			}
+			else if(hand == "off") {
+				p += 50;
+			}
+		}
+	}
+
+	return p;
+};
+
+kantia.npcSVC.prototype.checkTrait = function(trait) {
+	return this.dat.traits[trait] ? true : false;
+};
+
+kantia.npcSVC.prototype.checkHC = function(hc) {
+	return false;
+};
+
+kantia.npcSVC.prototype.getHC = function(hc) {
+	return null;
 };
