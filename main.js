@@ -125,10 +125,11 @@ GM.main.prototype.showCampaignPopup = function(panel) {
 	var popup = this.controls.addPopup();
 	popup.show();
 	popup.addClass("popup");
+	popup.setOverlayClass("fog");
 	popup.dat = {
 		name: "",
 	};
-	
+
 	var p = popup.addPanel("New Campaign");
 	var tf = p.addTextField("Name:",new db.connector(popup.dat,"name"),false);
 	tf.focus();

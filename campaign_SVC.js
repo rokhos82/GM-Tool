@@ -56,6 +56,7 @@ GM.campaignSVC.prototype.setData = function(dat) {
 GM.campaignSVC.prototype.showPopup = function() {
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
+	popup.setOverlayClass("fog");
 	popup.dat = {
 		"name": ""
 	};

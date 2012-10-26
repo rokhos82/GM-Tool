@@ -179,10 +179,7 @@ kantia.npcSVC.prototype.updateSkill = function(s,tf) {
 	var rank = tf.getValue();
 	this.dat.skills[s].rank = rank;
 	var av = rank * 5;
-	var adj = 0;
-	var attr = this.dat.skills[s].attribute;
-	if(attr != "special")
-		adj = this.dat.attributes[attr].adjust;
+	var adj = this.dat.skills[s].attribute.adjust;
 	this.dat.skills[s].adjust = adj;
 	this.dat.skills[s].av = av;
 	this.dat.skills[s].total = av + adj; 
@@ -196,6 +193,7 @@ kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
 	var popup = this.ui.addPopup();
 	popup.show();
 	popup.addClass("popup");
+	popup.setOverlayClass("fog");
 	popup.dat = {
 		name: "",
 		skill: "",
@@ -282,6 +280,7 @@ kantia.npcSVC.prototype.addDisciplinePopup = function() {
 	var popup = this.ui.addPopup();
 	popup.show();
 	popup.addClass("popup");
+	popup.setOverlayClass("fog");
 	popup.dat = {
 		name: "",
 		rank: 0,
@@ -355,6 +354,7 @@ kantia.npcSVC.prototype.updateDiscipline = function(disc,tf) {
 kantia.npcSVC.prototype.addSpellPopup = function(disc) {
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
+	popup.setOverlayClass("fog");
 	popup.show();
 	popup.dat = {
 		discipline: disc,

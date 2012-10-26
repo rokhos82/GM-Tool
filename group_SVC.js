@@ -77,6 +77,7 @@ GM.groupSVC.prototype.addNPC = function(popup) {
 GM.groupSVC.prototype.showPopup = function() {
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
+	popup.setOverlayClass("fog");
 	popup.show();
 	popup.dat = {
 		"name": "",
