@@ -52,6 +52,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
 		damage: { avg: 5, text: "1d6 + 2", roll: function() { kantia.func.d6(1) + 2; }},
+		damage: { avg: 5, text: "1d6 + 2", roll: function() { return kantia.func.d6(1) + 2; }},
 		hands: 1,
 		other: {}
 	},
@@ -60,6 +61,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 8, source: "strength" },
 		damage: { avg: 5, text: "1d8 + 1", roll: function() { kantia.func.d8(1) + 1; }},
+		damage: { avg: 5, text: "1d8 + 1", roll: function() { return kantia.func.d8(1) + 1; }},
 		hands: 1,
 		other: {}
 	},
@@ -68,6 +70,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 4, source: "strength"	},
 		damage: { avg: 3, text: "1d6", roll: function() { kantia.func.d6(1); }},
+		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
 		hands: 1,
 		other: { "easy dual": 1	}
 	},
@@ -76,6 +79,7 @@ kantia.weapons.melee = {
 		range: { text: "Reach" },
 		staging: { value: 10,source: "strength" },
 		damage: { avg: 5, text: "1d10", roll: function() { kantia.func.d10(1); }},
+		damage: { avg: 5, text: "1d10", roll: function() { return kantia.func.d10(1); }},
 		other: {}
 	},
 	"Short Spear, 1H": {
@@ -83,6 +87,7 @@ kantia.weapons.melee = {
 		range: { text: "Reach" },
 		staging: { value: 8,source: "strength" },
 		damage: { avg: 5, text: "1d10",	roll: function() { kantia.func.d10(1); }},
+		damage: { avg: 5, text: "1d10",	roll: function() { return kantia.func.d10(1); }},
 		other: {}
 	},
 	"Battle Axe, 1H": {
@@ -90,6 +95,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 12,source: "strength" },
 		damage: { avg: 7, text: "1d10 + 2",	roll: function() { kantia.func.d10(1) + 2; }},
+		damage: { avg: 7, text: "1d10 + 2",	roll: function() { return kantia.func.d10(1) + 2; }},
 		other: {}
 	},
 	"Battle Axe, 2H": {
@@ -97,6 +103,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 16, source: "strength" },
 		damage: { avg: 7, text: "1d10 + 2", roll: function() { kantia.func.d10(1) + 2; }},
+		damage: { avg: 7, text: "1d10 + 2", roll: function() { return kantia.func.d10(1) + 2; }},
 		other: {}
 	},
 	"Footman's Pick, 1H": {
@@ -104,6 +111,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
 		damage: { avg: 8, text: "2d6 + 1", roll: function() { kantia.func.d6(2) + 1; }},
+		damage: { avg: 8, text: "2d6 + 1", roll: function() { return kantia.func.d6(2) + 1; }},
 		other: {}
 	},
 	"Footman's Pick, 2H": {
@@ -111,6 +119,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 16, source: "strength" },
 		damage: { avg: 8, text: "2d6 + 1", roll: function() { kantia.func.d6(2) + 1; }},
+		damage: { avg: 8, text: "2d6 + 1", roll: function() { return kantia.func.d6(2) + 1; }},
 		other: {}
 	},
 	"Great Axe": {
@@ -118,6 +127,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 20, source: "strength" },
 		damage: { avg: 9, text: "2d6 + 2", roll: function() { kantia.func.d6(2) + 1; }},
+		damage: { avg: 9, text: "2d6 + 2", roll: function() { return kantia.func.d6(2) + 1; }},
 		other: {}
 	},
 	"Medium Club, 1H": {
@@ -125,6 +135,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 8, source: "strength" },
 		damage: { avg: 4, text: "1d8", roll: function() { kantia.func.d8(1); }},
+		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
 		other: {}
 	},
 	"Medium Club, 2H": {
@@ -132,6 +143,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
 		damage: { avg: 4, text: "1d8", roll: function() { kantia.func.d8(1); }},
+		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
 		other: {}
 	},
 	"Heavy Club": {
@@ -139,6 +151,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 12, source: "strength" },
 		damage: { avg: 7, text: "1d8 + 3", roll: function() { kantia.func.d8(1) + 3; }},
+		damage: { avg: 7, text: "1d8 + 3", roll: function() { return kantia.func.d8(1) + 3; }},
 		other: {}
 	},
 	"Greatsword": {
@@ -146,6 +159,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 20, source: "strength" },
 		damage: { avg: 9, text: "2d8", roll: function() { kantia.func.d8(2); }},
+		damage: { avg: 9, text: "2d8", roll: function() { return kantia.func.d8(2); }},
 		other: {}
 	},
 	"Wood Axe": {
@@ -153,6 +167,7 @@ kantia.weapons.melee = {
 		range: { text: "Standard" },
 		staging: { value: 16, source: "strength" },
 		damage: { avg: 6, text: "1d8 + 2", roll: function() { kantia.func.d8() + 2; }},
+		damage: { avg: 6, text: "1d8 + 2", roll: function() { return kantia.func.d8() + 2; }},
 		other: {}
 	},
 	"Pick-Axe": {
