@@ -567,7 +567,7 @@ kantia.func.d10 = function(x) {
 	var total = 0;
 	for(var i = 0;i < x;i++) {
 		var r = Math.random();
-		total += Math.round(r * 10);
+		total += Math.ceil(r * 10);
 	}
 	return total;
 };
@@ -576,7 +576,7 @@ kantia.func.d8 = function(x) {
 	var total = 0;
 	for(var i = 0;i < x;i++) {
 		var r = Math.random();
-		total += Math.round(r * 8);
+		total += Math.ceil(r * 8);
 	}
 	return total;
 };
@@ -585,7 +585,7 @@ kantia.func.d6 = function(x) {
 	var total = 0;
 	for(var i = 0;i < x;i++) {
 		var r = Math.random();
-		total += Math.round(r * 6);
+		total += Math.ceil(r * 6);
 	}
 	return total;
 };
