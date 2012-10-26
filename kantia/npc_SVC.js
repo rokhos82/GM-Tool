@@ -9,20 +9,24 @@ kantia.npcSVC = function(dat,parent) {
 	this.ui = new ui.panel(dat.name + " - " + dat.template);
 	this.panels = {};
 	
-	this.ui.addButton("Defend");
-	this.ui.addButton("Stun");
-	this.ui.addButton("Grapple");
-	this.ui.addButton("Prone");
-	this.ui.addButton("K.O.");
-	this.ui.addButton("Bound/Helpless");
-	this.ui.addButton("Fight Defensively");
-	this.ui.addButton("Throwing Caution");
-	this.ui.addButton("Delay");
-	this.ui.addButton("Rush");
 	this.ui.addButton("Remove",new db.link(this.parent,this.parent.removeNPC,[this.dat.name]));
-	
+
+	var p = this.ui.addPanel("Actions");
+	var b = p.addButton("Stun");
+	var b = p.addButton("Grapple");
+	var b = p.addButton("Prone");
+	var b = p.addButton("K.O.");
+	var b = p.addButton("Bound/Helpless");
+	var b = p.addButton("Fight Defensively");
+	var b = p.addButton("Throwing Caution");
+	var b = p.addButton("Delay");
+	var b = p.addButton("Rush");
+	var b = p.addButton("Reset",new db.link(this,this.resetEffects,["all"]));
+
 	var stats = this.dat.stats;
+	
 	var p = this.ui.addPanel("Effects");
+	this.panels.effects = p;
 
 	var p = this.ui.addPanel("Description");
 	var ta = p.addTextArea(new db.connector(this.dat,"description"));
@@ -71,6 +75,11 @@ kantia.npcSVC = function(dat,parent) {
 	
 	// Build the combat section -----------------------
 	var combat = this.ui.addPanel("Combat");
+
+	var actions = combat.addPanel("Actions");
+	var b = actions.addButton("Attack");
+	var b = actions.addButton("Defend",new db.link(this,this.defensiveAction,[]));
+	var b = actions.addButton("End Round",new db.link(this,this.newCombatRound,[]));
 	
 	var defense = combat.addPanel("Defense");
 	this.panels.defense = defense;
@@ -155,6 +164,10 @@ kantia.npcSVC = function(dat,parent) {
 	this.panels.disciplines = disc;
 	this.mainframe.addHandler("disc_update","disc_table",disc.refreshView,disc,[]);
 	this.refreshDisciplines();
+
+	// Mainframe handlers
+	this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -261,6 +274,9 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			else if(type == "ranged") {
 				dat.av += penalties.r;
 			}
+
+			var def_action = this.dat.effects.defense ? this.dat.effects.defense * -20 : 0;
+			dat.av += def_action;
 			
 			if(weapon.staging.source)
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
@@ -402,4 +418,58 @@ kantia.npcSVC.prototype.refreshSpells = function(disc,panel) {
 		var spell = discipline.spells[s];
 		t.addRow([spell.name,spell.rank,spell.power]);
 	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshEffects
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.refreshEffects = function() {
+	for(var e in this.dat.effects) {
+	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// updateEffect
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateEffect = function(cat) {
+	if(cat == "defense") {
+		this.dat.effects.defense =  0;
+	}
+	else if(cat == "stun") {
+		this.dat.effects.stun = this.dat.effects.stun > 0 ? this.dat.effects.stun - 1 : 0;
+	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// resetEffects
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.resetEffects = function() {
+	this.dat.effects = {};
+};
+
+// -------------------------------------------------------------------------------------------------
+// defensiveAction
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.defensiveAction = function() {
+	if(!this.dat.effects.defense)
+		this.dat.effects.defense = 0;
+
+	this.dat.effects.defense += 1;
+
+	this.mainframe.trigger("defense_action");
+};
+
+// -------------------------------------------------------------------------------------------------
+// offensiveAction
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.offensiveAction = function() {
+};
+
+// -------------------------------------------------------------------------------------------------
+// newCombatRound
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.newCombatRound = function() {
+	this.updateEffect("defense");
+	this.updateEffect("stun");
+	this.mainframe.trigger("new_round");
 };
