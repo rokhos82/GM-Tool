@@ -69,7 +69,7 @@ kantia.weapons.melee = {
 		staging: { value: 4, source: "strength"	},
 		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
 		hands: 1,
-		other: { "easy dual": 1	}
+		other: { "Easy Two Weapon": 1 }
 	},
 	"Short Spear, 2H": {
 		difficulty: { base: 20 },
@@ -177,29 +177,29 @@ kantia.weapons.ranged = {
 		difficulty: { base: 10, increment: 5 },
 		range: { text: "4 (+2)", base: 4, increment: 2 },
 		staging: { value: 4, source: "strength" },
-		damage: { avg: 3, text: "1d6", roll: function() { kantia.func.d6(1); }},
-		rof: 1
+		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
+		other: { rof: 1 }
 	},
 	"Short Spear": {
 		difficulty: { base: 20, increment: 5 },
 		range: { text: "4 (+2)", base: 4, increment: 2 },
 		staging: { value: 8, source: "strength" },
-		damage: { avg: 5, text: "1d10", roll: function() { kantia.func.d10(1); }},
-		rof: 1
+		damage: { avg: 5, text: "1d10", roll: function() { return kantia.func.d10(1); }},
+		other: { rof: 1 }
 	},
 	"Light Crossbow": {
 		difficulty: { base: 20, increment: 10 },
 		range: { text: "20 (+5", base: 20, increment: 5 },
 		staging: { value: 22 },
-		damage: { avg: 6, text: "1d8 + 2", roll: function() { kantia.func.d8(1) + 2; }},
-		rof: 1
+		damage: { avg: 6, text: "1d8 + 2", roll: function() { return kantia.func.d8(1) + 2; }},
+		other: { rof: 1 }
 	},
 	"Short Bow": {
 		difficulty: { base: 20, increment: 10 },
 		range: { text: "20 (+5", base: 20, increment: 5 },
 		staging: { value: 8, source: "strength", limit: 13 },
-		damage: { avg: 5, text: "1d8 + 1", roll: function() { kantia.func.d8(1) + 1; }},
-		rof: 2
+		damage: { avg: 5, text: "1d8 + 1", roll: function() { return kantia.func.d8(1) + 1; }},
+		other: { rof: 2 }
 	}
 };
 

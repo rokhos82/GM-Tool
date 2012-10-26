@@ -61,8 +61,9 @@ kantia.npcDAT = function(name,template) {
 	this.effects = {};
 	
 	this.traits = {};
+	this.lists.traits = [];
 	for(var t in temp.traits) {
-		this.traits[t] = temp.traits[t].name;
+		this.lists.traits.push(temp.traits[t].name);
 	}
 	
 	this.magic = {

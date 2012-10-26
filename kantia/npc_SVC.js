@@ -88,46 +88,35 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Touch DR",stats.defense.touchdr]);
 	t.addRow(["Staging",stats.defense.staging]);
 	t.addRow(["Absorb",stats.defense.absorb]);
-		
-	var main = combat.addPanel("Main Hand Weapon");
-	this.panels.mainhand = main;
-	main.addClass("small");
-	main.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","main"]));
-	main.addButton("Remove");
-	var t = main.addTable();
-	this.mainframe.addHandler("weapon_update","main_table",t.refreshView,t,[]);
-	t.addRow(["Weapon",new db.connector(this.dat.weapons.main,"name")]);
-	t.addRow(["AV",new db.connector(this.dat.weapons.main,"av")]);
-	t.addRow(["Staging",new db.connector(this.dat.weapons.main,"staging")]);
-	t.addRow(["Attacks",new db.connector(this.dat.weapons.main,"attacks")]);
-	t.addRow(["Damage",new db.connector(this.dat.weapons.main,"damage")]);
 
-	var off = combat.addPanel("Off Hand Weapon");
-	this.panels.offhand = off;
-	off.addClass("small");
-	off.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","off"]));
-	off.addButton("Remove");
-	var t = off.addTable();
-	this.mainframe.addHandler("weapon_update","off_table",t.refreshView,t,[]);
-	t.addRow(["Weapon",new db.connector(this.dat.weapons.off,"name")]);
-	t.addRow(["AV",new db.connector(this.dat.weapons.off,"av")]);
-	t.addRow(["Staging",new db.connector(this.dat.weapons.off,"staging")]);
-	t.addRow(["Attacks",new db.connector(this.dat.weapons.off,"attacks")]);
-	t.addRow(["Damage",new db.connector(this.dat.weapons.off,"damage")]);
+	var weapons = combat.addPanel("Weapons");
+	weapons.addClass("small");
+	this.mainframe.addHandler("weapon_update","weap_panel",weapons.refreshView,weapons,[]);
 
-	
-	var ranged = combat.addPanel("Ranged Weapon");
-	this.panels.ranged = ranged;
-	ranged.addClass("small");
-	ranged.addButton("Equip",new db.link(this,this.selectWeaponPopup,["ranged","ranged"]));
-	ranged.addButton("Remove");
-	var t = ranged.addTable();
-	this.mainframe.addHandler("weapon_update","range_table",t.refreshView,t,[]);
-	t.addRow(["Weapon",new db.connector(this.dat.weapons.ranged,"name")]);
-	t.addRow(["AV",new db.connector(this.dat.weapons.ranged,"av")]);
-	t.addRow(["Staging",new db.connector(this.dat.weapons.ranged,"staging")]);
-	t.addRow(["Attacks",new db.connector(this.dat.weapons.ranged,"attacks")]);
-	t.addRow(["Damage",new db.connector(this.dat.weapons.ranged,"damage")]);
+	weapons.addTextField("Main Hand:",new db.connector(this.dat.weapons.main,"name"));
+	weapons.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","main"]));
+	weapons.addButton("Remove");
+
+	weapons.addTextField("Off Hand:",new db.connector(this.dat.weapons.off,"name"));
+	weapons.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","off"]));
+	weapons.addButton("Remove");
+
+	weapons.addTextField("Ranged:",new db.connector(this.dat.weapons.ranged,"name"));
+	weapons.addButton("Equip",new db.link(this,this.selectWeaponPopup,["ranged","ranged"]));
+	weapons.addButton("Remove");
+
+	var cav = combat.addPanel("Combat AVs");
+	cav.addClass("small");
+	var t = cav.addTable();
+	t.addClass("attr_table");
+	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
+	t.addRow(["Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage"]);
+	for(var w in this.dat.weapons) {
+		var weap = this.dat.weapons[w];
+		var av = weap.av;
+		t.addRow([weap.name,weap.attacks,av,av-20,av-40,weap.staging,weap.damage]);
+	}
+
 	
 	// Build the skills section ------------------------
 	var skills = this.ui.addPanel("Skills");
@@ -509,7 +498,7 @@ kantia.npcSVC.prototype.combatPopup = function() {
 	for(var w in this.dat.weapons) {
 		var weapon = this.dat.weapons[w];
 		if(weapon.name != "") {
-			var av = weapon.av - this.combatSkillPenalties(w);
+			var av = weapon.av - this.combatSkillPenalties(w,weapon);
 			
 			var d = weapon.damage;
 			var ad = kantia.weapons[weapon.type][weapon.name].damage.avg;
@@ -521,7 +510,11 @@ kantia.npcSVC.prototype.combatPopup = function() {
 	p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
 };
 
-kantia.npcSVC.prototype.combatSkillPenalties = function(hand) {
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.combatSkillPenalties = function(hand,weapon) {
 	var p = 0;
 	
 	if(this.dat.effects.stun)
@@ -555,19 +548,31 @@ kantia.npcSVC.prototype.combatSkillPenalties = function(hand) {
 				p += 50;
 			}
 		}
+
+		if(kantia.weapons[weapon.type][weapon.name].other["Easy Two Weapon"])
+			p -= 10;
 	}
 
 	return p;
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.checkTrait = function(trait) {
 	return this.dat.traits[trait] ? true : false;
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.checkHC = function(hc) {
 	return false;
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.getHC = function(hc) {
 	return null;
 };
