@@ -7,6 +7,7 @@ GM.campaignSVC = function(dat,frame,parent) {
 	this.mainframe = new lib.mainframe(frame);
 	this.parent = parent;
 	this.groups = {};
+	this.panels = {};
 	this.activeGroup = null;
 	this.ui = new ui.panel(this.name);
 	this.ui.setTitleData(new db.connector(this,"name"));
@@ -23,7 +24,7 @@ GM.campaignSVC = function(dat,frame,parent) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.initialize = function() {
 	this.parent.appendChild(this.ui);
-	if(this.activeGroup != undefined)
+	if(this.activeGroup)
 		this.activeGroup.initialize();
 };
 
@@ -32,7 +33,11 @@ GM.campaignSVC.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.setData = function(dat) {
 	this.dat = dat;
-	this.name = dat.name;
+	this.name = dat.name + " Campaign";
+	this.groupButtons.removeChildren();
+	if(this.activeGroup)
+		this.ui.removeChild(this.activeGroup.ui);
+	this.activeGroup = null;
 	
 	var active = false;
 	for(var g in this.dat.groups) {
@@ -42,12 +47,12 @@ GM.campaignSVC.prototype.setData = function(dat) {
 		if(!active) {
 			active = true;
 			this.activeGroup = new GM.groupSVC(group,this);
+			this.activeGroup.initialize();
 			b.setChecked();
 		}
 	}
 	
-	if(active)
-		this.refreshView();
+	this.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -114,6 +119,5 @@ GM.campaignSVC.prototype.selectGroup = function(name) {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.refreshView = function() {
-	this.activeGroup.refreshView();
 	this.ui.refreshView();
 };

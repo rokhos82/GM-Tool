@@ -47,10 +47,11 @@ GM.main = function(root) {
 	
 	var p = this.controls.addPanel("Campaign Selector");
 	var cb = p.addComboBox("Campaigns",this.campaignList,new db.local(""));
-	cb.setUpdate(this,this.selectCampaign,[cb,false]);
+	//cb.setUpdate(this,this.selectCampaign,[cb,false]);
+	this.selector = cb;
 	this.mainframe.addHandler("campaignListUpdate","campaigns",cb.setOptions,cb,[this.campaignList]);
 	this.mainframe.addHandler("campaignChange","campaigns",cb.refreshView,cb,[]);
-	var b = p.addButton("Select Campaign",new db.link(this,this.selectCampaign,[cb,false]));
+	var b = p.addButton("Select Campaign",new db.link(this,this.selectCampaign,[null,false]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
 	
 	if(this.activeCampaign)
@@ -149,30 +150,27 @@ GM.main.prototype.addCampaign = function(popup) {
 	this.campaigns[name] = new GM.campaignDAT(name);
 	this.campaignList[name] = name;
 	this.mainframe.trigger("campaignListUpdate");
-	if(this.activeCampaign != undefined) {
-		this.activeCampaign.setData(this.campaigns[name]);
-	}
-	else {
-		this.activeCampaign = new GM.campaignSVC(this.campaigns[name],this.mainframe,this);
-		this.activeCampaign.initialize();
-	}
+	this.selector.selectOption(name);
+	this.selectCampaign(name,true);
 	this.closePopup(popup);
 };
 
 // -------------------------------------------------------------------------------------------------
 // selectCampaign
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.selectCampaign = function(cb,conf) {
-	var name = cb.getValue();
-	if(this.activeCampaign.name != name) {
+GM.main.prototype.selectCampaign = function(name,conf) {
+	if(!name)
+		name = this.selector.getValue();
+
+	if(!this.activeCampaign) {
+		this.activeCampaign = new GM.campaignSVC(this.campaigns[name],this.mainframe,this);
+		this.activeCampaign.initialize();
+		this.mainframe.trigger("campaignChange");
+	}
+	else if(this.activeCampaign.name != name) {
 		if(conf || confirm("Change active campaign to: " + name)) {
-			if(this.activeCampaign == undefined) {
-				this.activeCampaign = new GM.campaignSVC(this.campaigns[name],this.mainframe,this);
-				this.activeCampaign.initialize();
-			}
-			else {
-				this.activeCampaign.setData(this.campaigns[name]);
-			}
+			this.activeCampaign.setData(this.campaigns[name]);
+			this.activeCampaign.refreshView();
 			this.mainframe.trigger("campaignChange");
 		}
 	}

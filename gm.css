@@ -17,8 +17,16 @@ body {
 	top: 200px;
 	position: fixed;
 	display: none;
-	background-color: #999999;
+	background-color: #dddddd;
 	z-index: 1;
+}
+
+.popup fieldset {
+	background-color: #dddddd;
+}
+
+.popup legend {
+	background-color: #dddddd;
 }
 
 .fog {
