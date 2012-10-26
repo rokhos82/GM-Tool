@@ -132,11 +132,6 @@ kantia.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("skill_update","weapon_table",this.updateWeapons,this,[]);
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
-		var av = skill.rank * 5;
-		var a = skill.attribute;
-		var adj = 0;
-		if(a != "special")
-			adj = this.dat.attributes[a].adjust;
 		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.connector(skill,"total")]);
 		r.cells[0].setUpdate(this,this.updateSkill,[s,r.cells[0]]);
 	}
@@ -199,6 +194,7 @@ kantia.npcSVC.prototype.updateSkill = function(s,tf) {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
 	var popup = this.ui.addPopup();
+	popup.show();
 	popup.addClass("popup");
 	popup.dat = {
 		name: "",
@@ -206,14 +202,15 @@ kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
 		type: type,
 		slot: slot
 	};
+
 	var p = popup.addPanel("Select Weapon");
 	var cb = p.addComboBox("Weapon",this.dat[type + "List"],new db.connector(popup.dat,"name"));
 	cb.updateData();
+	cb.focus();
 	var cb = p.addComboBox("Skill",this.dat.skillList,new db.connector(popup.dat,"skill"));
 	cb.updateData();
 	var b = p.addButton("Ok",new db.link(this,this.selectWeapon,[popup]));
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -271,7 +268,7 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
 			else
 				dat.staging = weapon.staging.value;
-			dat.attacks = Math.round(skill.rank / 3);
+			dat.attacks = Math.floor(skill.rank / 3);
 			dat.damage = weapon.damage.text;
 		}
 	}
@@ -283,20 +280,21 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addDisciplinePopup = function() {
 	var popup = this.ui.addPopup();
+	popup.show();
 	popup.addClass("popup");
 	popup.dat = {
 		name: "",
 		rank: 0,
 	};
+
 	var p = popup.addPanel("Add Discipline");
 	var cb = p.addComboBox("Discipline",null,new db.connector(popup.dat,"name"));
 	cb.setComplexOptions(kantia.disciplineList);
 	cb.updateData();
+	cb.focus();
 	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
 	p.addButton("Ok",new db.link(this,this.addDiscipline,[popup]));
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-	
-	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -356,20 +354,21 @@ kantia.npcSVC.prototype.updateDiscipline = function(disc,tf) {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addSpellPopup = function(disc) {
 	var popup = this.ui.addPopup();
+	popup.addClass("popup");
+	popup.show();
 	popup.dat = {
 		discipline: disc,
 		spell: "",
 		rank: 0
 	};
-	popup.addClass("popup");
+
 	var p = popup.addPanel("Add Spell - " + disc);
 	var cb = p.addComboBox("Spells",kantia.spellList[disc],new db.connector(popup.dat,"spell"));
 	cb.updateData();
+	cb.focus();
 	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
 	p.addButton("Ok",new db.link(this,this.addSpell,[popup]));
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-	
-	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------

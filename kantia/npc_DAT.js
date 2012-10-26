@@ -1,3 +1,6 @@
+// -------------------------------------------------------------------------------------------------
+// npcDAT
+// -------------------------------------------------------------------------------------------------
 kantia.npcDAT = function(name,template) {
 	this.name = name;
 	this.template = template;
@@ -19,7 +22,7 @@ kantia.npcDAT = function(name,template) {
 	for(var s in temp.skills) {
 		var skill = temp.skills[s];
 		var attr = this.attributes[skill.attribute];
-		this.skills[s] = new kantia.skillDAT(skill.name,skill.attribute,skill.rank);
+		this.skills[s] = new kantia.skillDAT(skill.name,attr,skill.rank);
 		this.skillList.push(s);
 	}
 	

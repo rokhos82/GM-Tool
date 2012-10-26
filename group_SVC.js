@@ -77,12 +77,14 @@ GM.groupSVC.prototype.addNPC = function(popup) {
 GM.groupSVC.prototype.showPopup = function() {
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
+	popup.show();
 	popup.dat = {
 		"name": "",
 		"template": ""
 	}
 	var p = popup.addPanel("New NPC");
 	var tf = p.addTextField("Name",new db.connector(popup.dat,"name"));
+	tf.focus();
 	var c = new ui.comboBox("Template");
 	c.setComplexOptions(kantia.template.npcList);
 	c.setData(new db.connector(popup.dat,"template"));
@@ -90,8 +92,6 @@ GM.groupSVC.prototype.showPopup = function() {
 	p.appendChild(c);
 	var b = p.addButton("Ok",new db.link(this,this.addNPC,[popup]));
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-	
-	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------

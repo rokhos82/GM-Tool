@@ -56,6 +56,10 @@ body {
 	vertical-align: top;
 }
 
+.small input {
+	width: 115px;
+}
+
 .panel {
 	display: inline-block;
 	vertical-align: top;

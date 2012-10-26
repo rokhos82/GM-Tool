@@ -13,10 +13,10 @@ GM.main = function(root) {
 	this.sidebar.setParent(this.root);
 	this.sidebar.addClass("sidebar");
 	this.root.appendChild(this.sidebar.dom);
-	
+
 	this.campaigns = {};
 	this.campaignList = {};
-	this.activeCampaign = undefined;
+	this.activeCampaign = null;
 	
 	this.templates = {};
 	this.templateList = {};
@@ -26,6 +26,7 @@ GM.main = function(root) {
 	// Build sidebar
 	var p = this.sidebar.addPanel("Initiative");
 	var l = p.addList();
+	this.mainframe.addHandler("group_change","init_list",l.removeChildren,l,[]);
 	var b = p.addButton("Indiv. Roll",new db.link(this,this.rollInitiative,[l]));
 	var b = p.addButton("Group Roll", new db.link(this,this.rollGroupInitiative,[l]));
 	var p = this.sidebar.addPanel("Players");
@@ -52,7 +53,7 @@ GM.main = function(root) {
 	var b = p.addButton("Select Campaign",new db.link(this,this.selectCampaign,[cb,false]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
 	
-	if(this.activeCampaign != undefined)
+	if(this.activeCampaign)
 		this.activeCampaign.initialize();
 };
 
@@ -122,16 +123,17 @@ GM.main.prototype.closePopup = function(popup) {
 // -------------------------------------------------------------------------------------------------
 GM.main.prototype.showCampaignPopup = function(panel) {
 	var popup = this.controls.addPopup();
+	popup.show();
 	popup.addClass("popup");
 	popup.dat = {
 		name: "",
 	};
+	
 	var p = popup.addPanel("New Campaign");
 	var tf = p.addTextField("Name:",new db.connector(popup.dat,"name"),false);
 	tf.focus();
 	var b = p.addButton("Ok",new db.link(this,this.addCampaign,[popup]));
 	var b = p.addButton("Cancel",new db.link(this,this.closePopup,[popup]));
-	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------

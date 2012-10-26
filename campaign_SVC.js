@@ -7,7 +7,7 @@ GM.campaignSVC = function(dat,frame,parent) {
 	this.mainframe = new lib.mainframe(frame);
 	this.parent = parent;
 	this.groups = {};
-	this.activeGroup = undefined;
+	this.activeGroup = null;
 	this.ui = new ui.panel(this.name);
 	this.ui.setTitleData(new db.connector(this,"name"));
 	
@@ -59,12 +59,12 @@ GM.campaignSVC.prototype.showPopup = function() {
 	popup.dat = {
 		"name": ""
 	};
+	popup.show();
 	var p = popup.addPanel("New Group");
 	var tf = p.addTextField("Name:",new db.connector(popup.dat,"name"));
+	tf.focus();
 	var b = p.addButton("Ok",new db.link(this,this.addGroup,[popup]));
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-	
-	popup.show();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -88,14 +88,7 @@ GM.campaignSVC.prototype.addGroup = function(popup) {
 		var b = this.groupButtons.addRadioButton(name);
 		b.setUpdate(this,this.selectGroup,[name]);
 		b.setChecked();
-		if(this.activeGroup == undefined) {
-			this.activeGroup = new GM.groupSVC(this.dat.groups[name],this);
-			this.activeGroup.initialize();
-		}
-		else {
-			this.activeGroup.setData(this.dat.groups[name]);
-		}
-		this.refreshView();
+		this.selectGroup(name);
 	}
 	
 	this.hidePopup(popup);
@@ -105,8 +98,15 @@ GM.campaignSVC.prototype.addGroup = function(popup) {
 // selectGroup
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.selectGroup = function(name) {
-	this.activeGroup.setData(this.dat.groups[name]);
+	if(!this.activeGroup) {
+		this.activeGroup = new GM.groupSVC(this.dat.groups[name],this);
+		this.activeGroup.initialize();
+	}
+	else {
+		this.activeGroup.setData(this.dat.groups[name]);
+	}
 	this.activeGroup.refreshView();
+	this.mainframe.trigger("group_change");
 };
 
 // -------------------------------------------------------------------------------------------------
