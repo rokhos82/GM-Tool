@@ -11,7 +11,7 @@
 * Finish human brute npc templates.
 * Finish troll brute npc templates.
 * Finish lukoi brute npc templates.
-* Get dual weilding working.
+* <strike>Get dual weilding working.</strike>
 
 
 ## For future versions ##

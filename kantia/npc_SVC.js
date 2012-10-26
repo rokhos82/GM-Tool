@@ -17,7 +17,7 @@ kantia.npcSVC = function(dat,parent) {
 	var b = p.addButton("End Round",new db.link(this,this.newCombatRound,[]));
 	var b = p.addButton("Stun",new db.link(this,this.addEffect,["stun",1]));
 	var b = p.addButton("Grapple");
-	var b = p.addButton("Prone");
+	var b = p.addButton("Prone",new db.link(this,this.addEffect,["prone",1]));
 	var b = p.addButton("K.O.");
 	var b = p.addButton("Bound/Helpless");
 	var b = p.addButton("Fight Defensively");
@@ -216,10 +216,10 @@ kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
 	};
 
 	var p = popup.addPanel("Select Weapon");
-	var cb = p.addComboBox("Weapon",this.dat[type + "List"],new db.connector(popup.dat,"name"));
+	var cb = p.addComboBox("Weapon",this.dat.lists[type],new db.connector(popup.dat,"name"));
 	cb.updateData();
 	cb.focus();
-	var cb = p.addComboBox("Skill",this.dat.skillList,new db.connector(popup.dat,"skill"));
+	var cb = p.addComboBox("Skill",this.dat.lists.skills,new db.connector(popup.dat,"skill"));
 	cb.updateData();
 	var b = p.addButton("Ok",new db.link(this,this.selectWeapon,[popup]));
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
@@ -235,8 +235,8 @@ kantia.npcSVC.prototype.selectWeapon = function(popup) {
 	var iskill = popup.dat.skill;
 	this.hidePopup(popup);
 
-	var name = this.dat[type + "List"][iname];
-	var skill = this.dat.skillList[iskill];
+	var name = this.dat.lists[type][iname];
+	var skill = this.dat.lists.skills[iskill];
 	this.dat.weapons[slot].type = type;
 	this.dat.weapons[slot].name = name;
 	this.dat.weapons[slot].skill = skill;
@@ -529,6 +529,9 @@ kantia.npcSVC.prototype.combatSkillPenalties = function(hand) {
 	
 	if(this.dat.effects.defense)
 		p += this.dat.effects.defense * 20;
+
+	if(this.dat.effects.prone)
+		p += 10;
 	
 	if(this.dat.effects.dualwield) {
 		var twm = {};

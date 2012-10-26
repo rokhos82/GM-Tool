@@ -15,15 +15,17 @@ kantia.npcDAT = function(name,template) {
 		var attr = temp.attributes[a];
 		this.attributes[a] = new kantia.attributeDAT(attr.name,attr.min,attr.max,attr.avg);
 	}
+
+	this.lists = {};
 	
 	// Build the real skill objects and the skill list.
 	this.skills = {};
-	this.skillList = [];
+	this.lists.skills = [];
 	for(var s in temp.skills) {
 		var skill = temp.skills[s];
 		var attr = this.attributes[skill.attribute];
 		this.skills[s] = new kantia.skillDAT(skill.name,attr,skill.rank);
-		this.skillList.push(s);
+		this.lists.skills.push(s);
 	}
 	
 	// Build the stats objects.
@@ -48,7 +50,7 @@ kantia.npcDAT = function(name,template) {
 		}
 	}
 	
-	this.meleeList = temp.weapons.melee;
+	this.lists.melee = temp.weapons.melee;
 	this.rangedList = temp.weapons.ranged;
 	this.weapons = {
 		main: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
