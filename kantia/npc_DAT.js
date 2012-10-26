@@ -45,9 +45,9 @@ kantia.npcDAT = function(name,template) {
 		}
 	}
 	
+	this.meleeList = temp.weapons.melee;
+	this.rangedList = temp.weapons.ranged;
 	this.weapons = {
-		meleeList: temp.weapons.melee,
-		rangedList: temp.weapons.ranged,
 		main: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
 		off: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""},
 		ranged: { type: "", name: "", skill: "", av: "", attacks: "", staging: "", damage: ""}

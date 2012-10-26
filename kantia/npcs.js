@@ -103,7 +103,7 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 	},
 	["Leather Jerkin","Leather Vambrace","Leather Greaves"],
 	{
-		"melee": ["Light Club","Medium Club","Heavy Club","Battle Axe","Great Axe","Footman's Pick","Greatsword","Wood Axe","Pick-Axe","Dagger"],
+		"melee": ["Light Club","Medium Club, 1H","Medium Club, 2H","Heavy Club","Battle Axe, 1H","Battle Axe, 2H","Great Axe","Footman's Pick, 1H","Footman's Pick, 2H","Greatsword","Wood Axe","Pick-Axe","Dagger"],
 		"ranged": []
 	},
 	"",

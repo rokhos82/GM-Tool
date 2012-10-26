@@ -207,7 +207,7 @@ kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
 		slot: slot
 	};
 	var p = popup.addPanel("Select Weapon");
-	var cb = p.addComboBox("Weapon",this.dat.weapons[type + "List"],new db.connector(popup.dat,"name"));
+	var cb = p.addComboBox("Weapon",this.dat[type + "List"],new db.connector(popup.dat,"name"));
 	cb.updateData();
 	var cb = p.addComboBox("Skill",this.dat.skillList,new db.connector(popup.dat,"skill"));
 	cb.updateData();
@@ -224,9 +224,9 @@ kantia.npcSVC.prototype.selectWeapon = function(popup) {
 	var slot = popup.dat.slot;
 	var iname = popup.dat.name;
 	var iskill = popup.dat.skill;
-	this.hidePopup(poup);
+	this.hidePopup(popup);
 
-	var name = this.dat.weapons[type + "List"][iname];
+	var name = this.dat[type + "List"][iname];
 	var skill = this.dat.skillList[iskill];
 	this.dat.weapons[slot].type = type;
 	this.dat.weapons[slot].name = name;
@@ -258,7 +258,7 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			var weapon = kantia.weapons[type][name];
 			var skill = this.dat.skills[sname];
 			
-			dat.av = skill.total - weapon.difficulty.base;
+			dat.av = skill.total - parseInt(weapon.difficulty.base);
 			var penalties = kantia.func.armorPenalties(this.dat.armor,["ar","r"]);
 			if(type == "melee") {
 				dat.av += penalties.ar;
