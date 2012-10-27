@@ -113,8 +113,15 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage"]);
 	for(var w in this.dat.weapons) {
 		var weap = this.dat.weapons[w];
-		var av = weap.av;
-		t.addRow([weap.name,weap.attacks,av,av-20,av-40,weap.staging,weap.damage]);
+		t.addRow([
+			new db.connector(weap,"name"),
+			new db.connector(weap,"attacks"),
+			new db.connector(weap.av,0),
+			new db.connector(weap.av,1),
+			new db.connector(weap.av,2),
+			new db.connector(weap,"staging"),
+			new db.connector(weap,"damage")
+		]);
 	}
 
 	
@@ -129,7 +136,7 @@ kantia.npcSVC = function(dat,parent) {
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
 		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.connector(skill,"total")]);
-		r.cells[0].setUpdate(this,this.updateSkill,[s,r.cells[0]]);
+		//r.cells[0].setUpdate(this,this.updateSkill,[s,r.cells[0]]);
 	}
 	
 	// Build the armor section
@@ -245,6 +252,8 @@ kantia.npcSVC.prototype.hidePopup = function(popup) {
 // updateWeapons
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.updateWeapons = function() {
+	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "")
+		this.addEffect("dualwield",1);
 	// Update equiped weapons.
 	for(var w in this.dat.weapons) {
 		var name = this.dat.weapons[w].name;
@@ -256,17 +265,20 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			var weapon = kantia.weapons[type][name];
 			var skill = this.dat.skills[sname];
 			
-			dat.av = skill.total - parseInt(weapon.difficulty.base);
+			dat.av[0] = skill.total - parseInt(weapon.difficulty.base);
 			var penalties = kantia.func.armorPenalties(this.dat.armor,["ar","r"]);
 			if(type == "melee") {
-				dat.av += penalties.ar;
+				dat.av[0] += penalties.ar;
 			}
 			else if(type == "ranged") {
-				dat.av += penalties.r;
+				dat.av[0] += penalties.r;
 			}
 
-			var def_action = this.dat.effects.defense ? this.dat.effects.defense * -20 : 0;
-			dat.av += def_action;
+			var pen = this.combatSkillPenalties(w,this.dat.weapons[w]);
+			dat.av[0] -= pen;
+
+			dat.av[1] = dat.av[0] - 20;
+			dat.av[2] = dat.av[0] - 40;
 			
 			if(weapon.staging.source)
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
@@ -276,8 +288,6 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			dat.damage = weapon.damage.text;
 		}
 	}
-	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "")
-		this.addEffect("dualwield",1);
 	this.mainframe.trigger("weapon_update");
 };
 
