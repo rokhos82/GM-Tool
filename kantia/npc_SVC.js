@@ -110,10 +110,11 @@ kantia.npcSVC = function(dat,parent) {
 	var t = cav.addTable();
 	t.addClass("attr_table");
 	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
-	t.addRow(["Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage"]);
+	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage"]);
 	for(var w in this.dat.weapons) {
 		var weap = this.dat.weapons[w];
 		t.addRow([
+			w,
 			new db.connector(weap,"name"),
 			new db.connector(weap,"attacks"),
 			new db.connector(weap.av,0),
@@ -160,9 +161,9 @@ kantia.npcSVC = function(dat,parent) {
 	this.refreshDisciplines();
 
 	// Mainframe handlers
-	//this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("defense_action","effect_refresh",this.refreshEffects,this,[]);
-	//this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("new_round","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("add_effect","effect_refresh",this.refreshEffects,this,[]);
 };
@@ -265,20 +266,21 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			var weapon = kantia.weapons[type][name];
 			var skill = this.dat.skills[sname];
 			
-			dat.av[0] = skill.total - parseInt(weapon.difficulty.base);
+			var av = skill.total - parseInt(weapon.difficulty.base);
 			var penalties = kantia.func.armorPenalties(this.dat.armor,["ar","r"]);
 			if(type == "melee") {
-				dat.av[0] += penalties.ar;
+				av += penalties.ar;
 			}
 			else if(type == "ranged") {
-				dat.av[0] += penalties.r;
+				av += penalties.r;
 			}
 
 			var pen = this.combatSkillPenalties(w,this.dat.weapons[w]);
-			dat.av[0] -= pen;
+			av -= pen;
 
-			dat.av[1] = dat.av[0] - 20;
-			dat.av[2] = dat.av[0] - 40;
+			dat.av[0] = av;
+			dat.av[1] = av - 20;
+			dat.av[2] = av - 40;
 			
 			if(weapon.staging.source)
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
@@ -485,39 +487,8 @@ kantia.npcSVC.prototype.newCombatRound = function() {
 // addEffect
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addEffect = function(cat,value) {
-	if(!this.dat.effects[cat])
-		this.dat.effects[cat] = value;
-	else
-		this.dat.effects[cat] += value;
+	this.dat.effects[cat] = value;
 	this.mainframe.trigger("add_effect");
-};
-
-// -------------------------------------------------------------------------------------------------
-// combatPopup
-// -------------------------------------------------------------------------------------------------
-kantia.npcSVC.prototype.combatPopup = function() {
-	var popup = this.ui.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	popup.show();
-
-	var p = popup.addPanel("Combat");
-	var t = p.addTable();
-	t.addClass("attr_table");
-	t.addRow(["Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage","Avg Damage","Rolled Damage"]);
-	for(var w in this.dat.weapons) {
-		var weapon = this.dat.weapons[w];
-		if(weapon.name != "") {
-			var av = weapon.av - this.combatSkillPenalties(w,weapon);
-			
-			var d = weapon.damage;
-			var ad = kantia.weapons[weapon.type][weapon.name].damage.avg;
-			var rd = kantia.weapons[weapon.type][weapon.name].damage.roll();
-
-			t.addRow([weapon.name,weapon.attacks,av,av-20,av-40,weapon.staging,d,ad,rd]);
-		}
-	}
-	p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
 };
 
 
