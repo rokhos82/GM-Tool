@@ -115,13 +115,13 @@ kantia.npcSVC = function(dat,parent) {
 		var weap = this.dat.weapons[w];
 		t.addRow([
 			w,
-			new db.connector(weap,"name"),
-			new db.connector(weap,"attacks"),
-			new db.connector(weap.av,0),
-			new db.connector(weap.av,1),
-			new db.connector(weap.av,2),
-			new db.connector(weap,"staging"),
-			new db.connector(weap,"damage")
+			new db.view(weap,"name"),
+			new db.view(weap,"attacks"),
+			new db.view(weap.av,0),
+			new db.view(weap.av,1),
+			new db.view(weap.av,2),
+			new db.view(weap,"staging"),
+			new db.view(weap,"damage")
 		]);
 	}
 
@@ -137,7 +137,8 @@ kantia.npcSVC = function(dat,parent) {
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
 		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.connector(skill,"total")]);
-		//r.cells[0].setUpdate(this,this.updateSkill,[s,r.cells[0]]);
+		var c = r.cells[1].children[0];
+		c.setUpdate(this,this.updateSkill,[s,c]);
 	}
 	
 	// Build the armor section
@@ -166,6 +167,7 @@ kantia.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("new_round","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("add_effect","effect_refresh",this.refreshEffects,this,[]);
+	this.mainframe.addHandler("skill_update","update_weapons",this.updateWeapons,this,[]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -193,7 +195,7 @@ kantia.npcSVC.prototype.updateSkill = function(s,tf) {
 	var adj = this.dat.skills[s].attribute.adjust;
 	this.dat.skills[s].adjust = adj;
 	this.dat.skills[s].av = av;
-	this.dat.skills[s].total = av + adj; 
+	this.dat.skills[s].total = av + adj;
 	this.mainframe.trigger("skill_update");
 };
 
@@ -255,6 +257,7 @@ kantia.npcSVC.prototype.hidePopup = function(popup) {
 kantia.npcSVC.prototype.updateWeapons = function() {
 	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "")
 		this.addEffect("dualwield",1);
+	
 	// Update equiped weapons.
 	for(var w in this.dat.weapons) {
 		var name = this.dat.weapons[w].name;
@@ -266,7 +269,7 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			var weapon = kantia.weapons[type][name];
 			var skill = this.dat.skills[sname];
 			
-			var av = skill.total - parseInt(weapon.difficulty.base);
+			var av = skill.total - weapon.difficulty.base;
 			var penalties = kantia.func.armorPenalties(this.dat.armor,["ar","r"]);
 			if(type == "melee") {
 				av += penalties.ar;
@@ -286,6 +289,7 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
 			else
 				dat.staging = weapon.staging.value;
+			
 			dat.attacks = Math.floor(skill.rank / 3);
 			dat.damage = weapon.damage.text;
 		}
