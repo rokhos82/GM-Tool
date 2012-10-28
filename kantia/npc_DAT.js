@@ -23,7 +23,13 @@ kantia.npcDAT = function(name,template) {
 	this.lists.skills = [];
 	for(var s in temp.skills) {
 		var skill = temp.skills[s];
-		var attr = this.attributes[skill.attribute];
+		var attr = null;
+		if(typeof skill.attribute === "object") {
+			attr = [this.attributes[skill.attribute[0]],this.attributes[skill.attribute[1]]];
+		}
+		else {
+			attr = this.attributes[skill.attribute];
+		}
 		this.skills[s] = new kantia.skillDAT(skill.name,attr,skill.rank);
 		this.lists.skills.push(s);
 	}

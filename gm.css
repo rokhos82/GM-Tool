@@ -71,7 +71,14 @@ body {
 }
 
 .small input {
-	width: 115px;
+	width: 50px;
+}
+
+.skill_table {
+}
+
+.skill_table input {
+	width: 50px;
 }
 
 .panel {

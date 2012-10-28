@@ -137,12 +137,13 @@ kantia.npcSVC = function(dat,parent) {
 	var skills = this.ui.addPanel("Skills");
 	this.panels.skills = skills;
 	var t = skills.addTable();
+	t.addClass("skill_table");
 	t.addClass("attr_table");
 	t.addRow(["Skill","Rank","AV"]);
 	this.mainframe.addHandler("skill_update","skill_table",t.refreshView,t,[]);
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
-		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.connector(skill,"total")]);
+		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.view(skill,"total")]);
 		var c = r.cells[1].children[0];
 		c.setUpdate(this,this.updateSkill,[s,c]);
 	}
@@ -188,7 +189,11 @@ kantia.npcSVC.prototype.updateSkill = function(s,tf) {
 	var rank = tf.getValue();
 	this.dat.skills[s].rank = rank;
 	var av = rank * 5;
-	var adj = this.dat.skills[s].attribute.adjust;
+	var adj = 0;
+	if(this.dat.skills[s].attribute.length)
+		adj = this.dat.skills[s].attribute[0].adjust - this.dat.skills[s].attribute[1].adjust;
+	else
+		adj = this.dat.skills[s].attribute.adjust;
 	this.dat.skills[s].adjust = adj;
 	this.dat.skills[s].av = av;
 	this.dat.skills[s].total = av + adj;
