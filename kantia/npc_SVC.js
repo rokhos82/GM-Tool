@@ -29,6 +29,7 @@ kantia.npcSVC = function(dat,parent) {
 	
 	var p = this.ui.addPanel("Effects");
 	this.panels.effects = p;
+	this.refreshEffects();
 
 	var p = this.ui.addPanel("Description");
 	var ta = p.addTextArea(new db.connector(this.dat,"description"));
@@ -327,9 +328,11 @@ kantia.npcSVC.prototype.removeWeapon = function(slot) {
 
 	if(this.dat.weapons["main"].type == "" || this.dat.weapons["off"].type == "") {
 		this.clearEffect("dualwield");
+		this.updateWeapons();
 		this.mainframe.trigger("effect_update");
 	}
-	this.mainframe.trigger("weapon_update");
+	else
+		this.mainframe.trigger("weapon_update");
 };
 
 // -------------------------------------------------------------------------------------------------
