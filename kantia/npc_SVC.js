@@ -14,7 +14,6 @@ kantia.npcSVC = function(dat,parent) {
 	var p = this.ui.addPanel("Actions");
 	var b = p.addButton("Attack",new db.link(this,this.combatPopup,[]));
 	var b = p.addButton("Defend",new db.link(this,this.defensiveAction,[]));
-	var b = p.addButton("End Round",new db.link(this,this.newCombatRound,[]));
 	var b = p.addButton("Stun",new db.link(this,this.addEffect,["stun",1]));
 	var b = p.addButton("Grapple");
 	var b = p.addButton("Prone",new db.link(this,this.addEffect,["prone",1]));
@@ -95,9 +94,19 @@ kantia.npcSVC = function(dat,parent) {
 	var t = armor.addTable();
 	t.addClass("attr_table");
 	t.addRow(["Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
+	armor.addButton("+");
 	for(var a in this.dat.armor) {
 		var armor = this.dat.armor[a];
-		t.addRow([armor.name,armor.deflect,armor.calledshot,armor.staging,armor.absorb,armor.bypass]);
+		var r = [
+			new ui.text(armor.name),
+			new ui.text(armor.deflect),
+			new ui.text(armor.calledshot),
+			new ui.text(armor.staging),
+			new ui.text(armor.absorb),
+			new ui.text(armor.bypass),
+			new ui.button("X")
+		];
+		t.addCustomRow(r);
 	}
 
 	// Build the combat av section

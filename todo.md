@@ -7,7 +7,7 @@
 * <strike>Add description box to npcs (notable features, behaviors, habits, etc.)</strike>
 * Add player characters
 * <strike>Add opaque overlay for popup windows.</strike>
-* Convert weapons to a weapon table like the character sheet.
+* <strike>Convert weapons to a weapon table like the character sheet.</strike>
 * Finish human brute npc templates.
 * Finish troll brute npc templates.
 * Finish lukoi brute npc templates.
