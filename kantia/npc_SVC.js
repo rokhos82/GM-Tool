@@ -89,40 +89,38 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Staging",stats.defense.staging]);
 	t.addRow(["Absorb",stats.defense.absorb]);
 
-	var weapons = combat.addPanel("Weapons");
-	weapons.addClass("small");
-	this.mainframe.addHandler("weapon_update","weap_panel",weapons.refreshView,weapons,[]);
+	// Build the armor section
+	var armor = combat.addPanel("Armor");
+	armor.addClass("small");
+	var t = armor.addTable();
+	t.addClass("attr_table");
+	t.addRow(["Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
+	for(var a in this.dat.armor) {
+		var armor = this.dat.armor[a];
+		t.addRow([armor.name,armor.deflect,armor.calledshot,armor.staging,armor.absorb,armor.bypass]);
+	}
 
-	weapons.addTextField("Main Hand:",new db.connector(this.dat.weapons.main,"name"));
-	weapons.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","main"]));
-	weapons.addButton("Remove");
-
-	weapons.addTextField("Off Hand:",new db.connector(this.dat.weapons.off,"name"));
-	weapons.addButton("Equip",new db.link(this,this.selectWeaponPopup,["melee","off"]));
-	weapons.addButton("Remove");
-
-	weapons.addTextField("Ranged:",new db.connector(this.dat.weapons.ranged,"name"));
-	weapons.addButton("Equip",new db.link(this,this.selectWeaponPopup,["ranged","ranged"]));
-	weapons.addButton("Remove");
-
-	var cav = combat.addPanel("Combat AVs");
-	cav.addClass("small");
+	// Build the combat av section
+	var cav = this.ui.addPanel("Combat");
 	var t = cav.addTable();
 	t.addClass("attr_table");
 	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
 	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage"]);
 	for(var w in this.dat.weapons) {
 		var weap = this.dat.weapons[w];
-		t.addRow([
-			w,
-			new db.view(weap,"name"),
-			new db.view(weap,"attacks"),
-			new db.view(weap.av,0),
-			new db.view(weap.av,1),
-			new db.view(weap.av,2),
-			new db.view(weap,"staging"),
-			new db.view(weap,"damage")
-		]);
+		var r = [
+			new ui.text(w),
+			new ui.text(new db.view(weap,"name")),
+			new ui.text(new db.view(weap,"attacks")),
+			new ui.text(new db.view(weap.av,0)),
+			new ui.text(new db.view(weap.av,1)),
+			new ui.text(new db.view(weap.av,2)),
+			new ui.text(new db.view(weap,"staging")),
+			new ui.text(new db.view(weap,"damage")),
+			new ui.button("+",new db.link(this,this.selectWeaponPopup,[w])),
+			new ui.button("X")
+		];
+		t.addCustomRow(r);
 	}
 
 	
@@ -133,22 +131,11 @@ kantia.npcSVC = function(dat,parent) {
 	t.addClass("attr_table");
 	t.addRow(["Skill","Rank","AV"]);
 	this.mainframe.addHandler("skill_update","skill_table",t.refreshView,t,[]);
-	this.mainframe.addHandler("skill_update","weapon_table",this.updateWeapons,this,[]);
 	for(var s in this.dat.skills) {
 		var skill = this.dat.skills[s];
 		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.connector(skill,"total")]);
 		var c = r.cells[1].children[0];
 		c.setUpdate(this,this.updateSkill,[s,c]);
-	}
-	
-	// Build the armor section
-	var armor = this.ui.addPanel("Armor");
-	var t = armor.addTable();
-	t.addClass("attr_table");
-	t.addRow(["Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
-	for(var a in this.dat.armor) {
-		var armor = this.dat.armor[a];
-		t.addRow([armor.name,armor.deflect,armor.calledshot,armor.staging,armor.absorb,armor.bypass]);
 	}
 	
 	// Build the spell section
@@ -202,11 +189,15 @@ kantia.npcSVC.prototype.updateSkill = function(s,tf) {
 // -------------------------------------------------------------------------------------------------
 // selectWeaponPopup
 // -------------------------------------------------------------------------------------------------
-kantia.npcSVC.prototype.selectWeaponPopup = function(type,slot) {
+kantia.npcSVC.prototype.selectWeaponPopup = function(slot) {
 	var popup = this.ui.addPopup();
 	popup.show();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
+	var type = "melee";
+	if(slot == "ranged")
+		type = "ranged";
+	
 	popup.dat = {
 		name: "",
 		skill: "",
@@ -289,7 +280,7 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
 			else
 				dat.staging = weapon.staging.value;
-			
+
 			dat.attacks = Math.floor(skill.rank / 3);
 			dat.damage = weapon.damage.text;
 		}
