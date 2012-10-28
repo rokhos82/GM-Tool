@@ -55,7 +55,8 @@ kantia.npcSVC = function(dat,parent) {
 	
 	var p = hlth.addPanel("Stamina");
 	var t = p.addTable();
-	t.addRow(["Stamina",stats.stamina.max]);
+	t.addRow(["Max",stats.stamina.max]);
+	t.addRow(["Current",stats.stamina.current]);
 	t.addRow(["Wind",stats.wind.max]);
 	
 	// Build the other section -------------------------
@@ -74,6 +75,7 @@ kantia.npcSVC = function(dat,parent) {
 	for(var a in this.dat.traits) {
 		t.addRow([a]);
 	}
+	traits.addButton("+");
 	
 	// Build the combat section -----------------------
 	var combat = this.ui.addPanel("Combat");
@@ -114,7 +116,7 @@ kantia.npcSVC = function(dat,parent) {
 	var t = cav.addTable();
 	t.addClass("attr_table");
 	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
-	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","Staging","Damage"]);
+	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","4th","5th","Staging","Damage"]);
 	for(var w in this.dat.weapons) {
 		var weap = this.dat.weapons[w];
 		var r = [
@@ -124,10 +126,12 @@ kantia.npcSVC = function(dat,parent) {
 			new ui.text(new db.view(weap.av,0)),
 			new ui.text(new db.view(weap.av,1)),
 			new ui.text(new db.view(weap.av,2)),
+			new ui.text(new db.view(weap.av,3)),
+			new ui.text(new db.view(weap.av,4)),
 			new ui.text(new db.view(weap,"staging")),
 			new ui.text(new db.view(weap,"damage")),
 			new ui.button("+",new db.link(this,this.selectWeaponPopup,[w])),
-			new ui.button("X")
+			new ui.button("X",new db.link(this,this.removeWeapon,[w]))
 		];
 		t.addCustomRow(r);
 	}
@@ -142,8 +146,8 @@ kantia.npcSVC = function(dat,parent) {
 	t.addRow(["Skill","Rank","AV"]);
 	this.mainframe.addHandler("skill_update","skill_table",t.refreshView,t,[]);
 	for(var s in this.dat.skills) {
-		var skill = this.dat.skills[s];
-		var r = t.addRow([skill.name,new db.connector(skill,"rank"),new db.view(skill,"total")]);
+		var skill1 = this.dat.skills[s];
+		var r = t.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
 		var c = r.cells[1].children[0];
 		c.setUpdate(this,this.updateSkill,[s,c]);
 	}
@@ -164,6 +168,7 @@ kantia.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("new_round","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("add_effect","effect_refresh",this.refreshEffects,this,[]);
+	this.mainframe.addHandler("effect_update","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("skill_update","update_weapons",this.updateWeapons,this,[]);
 };
 
@@ -286,9 +291,10 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			var pen = this.combatSkillPenalties(w,this.dat.weapons[w]);
 			av -= pen;
 
-			dat.av[0] = av;
-			dat.av[1] = av - 20;
-			dat.av[2] = av - 40;
+			for(var a in dat.av) {
+				dat.av[a] = av;
+				av -= 20;
+			}
 			
 			if(weapon.staging.source)
 				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
@@ -298,6 +304,30 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 			dat.attacks = Math.floor(skill.rank / 3);
 			dat.damage = weapon.damage.text;
 		}
+	}
+	this.mainframe.trigger("weapon_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.removeWeapon = function(slot) {
+	var weapon = this.dat.weapons[slot];
+	weapon.type = ""; 
+	weapon.name = "";
+	weapon.skill = "";
+	var av = 0;
+	for(var a in weapon.av) {
+		weapon.av[a] = av;
+		av -= 20;
+	}
+	weapon.attacks = "";
+	weapon.staging = "";
+	weapon.damage = "";
+
+	if(this.dat.weapons["main"].type == "" || this.dat.weapons["off"].type == "") {
+		this.clearEffect("dualwield");
+		this.mainframe.trigger("effect_update");
 	}
 	this.mainframe.trigger("weapon_update");
 };
@@ -456,6 +486,10 @@ kantia.npcSVC.prototype.updateEffect = function(cat) {
 	else if(cat == "stun") {
 		this.dat.effects.stun = this.dat.effects.stun > 0 ? this.dat.effects.stun - 1 : 0;
 	}
+};
+
+kantia.npcSVC.prototype.clearEffect = function(e) {
+	delete this.dat.effects[e];
 };
 
 // -------------------------------------------------------------------------------------------------
