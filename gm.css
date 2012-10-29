@@ -75,6 +75,8 @@ body {
 }
 
 .skill_table {
+	float: left;
+	margin-right: 10px;
 }
 
 .skill_table input {

@@ -74,6 +74,7 @@ kantia.npcSVC = function(dat,parent) {
 	traits.addClass("small");
 	var l = traits.addList();
 	this.panels.traits = l;
+	this.refreshTraits();
 	traits.addButton("+",new db.link(this,this.addTraitPopup,[]));
 	
 	// Build the combat section -----------------------
@@ -139,16 +140,32 @@ kantia.npcSVC = function(dat,parent) {
 	// Build the skills section ------------------------
 	var skills = this.ui.addPanel("Skills");
 	this.panels.skills = skills;
-	var t = skills.addTable();
-	t.addClass("skill_table");
-	t.addClass("attr_table");
-	t.addRow(["Skill","Rank","AV"]);
-	this.mainframe.addHandler("skill_update","skill_table",t.refreshView,t,[]);
-	for(var s in this.dat.skills) {
-		var skill1 = this.dat.skills[s];
-		var r = t.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
+	var t1 = skills.addTable();
+	t1.addClass("skill_table");
+	t1.addClass("attr_table");
+	t1.addRow(["Skill","Rank","AV"]);
+	this.mainframe.addHandler("skill_update","skill_table1",t1.refreshView,t1,[]);
+	var t2 = skills.addTable();
+	t2.addClass("skill_table");
+	t2.addClass("attr_table");
+	t2.addRow(["Skill","Rank","AV"]);
+	this.mainframe.addHandler("skill_update","skill_table2",t2.refreshView,t2,[]);
+	var l = this.dat.lists.skills.length;
+	var shift = parseInt(l/2);
+	for(var i = 0;i < (l/2) - 1;i++) {
+		var name1 = this.dat.lists.skills[i];
+		var skill1 = this.dat.skills[name1];
+		var r = t1.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
 		var c = r.cells[1].children[0];
-		c.setUpdate(this,this.updateSkill,[s,c]);
+		c.setUpdate(this,this.updateSkill,[name1,c]);
+
+		if(i + shift < l) {
+			var name2 = this.dat.lists.skills[i + shift];
+			var skill2 = this.dat.skills[name2];
+			var r = t2.addRow([skill2.name,new db.connector(skill2,"rank"),new db.view(skill2,"total")]);
+			var c = r.cells[1].children[0];
+			c.setUpdate(this,this.updateSkill,[name2,c]);
+		}
 	}
 	
 	// Build the spell section
