@@ -72,11 +72,9 @@ kantia.npcSVC = function(dat,parent) {
 	
 	var traits = other.addPanel("Traits");
 	traits.addClass("small");
-	var t = traits.addTable();
-	for(var a in this.dat.traits) {
-		t.addRow([a]);
-	}
-	traits.addButton("+");
+	var l = traits.addList();
+	this.panels.traits = l;
+	traits.addButton("+",new db.link(this,this.addTraitPopup,[]));
 	
 	// Build the combat section -----------------------
 	var combat = this.ui.addPanel("Combat");
@@ -171,6 +169,7 @@ kantia.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("add_effect","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("effect_update","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("skill_update","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("trait_update","update_weapons",this.updateWeapons,this,[]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -602,4 +601,50 @@ kantia.npcSVC.prototype.checkHC = function(hc) {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.getHC = function(hc) {
 	return null;
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addTraitPopup = function() {
+	var popup = this.ui.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+	popup.dat = {
+		index: 0
+	};
+	var p = popup.addPanel("Add Trait");
+	p.addComboBox("Trait",this.dat.lists.traits,new db.connector(popup.dat,"index"));
+	p.addButton("Ok",new db.link(this,this.addTrait,[popup]));
+	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addTrait = function(popup) {
+	var index = popup.dat.index;
+	var name = this.dat.lists.traits[index];
+	this.dat.traits[name] = name;
+	this.refreshTraits();
+	this.hidePopup(popup);
+	this.mainframe.trigger("trait_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.refreshTraits = function() {
+	var l = this.panels.traits;
+	l.removeChildren();
+	for(var t in this.dat.traits) {
+		l.addItem(t);
+	}
+};
+
+kantia.npcSVC.prototype.removeTrait = function(name) {
+	delete this.dat.traits[name];
+	this.refreshTraits();
+	this.mainframe.trigger("trait_update");
 };
