@@ -44,18 +44,25 @@ kantia.npcDAT = function(name,template) {
 		"offense": new kantia.offenseDAT(this.attributes,"npc")
 	};
 	
-	this.armor = {};
+
+	// Setup the armor
+	this.armor = {
+		torso: new kantia.template.armor(),
+		arms: new kantia.template.armor(),
+		legs: new kantia.template.armor(),
+		blocking: new kantia.template.armor(),
+		head: new kantia.template.armor(),
+		hand: new kantia.template.armor()
+	};
+
 	for(var a in temp.armor) {
-		var armor = temp.armor[a];
-		this.armor[armor] = kantia.armor[armor];
-		this.stats.defense.dr += this.armor[armor].deflect;
-		this.stats.defense.noagldr += this.armor[armor].deflect;
-		if(this.armor[armor].coverage == "Torso") {
-			this.stats.defense.staging += this.armor[armor].staging;
-			this.stats.defense.absorb += this.armor[armor].absorb;
-		}
+		var name = temp.armor[a];
+		var armor = kantia.armor[name];
+		var slot = armor.coverage.toLowerCase();
+		this.armor[slot] = kantia.armor[name];
 	}
 	
+	// Setup the weapons
 	this.lists.melee = temp.weapons.melee;
 	this.rangedList = temp.weapons.ranged;
 	this.weapons = {

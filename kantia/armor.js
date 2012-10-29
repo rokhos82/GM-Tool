@@ -1,23 +1,35 @@
 kantia.armor = {};
 
+// Build the armor lists for each slot (coverage).
+kantia.lists.armor = {};
+kantia.lists.armor.torso = ["Leather Jerkin","Hard Leather Cuirass","Scale Breastplate","Chain Shirt","Breastplate"];
+kantia.lists.armor.arms = ["Leather Vambrace","Hard Leather Vambrace","Chain Vambrace","Scale Vambrace","Plate Vambrace"];
+kantia.lists.armor.legs = ["Leather Greaves","Hard Leather Greaves","Chain Greaves","Scale Greaves","Plate Greaves"];
+kantia.lists.armor.blocking = ["Small Shield","Medium Shield","Full Shield","Buckler","Leather Bracers","Reinforced Bracers"];
+kantia.lists.armor.head = ["Light Helm","Chain Coif","Battle Helm"];
+kantia.lists.armor.hand = ["Chain Gloves","Gauntlets","Leather Gloves"];
+
 kantia.template.armor = function(name,def,called,staging,absorb,ball,bypass,block,cover,pen,cat) {
-	this.name = name;
-	this.deflect = def;
-	this.calledshot = called;
-	this.staging = staging;
-	this.absorb = absorb;
-	this.ballistic = ball;
-	this.bypass = bypass;
-	this.block = block;
-	this.coverage = cover;
-	this.penalties = {
-		i: pen.i,
-		r: pen.r,
-		p: pen.p,
-		ar: pen.ar,
-		sp: pen.sp
-	};
-	this.category = cat;
+	this.name = name ? name : "";
+	this.deflect = def ? def : 0;
+	this.calledshot = called ? called : 0;
+	this.staging = staging ? staging : 0;
+	this.absorb = absorb ? absorb : 0;
+	this.ballistic = ball ? ball : 0;
+	this.bypass = bypass ? bypass : 0;
+	this.block = block ? block : 0;
+	this.coverage = cover ? cover : 0;
+	this.penalties = {i:0,r:0,p:0,ar:0,sp:0};
+	if(pen) {
+		this.penalties = {
+			i: pen.i,
+			r: pen.r,
+			p: pen.p,
+			ar: pen.ar,
+			sp: pen.sp
+		};
+	}
+	this.category = cat ? cat : "";
 };
 
 // Helmets /////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +42,10 @@ kantia.armor[name] = new kantia.template.armor(name,5,30,5,6,0,-20,0,"Head",{i:-
 var name = "Chain Coif";
 kantia.armor[name] = new kantia.template.armor(name,0,20,5,3,0,-10,0,"Head",{r:-5,p:-5,ar:-5,sp:-10},cat);
 
+// Battle Helm ---
+var name = "Battle Helm";
+kantia.armor[name] = new kantia.template.armor(name,5,40,10,10,0,-40,0,"Head",{i:-2,r:-20,p:-40,ar:-10,sp:-20},cat);
+
 // Shields /////////////////////////////////////////////////////////////////////////////////////////
 var cat = "Shield";
 // Small Shield ------------------------------------------------------------------------------------
@@ -39,6 +55,14 @@ kantia.armor[name] = new kantia.template.armor(name,5,0,10,12,0,0,20,"Blocking",
 // Medium Shield -----------------------------------------------------------------------------------
 var name = "Medium Shield";
 kantia.armor[name] = new kantia.template.armor(name,5,0,10,16,0,0,30,"Blocking",{i:-1,ar:-5,sp:-10},cat);
+
+// Full Shield -------------------------------------------------------------------------------------
+var name = "Full Shield";
+kantia.armor[name] = new kantia.template.armor(name,10,0,15,24,0,0,40,"Blocking",{i:-3,ar:-15,sp:-20},cat);
+
+// Buckler -----------------------------------------------------------------------------------------
+var name = "Buckler";
+kantia.armor[name] = new kantia.template.armor(name,0,0,10,12,0,0,10,"Blocking",{},cat);
 
 // Leather Armor ///////////////////////////////////////////////////////////////////////////////////
 var cat = "Leather";

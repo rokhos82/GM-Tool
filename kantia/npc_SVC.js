@@ -84,32 +84,36 @@ kantia.npcSVC = function(dat,parent) {
 	this.panels.defense = defense;
 	defense.addClass("small");
 	var t = defense.addTable();
-	t.addRow(["Normal DR",stats.defense.dr]);
-	t.addRow(["No Agility DR",stats.defense.noagldr]);
-	t.addRow(["Touch DR",stats.defense.touchdr]);
-	t.addRow(["Staging",stats.defense.staging]);
-	t.addRow(["Absorb",stats.defense.absorb]);
+	this.mainframe.addHandler("armor_update","def_table",t.refreshView,t,[]);
+	t.addCustomRow([new ui.text("Normal DR"),new ui.text(new db.view(stats.defense,"dr"))]);
+	t.addCustomRow([new ui.text("No Agility DR"),new ui.text(new db.view(stats.defense,"noagldr"))]);
+	t.addCustomRow([new ui.text("Touch DR"),new ui.text(new db.view(stats.defense,"touchdr"))]);
+	t.addCustomRow([new ui.text("Staging"),new ui.text(new db.view(stats.defense,"staging"))]);
+	t.addCustomRow([new ui.text("Absorb"),new ui.text(new db.view(stats.defense,"absorb"))]);
 
 	// Build the armor section
 	var armor = combat.addPanel("Armor");
 	armor.addClass("small");
 	var t = armor.addTable();
 	t.addClass("attr_table");
-	t.addRow(["Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
-	armor.addButton("+");
+	this.mainframe.addHandler("armor_update","armor_table",t.refreshView,t,[]);
+	t.addRow(["Slot","Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
 	for(var a in this.dat.armor) {
 		var armor = this.dat.armor[a];
-		var r = [
-			new ui.text(armor.name),
-			new ui.text(armor.deflect),
-			new ui.text(armor.calledshot),
-			new ui.text(armor.staging),
-			new ui.text(armor.absorb),
-			new ui.text(armor.bypass),
-			new ui.button("X")
-		];
+		var r = [];
+		r.push(new ui.text(a));
+		r.push(new ui.text(new db.view(armor,"name")));
+		r.push(new ui.text(new db.view(armor,"deflect")));
+		r.push(new ui.text(new db.view(armor,"calledshot")));
+		r.push(new ui.text(new db.view(armor,"staging")));
+		r.push(new ui.text(new db.view(armor,"absorb")));
+		r.push(new ui.text(new db.view(armor,"bypass")));
+		r.push(new ui.button("+",new db.link(this,this.addArmorPopup,[a])));
+		r.push(new ui.button("X"));
 		t.addCustomRow(r);
 	}
+	this.updateDefense();
+	this.mainframe.trigger("armor_update");
 
 	// Build the combat av section
 	var cav = this.ui.addPanel("Combat");
@@ -632,7 +636,8 @@ kantia.npcSVC.prototype.addTraitPopup = function() {
 		index: 0
 	};
 	var p = popup.addPanel("Add Trait");
-	p.addComboBox("Trait",this.dat.lists.traits,new db.connector(popup.dat,"index"));
+	var cb = p.addComboBox("Trait",this.dat.lists.traits,new db.connector(popup.dat,"index"));
+	cb.focus();
 	p.addButton("Ok",new db.link(this,this.addTrait,[popup]));
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
@@ -660,8 +665,93 @@ kantia.npcSVC.prototype.refreshTraits = function() {
 	}
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.removeTrait = function(name) {
 	delete this.dat.traits[name];
 	this.refreshTraits();
 	this.mainframe.trigger("trait_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addArmorPopup = function(slot) {
+	var popup = this.ui.addPopup();
+	popup.dat = {
+		index: 0,
+		slot: slot
+	};
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+	var p = popup.addPanel("Add Armor");
+	var cb = p.addComboBox("Armor",kantia.lists.armor[slot],new db.connector(popup.dat,"index"));
+	cb.updateData();
+	cb.focus();
+	p.addButton("Ok",new db.link(this,this.addArmor,[popup]));
+	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addArmor = function(popup) {
+	var index = popup.dat.index;
+	var slot = popup.dat.slot;
+	var name = kantia.lists.armor[slot][index];
+	var armor = kantia.armor[name];
+
+	for(var a in armor) {
+		this.dat.armor[slot][a] = armor[a];
+	}
+
+	this.hidePopup(popup);
+	this.updateDefense();
+	this.mainframe.trigger("armor_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateDefense = function() {
+	var dr = 50;
+	var noagldr = 50;
+	var touchdr = 50;
+	var staging = this.dat.attributes.fortitude.score;
+	var absorb = 0;
+
+	// Add the agility adjust
+	dr += this.dat.attributes.agility.adjust;
+	touchdr += this.dat.attributes.agility.adjust;
+
+	// Add the size adjust
+	dr -= this.dat.attributes.size.adjust;
+	noagldr -= this.dat.attributes.size.adjust;
+	touchdr -= this.dat.attributes.size.adjust;
+
+	// Add the deflection bonus
+	for(var a in this.dat.armor) {
+		var armor = this.dat.armor[a];
+		dr += armor.defelct;
+		noagldr += armor.deflect;
+		if(a == "torso") {
+			staging += armor.staging;
+			absorb += armor.absorb;
+		}
+	}
+
+	// Update the defense stat.
+	this.dat.stats.defense.dr = dr;
+	this.dat.stats.defense.noagldr = noagldr;
+	this.dat.stats.defense.touchdr = touchdr;
+	this.dat.stats.defense.staging = staging;
+	this.dat.stats.defense.absorb = absorb;
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.removeArmor = function(name) {
 };
