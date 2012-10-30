@@ -84,7 +84,7 @@ kantia.npcSVC = function(dat,parent) {
 	this.panels.defense = defense;
 	defense.addClass("small");
 	var t = defense.addTable();
-	this.mainframe.addHandler("armor_update","def_table",t.refreshView,t,[]);
+	this.mainframe.addHandler("defense_update","def_table",t.refreshView,t,[]);
 	t.addCustomRow([new ui.text("Normal DR"),new ui.text(new db.view(stats.defense,"dr"))]);
 	t.addCustomRow([new ui.text("No Agility DR"),new ui.text(new db.view(stats.defense,"noagldr"))]);
 	t.addCustomRow([new ui.text("Touch DR"),new ui.text(new db.view(stats.defense,"touchdr"))]);
@@ -109,11 +109,10 @@ kantia.npcSVC = function(dat,parent) {
 		r.push(new ui.text(new db.view(armor,"absorb")));
 		r.push(new ui.text(new db.view(armor,"bypass")));
 		r.push(new ui.button("+",new db.link(this,this.addArmorPopup,[a])));
-		r.push(new ui.button("X"));
+		r.push(new ui.button("X",new db.link(this,this.removeArmor,[a])));
 		t.addCustomRow(r);
 	}
 	this.updateDefense();
-	this.mainframe.trigger("armor_update");
 
 	// Build the combat av section
 	var cav = this.ui.addPanel("Combat");
@@ -155,8 +154,8 @@ kantia.npcSVC = function(dat,parent) {
 	t2.addRow(["Skill","Rank","AV"]);
 	this.mainframe.addHandler("skill_update","skill_table2",t2.refreshView,t2,[]);
 	var l = this.dat.lists.skills.length;
-	var shift = parseInt(l/2);
-	for(var i = 0;i < (l/2) - 1;i++) {
+	var shift = Math.ceil(l/2);
+	for(var i = 0;i < shift;i++) {
 		var name1 = this.dat.lists.skills[i];
 		var skill1 = this.dat.skills[name1];
 		var r = t1.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
@@ -191,6 +190,8 @@ kantia.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("effect_update","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("skill_update","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("trait_update","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("armor_update","update_defense",this.updateDefense,this,[]);
+	this.mainframe.addHandler("armor_update","update_weapons",this.updateWeapons,this,[]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -708,7 +709,6 @@ kantia.npcSVC.prototype.addArmor = function(popup) {
 	}
 
 	this.hidePopup(popup);
-	this.updateDefense();
 	this.mainframe.trigger("armor_update");
 };
 
@@ -734,7 +734,7 @@ kantia.npcSVC.prototype.updateDefense = function() {
 	// Add the deflection bonus
 	for(var a in this.dat.armor) {
 		var armor = this.dat.armor[a];
-		dr += armor.defelct;
+		dr += armor.deflect;
 		noagldr += armor.deflect;
 		if(a == "torso") {
 			staging += armor.staging;
@@ -748,10 +748,27 @@ kantia.npcSVC.prototype.updateDefense = function() {
 	this.dat.stats.defense.touchdr = touchdr;
 	this.dat.stats.defense.staging = staging;
 	this.dat.stats.defense.absorb = absorb;
+
+	this.mainframe.trigger("defense_update");
 };
 
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-kantia.npcSVC.prototype.removeArmor = function(name) {
+kantia.npcSVC.prototype.removeArmor = function(slot) {
+	var armor = this.dat.armor[slot];
+
+	armor.name = "";
+	armor.deflect = 0;
+	armor.calledshot = 0;
+	armor.staging = 0;
+	armor.absorb = 0;
+	armor.ballistic = 0;
+	armor.bypass = 0;
+	armor.block = 0;
+	armor.coverage = 0;
+	armor.penalties = {};
+	armor.category = "";
+
+	this.mainframe.trigger("armor_update");
 };

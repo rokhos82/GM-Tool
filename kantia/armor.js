@@ -7,7 +7,7 @@ kantia.lists.armor.arms = ["Leather Vambrace","Hard Leather Vambrace","Chain Vam
 kantia.lists.armor.legs = ["Leather Greaves","Hard Leather Greaves","Chain Greaves","Scale Greaves","Plate Greaves"];
 kantia.lists.armor.blocking = ["Small Shield","Medium Shield","Full Shield","Buckler","Leather Bracers","Reinforced Bracers"];
 kantia.lists.armor.head = ["Light Helm","Chain Coif","Battle Helm"];
-kantia.lists.armor.hand = ["Chain Gloves","Gauntlets","Leather Gloves"];
+kantia.lists.armor.hands = ["Chain Gloves","Gauntlets","Leather Gloves"];
 
 kantia.template.armor = function(name,def,called,staging,absorb,ball,bypass,block,cover,pen,cat) {
 	this.name = name ? name : "";
@@ -19,7 +19,7 @@ kantia.template.armor = function(name,def,called,staging,absorb,ball,bypass,bloc
 	this.bypass = bypass ? bypass : 0;
 	this.block = block ? block : 0;
 	this.coverage = cover ? cover : 0;
-	this.penalties = {i:0,r:0,p:0,ar:0,sp:0};
+	this.penalties = {};
 	if(pen) {
 		this.penalties = {
 			i: pen.i,
@@ -63,6 +63,16 @@ kantia.armor[name] = new kantia.template.armor(name,10,0,15,24,0,0,40,"Blocking"
 // Buckler -----------------------------------------------------------------------------------------
 var name = "Buckler";
 kantia.armor[name] = new kantia.template.armor(name,0,0,10,12,0,0,10,"Blocking",{},cat);
+
+// Hands ///////////////////////////////////////////////////////////////////////////////////////////
+var cat = "Gloves";
+// Leather Gloves ----------------------------------------------------------------------------------
+var name = "Leather Gloves";
+kantia.armor[name] = new kantia.template.armor(name,0,5,2,1,0,-5,0,"Hands",{sp:-5},cat);
+
+// Chain Gloves ------------------------------------------------------------------------------------
+var name = "Chain Gloves";
+kantia.armor[name] = new kantia.template.armor(name,0,20,5,3,0,-5,0,"Hands",{r:-10,sp:-30},cat);
 
 // Leather Armor ///////////////////////////////////////////////////////////////////////////////////
 var cat = "Leather";

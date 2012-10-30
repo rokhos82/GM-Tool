@@ -52,7 +52,7 @@ kantia.npcDAT = function(name,template) {
 		legs: new kantia.template.armor(),
 		blocking: new kantia.template.armor(),
 		head: new kantia.template.armor(),
-		hand: new kantia.template.armor()
+		hands: new kantia.template.armor()
 	};
 
 	for(var a in temp.armor) {

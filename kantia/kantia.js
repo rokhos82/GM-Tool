@@ -546,7 +546,7 @@ kantia.func.skillArray = function(skills) {
 	return arr;
 };
 
-kantia.func.armorPenalties = function(armor_array,pen_array) {
+kantia.func.armorPenalties = function(armorDAT,pen_array) {
 	var pen = {
 		i: 0,
 		r: 0,
@@ -554,12 +554,14 @@ kantia.func.armorPenalties = function(armor_array,pen_array) {
 		ar: 0,
 		sp: 0
 	};
-	for(var x in armor_array) {
-		var a = armor_array[x];
+	
+	for(var a in armorDAT) {
+		var armor = armorDAT[a];
+		
 		for(var y in pen_array) {
 			var p = pen_array[y];
-			if(pen[p])
-				pen[p] += kantia.armor[a].penalties[p];
+			if(armor.penalties[p])
+				pen[p] += armor.penalties[p];
 		}
 	}
 	return pen;
