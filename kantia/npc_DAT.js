@@ -63,8 +63,8 @@ kantia.npcDAT = function(name,template) {
 	}
 	
 	// Setup the weapons
-	this.lists.melee = temp.weapons.melee;
-	this.rangedList = temp.weapons.ranged;
+	this.lists.melee = temp.weapons.melee.slice();
+	this.lists.ranged = temp.weapons.ranged.slice();
 	this.weapons = {
 		main: { type: "", name: "", skill: "", av: [0,-20,-40,-60,-80], attacks: "", staging: "", damage: ""},
 		off: { type: "", name: "", skill: "", av: [0,-20,-40,-60,-80], attacks: "", staging: "", damage: ""},

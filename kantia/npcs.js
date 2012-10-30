@@ -309,7 +309,7 @@ kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
 		"Two Weapon Mastery": new kantia.template.npcMastery("Two Weapon Mastery",8),
 		"Multiple Attack - 2nd Attack": new kantia.template.npcMastery("Multiple Attack - 2nd Attack",12),
 		"Multiple Attack - 3rd Attack": new kantia.template.npcMastery("Multiple Attack - 3rd Attack",8),
-		"Multiple Attack - 4th Attack": new kantia.template.npcMastery("Multiple Attack - 4th Attack",4)
+		"Multiple Attack - 4th Attack": new kantia.template.npcMastery("Multiple Attack - 4th Attack",4),
 		"Leathal Strike Mastery": new kantia.template.npcMastery("Leathal Strike Mastery",12)
 	},
 	[
@@ -370,7 +370,7 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",6),
 		"Feint": new kantia.template.npcSkill("Feint","reasoning",4),
 		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],4),
-		"Knowledge Skills": new kantia.template.npcSkill("Knowledge Skills","reasoning",6)
+		"Knowledge Skills": new kantia.template.npcSkill("Knowledge Skills","reasoning",6),
 		"Listen": new kantia.template.npcSkill("Listen","perception",4),
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],4),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",4),
@@ -380,7 +380,8 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
-		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",8)
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
 	},
 	{
 	},
@@ -391,8 +392,8 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 	],
 	["Chain Shirt"],
 	{
-		"melee": [],
-		"ranged": []
+		"melee": kantia.lists.weapons.melee.all.slice(),
+		"ranged": kantia.lists.weapons.ranged.all.slice()
 	},
 	"",
 	"These NPCs do not have a preferred set of weapons and most listed weapons in the player's guide are acceptable. Equipment is typically of average quality, sometimes being well worn but usually well kept. Depending upon whether or not the NPC is near his home, he may or may not have more personal posessions besides standard equipment. While not rich, these NPCs tend to carry more money than simple commoners, though they sometimes spend their money un-wisely. Assume these NPCs carry 1d4 gold crowns, 1d8 silver shillings, and 2d10 copper if they would have any reason for carrying their money on their person (or adjust for the campaign).",

@@ -45,6 +45,36 @@ kantia.weapon.groups = {
 	}
 };
 
+kantia.lists.weapons = {};
+kantia.lists.weapons.melee = {};
+kantia.lists.weapons.melee.all = [
+	"Hand Axe",
+	"Short Sword",
+	"Dagger",
+	"Short Spear, 1H",
+	"Short Spear, 2H",
+	"Battle Axe, 1H",
+	"Battle Axe, 2H",
+	"Footman's Pick, 1H",
+	"Footman's Pick, 2H",
+	"Great Axe",
+	"Medium Club, 1H",
+	"Medium Club, 2H",
+	"Heavy Club",
+	"Greatsword",
+	"Wood Axe",
+	"Pick-Axe",
+	"Light Club"
+];
+
+kantia.lists.weapons.ranged = {};
+kantia.lists.weapons.ranged.all = [
+	"Dagger",
+	"Short Spear",
+	"Light Crossbow",
+	"Short Bow"
+];
+
 kantia.weapons = {};
 kantia.weapons.melee = {
 	"Hand Axe": {
