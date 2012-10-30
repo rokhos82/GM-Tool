@@ -271,10 +271,80 @@ kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
 	},
 	{
 		"Brawling": new kantia.template.npcSkill("Brawling","agility",12),
-		"Climbing": new kantia.template.npcSkill("Climbing","strength",6)
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
+		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",8),
+		"Feint": new kantia.template.npcSkill("Feint","reasoning",7),
+		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],6),
+		"Intimidation": new kantia.template.npcSkill("Intimidation","strength",14),
+		"Knowledge Skill": new kantia.template.npcSkill("Knowledge Skill","reasoning",8),
+		"Listen": new kantia.template.npcSkill("Listen","perception",6),
+		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],6),
+		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",6),
+		"Professional Skill": new kantia.template.npcSkill("Professional Skill","reasoning",6),
+		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",12),
+		"Smell": new kantia.template.npcSkill("Smell","perception",6),
+		"Spot": new kantia.template.npcSkill("Spot","perception",8),
+		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
+		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",12)
 	},
 	{
-	}
+		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
+		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
+		"Branded": new kantia.template.npcTrait("Branded",1),
+		"Combat Experience": new kantia.template.npcTrait("Combat Experience",1),
+		"Fast Healing": new kantia.template.npcTrait("Fast Healing",1),
+		"Habit": new kantia.template.npcTrait("Habit",1),
+		"Half-Breed": new kantia.template.npcTrait("Half-Breed",1),
+		"Impulsive": new kantia.template.npcTrait("Impulsive",1),
+		"Missing Eye": new kantia.template.npcTrait("Missing Eye",1),
+		"Missing Finger": new kantia.template.npcTrait("Missing Finger",1),
+		"Ruthless": new kantia.template.npcTrait("Ruthless",1),
+		"Skeptical": new kantia.template.npcTrait("Skeptical",1),
+		"Spirit Sink": new kantia.template.npcTrait("Spirit Sink",4),
+		"Uneducated": new kantia.template.npcTrait("Uneducated",1),
+		"Void": new kantia.template.npcTrait("Void",1)
+	},
+	{
+		"Two Weapon Mastery": new kantia.template.npcMastery("Two Weapon Mastery",8),
+		"Multiple Attack - 2nd Attack": new kantia.template.npcMastery("Multiple Attack - 2nd Attack",12),
+		"Multiple Attack - 3rd Attack": new kantia.template.npcMastery("Multiple Attack - 3rd Attack",8),
+		"Multiple Attack - 4th Attack": new kantia.template.npcMastery("Multiple Attack - 4th Attack",4)
+		"Leathal Strike Mastery": new kantia.template.npcMastery("Leathal Strike Mastery",12)
+	},
+	[
+		new kantia.template.npcHC("Alertness",4),
+		new kantia.template.npcHC("Animal Companion",1),
+		new kantia.template.npcHC("Back to the Wall",1),
+		new kantia.template.npcHC("Berserker",6),
+		new kantia.template.npcHC("Combat Intuition",4),
+		new kantia.template.npcHC("Combat Reflexes",6),
+		new kantia.template.npcHC("Danger Sense",1),
+		new kantia.template.npcHC("Deep Roots",1),
+		new kantia.template.npcHC("Favored Opponent",1),
+		new kantia.template.npcHC("Fearless",1),
+		new kantia.template.npcHC("Flashy Warrior",1),
+		new kantia.template.npcHC("Hermit's Stride",1),
+		new kantia.template.npcHC("Intimidating Presence",1),
+		new kantia.template.npcHC("Iron Will",1),
+		new kantia.template.npcHC("Nothing to Lose",1),
+		new kantia.template.npcHC("Psychic Resistance",1),
+		new kantia.template.npcHC("Robust Health",1),
+		new kantia.template.npcHC("Magic Resistance",1),
+		new kantia.template.npcHC("Take'em ALl",2),
+		new kantia.template.npcHC("The Stare",1),
+		new kantia.template.npcHC("Thick Skinned",3),
+		new kantia.template.npcHC("Tough as Nails",2)
+	],
+	["Leather Jerkin","Leather Vambrace","Leather Greaves"],
+	{
+		"melee": ["Light Club","Medium Club, 1H","Medium Club, 2H","Heavy Club","Battle Axe, 1H","Battle Axe, 2H","Great Axe","Footman's Pick, 1H","Footman's Pick, 2H","Greatsword","Wood Axe","Pick-Axe","Dagger"],
+		"ranged": []
+	},
+	"",
+	"These NPCs often have few possessions, although what they do own is often very durable and sturdy, although brutes of this skill and power may possess luxuries and some premium equipment. Wilderness types will often carry any survival equipment they need with them at all times, while urban types often only carry what they will need in the immediate future. The average brute has 1d6 crowns, 2d8 silver, and 2d10 copper.",
+	"A basic template for a large, combat oriented brute characters, barbarians, enforcers, bouncers and similar characters.  These characters are typically melee oriented, although some wilderness types use ranged weapons.",
+	[]
 );
 
 // Human Fighter, Basic ------------------------------------------------------------------------------
@@ -295,10 +365,39 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 	},
 	{
 		"Brawling": new kantia.template.npcSkill("Brawling","agility",6),
-		"Climbing": new kantia.template.npcSkill("Climbing","strength",4)
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",4),
+		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",6),
+		"Feint": new kantia.template.npcSkill("Feint","reasoning",4),
+		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],4),
+		"Knowledge Skills": new kantia.template.npcSkill("Knowledge Skills","reasoning",6)
+		"Listen": new kantia.template.npcSkill("Listen","perception",4),
+		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],4),
+		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",4),
+		"Professional Skills": new kantia.template.npcSkill("Professional Skills","reasoning",6),
+		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",6),
+		"Smell": new kantia.template.npcSkill("Smell","perception",6),
+		"Spot": new kantia.template.npcSkill("Spot","perception",6),
+		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
+		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
+		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",8)
 	},
 	{
-	}
+	},
+	{
+		"Two Weapon Mastery": new kantia.template.npcMastery("Two Weapon Mastery",4)
+	},
+	[
+	],
+	["Chain Shirt"],
+	{
+		"melee": [],
+		"ranged": []
+	},
+	"",
+	"These NPCs do not have a preferred set of weapons and most listed weapons in the player's guide are acceptable. Equipment is typically of average quality, sometimes being well worn but usually well kept. Depending upon whether or not the NPC is near his home, he may or may not have more personal posessions besides standard equipment. While not rich, these NPCs tend to carry more money than simple commoners, though they sometimes spend their money un-wisely. Assume these NPCs carry 1d4 gold crowns, 1d8 silver shillings, and 2d10 copper if they would have any reason for carrying their money on their person (or adjust for the campaign).",
+	"",
+	[]
 );
 
 // Human Fighter, Expert ------------------------------------------------------------------------------
