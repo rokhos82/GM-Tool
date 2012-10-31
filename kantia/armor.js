@@ -64,6 +64,14 @@ kantia.armor[name] = new kantia.template.armor(name,10,0,15,24,0,0,40,"Blocking"
 var name = "Buckler";
 kantia.armor[name] = new kantia.template.armor(name,0,0,10,12,0,0,10,"Blocking",{},cat);
 
+// Reinforced Bracers ------------------------------------------------------------------------------
+var name = "Leather Bracers";
+kantia.armor[name] = new kantia.template.armor(name,0,5,2,2,0,0,0,"Blocking",{},cat);
+
+// Reinforced Bracers ------------------------------------------------------------------------------
+var name = "Reinforced Bracers";
+kantia.armor[name] = new kantia.template.armor(name,0,20,8,6,0,0,5,"Blocking",{},cat);
+
 // Hands ///////////////////////////////////////////////////////////////////////////////////////////
 var cat = "Gloves";
 // Leather Gloves ----------------------------------------------------------------------------------

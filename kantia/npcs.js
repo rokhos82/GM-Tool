@@ -384,20 +384,57 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
 	},
 	{
+		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
+		"Animal Empathy": new kantia.template.npcTrait("Animal Empathy",1),
+		"Branded": new kantia.template.npcTrait("Branded",1),
+		"Code of Honor": new kantia.template.npcTrait("Code of Honor",1),
+		"Combat Experience": new kantia.template.npcTrait("Combat Experience",1),
+		"Habit": new kantia.template.npcTrait("Habit",1),
+		"Half-Breed": new kantia.template.npcTrait("Half-Breed",1),
+		"Impulsive": new kantia.template.npcTrait("Impulsive",1),
+		"Light Footed": new kantia.template.npcTrait("Light Footed",1),
+		"Light Sleeper": new kantia.template.npcTrait("Light Sleeper",1),
+		"Lone Wolf": new kantia.template.npcTrait("Lone Wolf",1),
+		"Lucky": new kantia.template.npcTrait("Lucky",6),
+		"Ruthless": new kantia.template.npcTrait("Ruthless",1),
+		"Skeptical": new kantia.template.npcTrait("Skeptical",1),
+		"Spirit Sink": new kantia.template.npcTrait("Spirit Sink",4),
+		"Suave": new kantia.template.npcTrait("Suave",1),
+		"Uneducated": new kantia.template.npcTrait("Uneducated",1),
+		"Void": new kantia.template.npcTrait("Void",1)
 	},
 	{
-		"Two Weapon Mastery": new kantia.template.npcMastery("Two Weapon Mastery",4)
+		"Two Weapon Mastery": new kantia.template.npcMastery("Two Weapon Mastery",4),
+		"Multiple Attack - 2nd Attack": new kantia.template.npcMastery("Multiple Attack - 2nd Attack",4),
+		"Lethal Strike Mastery": new kantia.template.npcMastery("Lethal Strike Mastery",4)
 	},
 	[
+		new kantia.template.npcHC("Intimidating Presence",1),
+		new kantia.template.npcHC("Nothing to Lose",1),
+		new kantia.template.npcHC("Thich Skinned",1),
+		new kantia.template.npcHC("Tough as Nails",1),
+		new kantia.template.npcHC("Animal Companion",1),
+		new kantia.template.npcHC("Favored Opponent",1),
+		new kantia.template.npcHC("Fearless",1),
+		new kantia.template.npcHC("Iron Will",1),
+		new kantia.template.npcHC("Alert Sleeper",1),
+		new kantia.template.npcHC("Psychic Resistance",1),
+		new kantia.template.npcHC("Magic Resistance",1),
+		new kantia.template.npcHC("Combat Reflexes",4),
+		new kantia.template.npcHC("Combat Intuition",4),
+		new kantia.template.npcHC("Cool Headed",1),
+		new kantia.template.npcHC("Steadfast",1),
+		new kantia.template.npcHC("Back to the Wall",1),
+		new kantia.template.npcHC("Tactician",1)
 	],
-	["Chain Shirt"],
+	["Chain Shirt","Reinforced Bracers"],
 	{
 		"melee": kantia.lists.weapons.melee.all.slice(),
 		"ranged": kantia.lists.weapons.ranged.all.slice()
 	},
 	"",
 	"These NPCs do not have a preferred set of weapons and most listed weapons in the player's guide are acceptable. Equipment is typically of average quality, sometimes being well worn but usually well kept. Depending upon whether or not the NPC is near his home, he may or may not have more personal posessions besides standard equipment. While not rich, these NPCs tend to carry more money than simple commoners, though they sometimes spend their money un-wisely. Assume these NPCs carry 1d4 gold crowns, 1d8 silver shillings, and 2d10 copper if they would have any reason for carrying their money on their person (or adjust for the campaign).",
-	"",
+	"The fighter template focuses on NPCs that have a talent for traditional melee combat. Many are soldiers, mercenaries, town watch, bandits, and bounty hunters. They are well-skilled and capable individuals that are equally efficient if working alone or with others. They lead rough and often very dangerous lives and their personalities and attitudes will reflect that. NPC Fighters are vaguely classified into three types: basic, expert, and master.",
 	[]
 );
 
@@ -419,10 +456,77 @@ kantia.template.npcs["Human Fighter, Expert"] = new kantia.template.npc(
 	},
 	{
 		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
-		"Climbing": new kantia.template.npcSkill("Climbing","strength",6)
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
+		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",10),
+		"Feint": new kantia.template.npcSkill("Feint","reasoning",6),
+		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],6),
+		"Knowledge Skills": new kantia.template.npcSkill("Knowledge Skills","reasoning",8),
+		"Listen": new kantia.template.npcSkill("Listen","perception",6),
+		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],6),
+		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",6),
+		"Professional Skills": new kantia.template.npcSkill("Professional Skills","reasoning",8),
+		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",8),
+		"Smell": new kantia.template.npcSkill("Smell","perception",8),
+		"Spot": new kantia.template.npcSkill("Spot","perception",8),
+		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
+		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
 	},
 	{
-	}
+		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
+		"Animal Empathy": new kantia.template.npcTrait("Animal Empathy",1),
+		"Branded": new kantia.template.npcTrait("Branded",1),
+		"Code of Honor": new kantia.template.npcTrait("Code of Honor",1),
+		"Combat Experience": new kantia.template.npcTrait("Combat Experience",1),
+		"Habit": new kantia.template.npcTrait("Habit",1),
+		"Half-Breed": new kantia.template.npcTrait("Half-Breed",1),
+		"Impulsive": new kantia.template.npcTrait("Impulsive",1),
+		"Light Footed": new kantia.template.npcTrait("Light Footed",1),
+		"Light Sleeper": new kantia.template.npcTrait("Light Sleeper",1),
+		"Lone Wolf": new kantia.template.npcTrait("Lone Wolf",1),
+		"Lucky": new kantia.template.npcTrait("Lucky",6),
+		"Ruthless": new kantia.template.npcTrait("Ruthless",1),
+		"Skeptical": new kantia.template.npcTrait("Skeptical",1),
+		"Spirit Sink": new kantia.template.npcTrait("Spirit Sink",4),
+		"Suave": new kantia.template.npcTrait("Suave",1),
+		"Uneducated": new kantia.template.npcTrait("Uneducated",1),
+		"Void": new kantia.template.npcTrait("Void",1)
+	},
+	{
+		"Two Weapon Mastery": new kantia.template.npcMastery("Two Weapon Mastery",4),
+		"Multiple Attack - 2nd Attack": new kantia.template.npcMastery("Multiple Attack - 2nd Attack",4),
+		"Lethal Strike Mastery": new kantia.template.npcMastery("Lethal Strike Mastery",4)
+	},
+	[
+		new kantia.template.npcHC("Intimidating Presence",1),
+		new kantia.template.npcHC("Nothing to Lose",1),
+		new kantia.template.npcHC("Thich Skinned",1),
+		new kantia.template.npcHC("Tough as Nails",1),
+		new kantia.template.npcHC("Animal Companion",1),
+		new kantia.template.npcHC("Favored Opponent",1),
+		new kantia.template.npcHC("Fearless",1),
+		new kantia.template.npcHC("Iron Will",1),
+		new kantia.template.npcHC("Alert Sleeper",1),
+		new kantia.template.npcHC("Psychic Resistance",1),
+		new kantia.template.npcHC("Magic Resistance",1),
+		new kantia.template.npcHC("Combat Reflexes",4),
+		new kantia.template.npcHC("Combat Intuition",4),
+		new kantia.template.npcHC("Cool Headed",1),
+		new kantia.template.npcHC("Steadfast",1),
+		new kantia.template.npcHC("Back to the Wall",1),
+		new kantia.template.npcHC("Tactician",1)
+	],
+	["Chain Shirt","Reinforced Bracers"],
+	{
+		"melee": kantia.lists.weapons.melee.all.slice(),
+		"ranged": kantia.lists.weapons.ranged.all.slice()
+	},
+	"",
+	"These NPCs do not have a preferred set of weapons and most listed weapons in the player's guide are acceptable. Equipment is typically of average quality, sometimes being well worn but usually well kept. Depending upon whether or not the NPC is near his home, he may or may not have more personal posessions besides standard equipment. While not rich, these NPCs tend to carry more money than simple commoners, though they sometimes spend their money un-wisely. Assume these NPCs carry 1d4 gold crowns, 1d8 silver shillings, and 2d10 copper if they would have any reason for carrying their money on their person (or adjust for the campaign).",
+	"The fighter template focuses on NPCs that have a talent for traditional melee combat. Many are soldiers, mercenaries, town watch, bandits, and bounty hunters. They are well-skilled and capable individuals that are equally efficient if working alone or with others. They lead rough and often very dangerous lives and their personalities and attitudes will reflect that. NPC Fighters are vaguely classified into three types: basic, expert, and master.",
+	[]
 );
 
 // Human Fighter, Master ------------------------------------------------------------------------------

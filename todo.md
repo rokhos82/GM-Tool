@@ -1,5 +1,5 @@
 ## For current version ##
-* Equip/remove armor
+* <strike>Equip/remove armor</strike>
 * Custom npc templates
 * Clone npc
 * Mass create npc
@@ -8,11 +8,14 @@
 * Add player characters
 * <strike>Add opaque overlay for popup windows.</strike>
 * <strike>Convert weapons to a weapon table like the character sheet.</strike>
-* Finish human brute npc templates.
+* <strike>Finish human brute npc templates.</strike>
 * Finish troll brute npc templates.
 * Finish lukoi brute npc templates.
 * <strike>Get dual weilding working.</strike>
 * <strike>Make skill table multi-column.</strike>
+* Have race affect NPC templates.
+* Add HCs
+* Add dodge,feint,etc. to combat AVs.
 
 
 ## For future versions ##
