@@ -8,6 +8,7 @@ kantia.npcDAT = function(name,template) {
 	var temp = kantia.template.npcs[template];
 	
 	this.description = temp.description;
+	this.race = temp.race;
 	
 	// Build the real attribute objects.
 	this.attributes = {};

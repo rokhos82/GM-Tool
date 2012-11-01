@@ -181,7 +181,11 @@ kantia.npcSVC = function(dat,parent) {
 		if(i + shift < l) {
 			var name2 = this.dat.lists.skills[i + shift];
 			var skill2 = this.dat.skills[name2];
-			var r = t2.addRow([skill2.name,new db.connector(skill2,"rank"),new db.view(skill2,"total")]);
+			var r = t2.addRow([
+				skill2.name,
+				new db.connector(skill2,"rank"),
+				new db.view(skill2,"total")
+			]);
 			var c = r.cells[1].children[0];
 			c.setUpdate(this,this.updateSkill,[name2,c]);
 		}
@@ -425,7 +429,11 @@ kantia.npcSVC.prototype.refreshDisciplines = function() {
 		panel.addButton("Remove");
 		var t = panel.addTable();
 		t.addRow(["Disc Rank",new db.connector(disc,"rank")]);
-		var r = t.addRow(["Casting Rank",new db.connector(disc.casting,"rank"),new db.connector(disc.casting,"total")]);
+		var r = t.addRow([
+			"Casting Rank",
+			new db.connector(disc.casting,"rank"),
+			new db.connector(disc.casting,"total")
+		]);
 		r.cells[0].setUpdate(this,this.updateDiscipline,[d,r.cells[0]]);
 		panel.addButton("Add Spell",new db.link(this,this.addSpellPopup,[disc.discipline]));
 		var p = panel.addPanel("Spells");
@@ -578,7 +586,7 @@ kantia.npcSVC.prototype.addEffect = function(cat,value) {
 
 
 // -------------------------------------------------------------------------------------------------
-//
+// combatSkillPenalties
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.combatSkillPenalties = function(hand,weapon) {
 	var p = 0;
@@ -623,28 +631,28 @@ kantia.npcSVC.prototype.combatSkillPenalties = function(hand,weapon) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// checkTrait
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.checkTrait = function(trait) {
 	return this.dat.traits[trait] ? true : false;
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// checkHC
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.checkHC = function(hc) {
 	return this.dat.mastery[hc] ? true : false;
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// getHC
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.getHC = function(hc) {
 	return this.dat.mastery[hc].effect;
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// addTraitPopup
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.addTraitPopup = function() {
 	var popup = this.ui.addPopup();

@@ -14,7 +14,7 @@
 * <strike>Get dual weilding working.</strike>
 * <strike>Make skill table multi-column.</strike>
 * Have race affect NPC templates.
-* Add HCs
+* <strike>Add HCs</strike>
 * Add dodge,feint,etc. to combat AVs.
 
 
@@ -23,3 +23,4 @@
 * Add plot points and attache encounters directly to them.  Plot points will be mostly text.
 * Have a campaign NPC section for major NPCs that the group may or may not encounter multiple times.
 * Add file attachment to plot points (requires server connection for this).
+* Add combat interface popup.
