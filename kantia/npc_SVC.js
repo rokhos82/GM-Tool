@@ -72,10 +72,18 @@ kantia.npcSVC = function(dat,parent) {
 	
 	var traits = other.addPanel("Traits");
 	traits.addClass("small");
-	var l = traits.addList();
+	var l = traits.addTable();
 	this.panels.traits = l;
 	this.refreshTraits();
 	traits.addButton("+",new db.link(this,this.addTraitPopup,[]));
+
+	// Build the HC section ---------------------------
+	var hc = this.ui.addPanel("HC");
+	hc.addClass("small");
+	var t = hc.addTable();
+	this.panels.hc = t;
+	this.refreshHC();
+	var b = hc.addButton("+",new db.link(this,this.addHCPopup,[]));
 	
 	// Build the combat section -----------------------
 	var combat = this.ui.addPanel("Combat");
@@ -115,7 +123,8 @@ kantia.npcSVC = function(dat,parent) {
 	this.updateDefense();
 
 	// Build the combat av section
-	var cav = this.ui.addPanel("Combat");
+	var cav = this.ui.addPanel("Combat AVs");
+	cav.addClass("small");
 	var t = cav.addTable();
 	t.addClass("attr_table");
 	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
@@ -139,6 +148,13 @@ kantia.npcSVC = function(dat,parent) {
 		t.addCustomRow(r);
 	}
 
+	var mastery = this.ui.addPanel("Mastery");
+	mastery.addClass("small");
+	var t = mastery.addTable();
+	t.addClass("attr_table");
+	this.panels.mastery = t;
+	this.refreshMastery();
+	mastery.addButton("+",new db.link(this,this.addMasteryPopup,[]));
 	
 	// Build the skills section ------------------------
 	var skills = this.ui.addPanel("Skills");
@@ -192,6 +208,8 @@ kantia.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("trait_update","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("armor_update","update_defense",this.updateDefense,this,[]);
 	this.mainframe.addHandler("armor_update","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("mastery_update","update_weapons",this.updateWeapons,this,[]);
+	this.mainframe.addHandler("mastery_update","update_defense",this.updateDefense,this,[]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -576,8 +594,8 @@ kantia.npcSVC.prototype.combatSkillPenalties = function(hand,weapon) {
 	
 	if(this.dat.effects.dualwield) {
 		var twm = {};
-		if(this.checkHC("Two-Weapon Mastery"))
-			twm = this.getHC("Two-Weapon Mastery");
+		if(this.checkHC("Two Weapon Mastery"))
+			twm = this.getHC("Two Weapon Mastery");
 
 		if(this.checkTrait("Ambidextrious")) {
 			if(twm.ambi)
@@ -615,14 +633,14 @@ kantia.npcSVC.prototype.checkTrait = function(trait) {
 //
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.checkHC = function(hc) {
-	return false;
+	return this.dat.mastery[hc] ? true : false;
 };
 
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.getHC = function(hc) {
-	return null;
+	return this.dat.mastery[hc].effect;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -660,9 +678,12 @@ kantia.npcSVC.prototype.addTrait = function(popup) {
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.refreshTraits = function() {
 	var l = this.panels.traits;
-	l.removeChildren();
+	l.removeRows();
 	for(var t in this.dat.traits) {
-		l.addItem(t);
+		l.addCustomRow([
+			new ui.text(t),
+			new ui.button("X",new db.link(this,this.removeTrait,[t]))
+		]);
 	}
 };
 
@@ -771,4 +792,125 @@ kantia.npcSVC.prototype.removeArmor = function(slot) {
 	armor.category = "";
 
 	this.mainframe.trigger("armor_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addHCPopup = function() {
+	var hc_dat = {
+		index: 0,
+		rank: 0
+	};
+	var popup = this.ui.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+	
+	var p = popup.addPanel("Add Heroic Characteristic");
+	var cb = p.addComboBox("HC",this.dat.lists.hc,new db.connector(hc_dat,"index"));
+	cb.focus();
+	var tf = p.addTextField("Rank",new db.connector(hc_dat,"rank"));
+	
+	var seq = new db.sequence();
+	seq.addAction("addhc",new db.sequence.action(this,this.addHC,[hc_dat]));
+	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
+	p.addButton("Ok",seq);
+	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addHC = function(dat) {
+	var name = this.dat.lists.hc[dat.index];
+	var rank = dat.rank;
+
+	this.dat.hc[name] = rank;
+	this.refreshHC();
+	this.mainframe.trigger("update_hc");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.refreshHC = function() {
+	this.panels.hc.removeRows();
+	for(var h in this.dat.hc) {
+		this.panels.hc.addCustomRow([
+			new ui.text(h + " - " + this.dat.hc[h]),
+			new ui.button("X",new db.link(this,this.removeHC,[h]))
+		]);
+	}
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.removeHC = function(name) {
+	delete this.dat.hc[name];
+	this.refreshHC();
+	this.mainframe.trigger("update_hc");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addMasteryPopup = function() {
+	var mastery_dat = {
+		index: 0,
+		rank: 1
+	};
+	var popup = this.ui.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+	
+	var p = popup.addPanel("Add Mastery");
+	var cb = p.addComboBox("Mastery",this.dat.lists.mastery,new db.connector(mastery_dat,"index"));
+	cb.focus();
+	var tf = p.addTextField("Rank",new db.connector(mastery_dat,"rank"));
+
+	var seq = new db.sequence();
+	seq.addAction("add_mastery",new db.sequence.action(this,this.addMastery,[mastery_dat]));
+	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
+	p.addButton("Ok",seq);
+	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.addMastery = function(dat) {
+	var name = this.dat.lists.mastery[dat.index];
+	var r = dat.rank;
+
+	this.dat.mastery[name] = {rank: r,effect: kantia.mastery[name][r]};
+	this.refreshMastery();
+	this.mainframe.trigger("mastery_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.refreshMastery = function() {
+	this.panels.mastery.removeRows();
+	this.panels.mastery.addRow(["Mastery","Rank"]);
+	for(var m in this.dat.mastery) {
+		this.panels.mastery.addCustomRow([
+			new ui.text(m),
+			new ui.text(this.dat.mastery[m].rank),
+			new ui.button("X",new db.link(this,this.removeMastery,[m]))
+		]);
+	}
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.removeMastery = function(name) {
+	this.dat.mastery[name] = {};
+	delete this.dat.mastery[name];
+	this.refreshMastery();
+	this.mainframe.trigger("mastery_update");
 };
