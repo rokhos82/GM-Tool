@@ -105,7 +105,8 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",4),
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
-		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",8)
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -193,7 +194,8 @@ kantia.template.npcs["Human Brute, Expert"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
-		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",12)
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -286,7 +288,8 @@ kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
-		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",12)
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -691,7 +694,8 @@ kantia.template.npcs["Lukoi Brute, Baisc"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",4),
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
-		"Weapon of Choice": new kantia.template.npcSkill("Weapon of Choice","agility",8)
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
