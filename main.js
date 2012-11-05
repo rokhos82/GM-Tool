@@ -44,6 +44,8 @@ GM.main = function(root) {
 	var p = this.controls.addPanel();
 	var b = p.addButton("Save Data",new db.link(this,this.saveData,[]));
 	var b = p.addButton("Clear Data",new db.link(this,this.clearData,[]));
+	var b = p.addButton("Import",new db.link(this,this.importDataPopup,[]));
+	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
 	
 	var p = this.controls.addPanel("Campaign Selector");
 	var cb = p.addComboBox("Campaigns",this.campaignList,new db.local(""));
@@ -224,4 +226,47 @@ GM.main.prototype.rollGroupInitiative = function(list) {
 	var roll = kantia.func.d10(1) + avg;
 	
 	list.addItem("Group - " + roll);
+};
+
+// -------------------------------------------------------------------------------------------------
+// hidePopup
+// -------------------------------------------------------------------------------------------------
+GM.main.prototype.hidePopup = function(popup) {
+	popup.hide();
+	this.controls.removeChild(popup);
+};
+
+// -------------------------------------------------------------------------------------------------
+// importDataPopup
+// -------------------------------------------------------------------------------------------------
+GM.main.prototype.importDataPopup = function() {
+	var popup = this.controls.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+
+	var p = popup.addPanel("JSON Import");
+};
+
+// -------------------------------------------------------------------------------------------------
+// importData
+// -------------------------------------------------------------------------------------------------
+GM.main.prototype.importData = function(data) {
+};
+
+// -------------------------------------------------------------------------------------------------
+// exportDataPopup
+// -------------------------------------------------------------------------------------------------
+GM.main.prototype.exportDataPopup = function() {
+	var popup = this.controls.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+
+	var p = popup.addPanel("JSON Export");
+	var dat = {
+		json: JSON.stringify(this.campaigns)
+	};
+	var ta = p.addTextArea(new db.connector(dat,"json"));
+	var b = p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
 };
