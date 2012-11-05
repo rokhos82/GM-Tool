@@ -8,11 +8,11 @@ GM.main = function(root) {
 	this.panel.setParent(this.root);
 	this.panel.addClass("panel");
 	this.root.appendChild(this.panel.dom);
-	this.controls = this.panel.addPanel("Controls");
 	this.sidebar = new ui.panel(null,new lib.mainframe(this.mainframe));
 	this.sidebar.setParent(this.root);
 	this.sidebar.addClass("sidebar");
 	this.root.appendChild(this.sidebar.dom);
+	this.controls = this.sidebar.addPanel("Controls");
 
 	this.campaigns = {};
 	this.campaignList = {};
