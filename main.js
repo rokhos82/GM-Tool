@@ -263,15 +263,23 @@ GM.main.prototype.importDataPopup = function() {
 GM.main.prototype.importData = function(data) {
 	var str = data.json;
 	var camps = JSON.parse(str);
+	var first = null;
 	for(var c in camps) {
-		if(this.activeCampaign == undefined) {
-			this.activeCampaign = new GM.campaignSVC(camps[c],this.mainframe,this);
+		if(!first) {
+			first = c;
 		}
 		this.campaigns[c] = camps[c];
 		this.campaignList[c] = c;
 	}
 
-	this.activeCampaign.initialize();
+	if(this.activeCampaign) {
+		this.activeCampaign.setData(camps[first]);
+	}
+	else {
+		this.activeCampaign = new GM.campaignSVC(camps[first],this.mainframe,this);
+		this.activeCampaign.initialize();
+	}
+
 	this.selector.setOptions(this.campaignList);
 };
 
