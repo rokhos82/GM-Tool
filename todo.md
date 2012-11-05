@@ -19,6 +19,7 @@
 * Have race affect NPC templates.
 * <strike>Add HCs</strike>
 * Add dodge,feint,etc. to combat AVs.
+* Add data import/export.
 
 
 ## For future versions ##
