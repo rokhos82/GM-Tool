@@ -244,14 +244,35 @@ GM.main.prototype.importDataPopup = function() {
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
 	popup.show();
+	var dat = {
+		json: ""
+	};
 
 	var p = popup.addPanel("JSON Import");
+	var ta = p.addTextArea(new db.connector(dat,"json"));
+	var seq = new db.sequence();
+	seq.addAction("import",new db.sequence.action(this,this.importData,[dat]));
+	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
+	var b = p.addButton("Ok",seq);
+	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
 // -------------------------------------------------------------------------------------------------
 // importData
 // -------------------------------------------------------------------------------------------------
 GM.main.prototype.importData = function(data) {
+	var str = data.json;
+	var camps = JSON.parse(str);
+	for(var c in camps) {
+		if(this.activeCampaign == undefined) {
+			this.activeCampaign = new GM.campaignSVC(camps[c],this.mainframe,this);
+		}
+		this.campaigns[c] = camps[c];
+		this.campaignList[c] = c;
+	}
+
+	this.activeCampaign.initialize();
+	this.selector.setOptions(this.campaignList);
 };
 
 // -------------------------------------------------------------------------------------------------
