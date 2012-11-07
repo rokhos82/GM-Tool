@@ -198,6 +198,13 @@ kantia.weapons.melee = {
 		staging: { value: 6, source: "strength" },
 		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
 		other: {}
+	},
+	"Staff": {
+		difficulty: { base: 10 },
+		range: { text: "Reach" },
+		staging: { value: 8, source: "strength" },
+		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
+		other: { "Defensive Weapon": 1, "Double-ended": 1, "Reach": 1 }
 	}
 };
 
