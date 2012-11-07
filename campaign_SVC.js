@@ -12,8 +12,12 @@ GM.campaignSVC = function(dat,frame,parent) {
 	this.ui = new ui.panel(this.name);
 	this.ui.setTitleData(new db.connector(this,"name"));
 	
-	var b = this.ui.addButton("New Group",new db.link(this,this.showPopup,[]));
-	var grps = this.ui.addPanel("Groups");
+
+	// Build sidebar controls
+	var p = new ui.panel(this.name);
+	this.addToSidebar(p);
+	var b = p.addButton("New Group",new db.link(this,this.showPopup,[]));
+	var grps = p.addPanel("Groups");
 	this.groupButtons = grps.addRadioSet("groups");
 	
 	this.setData(dat);
@@ -120,4 +124,8 @@ GM.campaignSVC.prototype.selectGroup = function(name) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.refreshView = function() {
 	this.ui.refreshView();
+};
+
+GM.campaignSVC.prototype.addToSidebar = function(ui) {
+	this.parent.addToSidebar(ui);
 };

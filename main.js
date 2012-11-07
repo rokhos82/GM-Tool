@@ -299,3 +299,7 @@ GM.main.prototype.exportDataPopup = function() {
 	var ta = p.addTextArea(new db.connector(dat,"json"));
 	var b = p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
 };
+
+GM.main.prototype.addToSidebar = function(ui) {
+	this.sidebar.appendChild(ui);
+};

@@ -12,7 +12,8 @@ GM.groupSVC = function(dat,parent) {
 	this.ui.addButton("New NPC",new db.link(this,this.showPopup,[]));
 	this.ui.addButton("Clone NPC");
 	
-	this.links = this.ui.addPanel("Quick Links");
+	this.links = new ui.panel("Quick Links");
+	this.parent.addToSidebar(this.links);
 	this.npcs = this.ui.addPanel();
 	
 	this.setData(dat);
