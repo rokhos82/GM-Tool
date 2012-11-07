@@ -734,10 +734,15 @@ kantia.npcSVC.prototype.updateDefense = function() {
 	var touchdr = 50;
 	var staging = this.dat.attributes.fortitude.score;
 	var absorb = 0;
+	var race = this.dat.race.toLowerCase();
 
 	// Add the agility adjust
 	dr += this.dat.attributes.agility.adjust;
 	touchdr += this.dat.attributes.agility.adjust;
+	if(kantia.race[race].defense.agldr) {
+		dr += kantia.race[race].defense.agldr;
+		touchdr += kantia.race[race].defense.agldr;
+	}
 
 	// Add the size adjust
 	dr -= this.dat.attributes.size.adjust;
@@ -753,6 +758,11 @@ kantia.npcSVC.prototype.updateDefense = function() {
 			staging += armor.staging;
 			absorb += armor.absorb;
 		}
+	}
+
+	if(kantia.race[race].defense.defdr) {
+		dr += kantia.race[race].defense.defdr;
+		noagldr += kantia.race[race].defense.defdr;
 	}
 
 	// Update the defense stat.

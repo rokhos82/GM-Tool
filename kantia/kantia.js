@@ -25,6 +25,7 @@ kantia.template.race = function() {
 		wound: 0,
 		bludgeon: 0
 	};
+	this.defense = {};
 };
 
 kantia.template.skill = function(name,attr) {
