@@ -184,12 +184,12 @@ kantia.npcSVC = function(dat,parent) {
 	this.refreshDisciplines();
 
 	// Mainframe handlers
-	this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
-	this.mainframe.addHandler("defense_action","effect_refresh",this.refreshEffects,this,[]);
+	//this.mainframe.addHandler("defense_action","update_weapons",this.updateWeapons,this,[]);
+	//this.mainframe.addHandler("defense_action","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("new_round","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("new_round","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("add_effect","effect_refresh",this.refreshEffects,this,[]);
-	this.mainframe.addHandler("effect_update","effect_refresh",this.refreshEffects,this,[]);
+	//this.mainframe.addHandler("effect_update","effect_refresh",this.refreshEffects,this,[]);
 	this.mainframe.addHandler("skill_update","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("trait_update","update_weapons",this.updateWeapons,this,[]);
 	this.mainframe.addHandler("armor_update","update_defense",this.updateDefense,this,[]);
@@ -499,13 +499,13 @@ kantia.npcSVC.prototype.refreshSpells = function(disc,panel) {
 // refreshEffects
 // -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.refreshEffects = function() {
-	this.panels.effects.removeChildren();
+	/*this.panels.effects.removeChildren();
 	
 	for(var e in this.dat.effects) {
 		var name = e;
 		var value = this.dat.effects[e];
 		this.panels.effects.addButton(name + " - " + value);
-	}
+	}//*/
 };
 
 // -------------------------------------------------------------------------------------------------
