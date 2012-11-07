@@ -680,9 +680,10 @@ kantia.template.npcs["Human Mage, Basic"] = new kantia.template.npc(
 	},
 	{
 		"Brawling": new kantia.template.npcSkill("Brawling","agility",2),
-		"Climbing": new kantia.template.npcSkill("Climbing","strength",3),
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",2),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
-		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",5),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",4),
+		"Ethereal Accuracy": new kantia.template.npcSkill("Ethereal Accuracy","willpower",6),
 		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],4),
 		"Intimidation": new kantia.template.npcSkill("Intimidation","strength",4),
 		"Knowledge Skill": new kantia.template.npcSkill("Knowledge Skill","reasoning",6),
@@ -695,8 +696,6 @@ kantia.template.npcs["Human Mage, Basic"] = new kantia.template.npc(
 		"Spellcraft": new kantia.template.npcSkill("Spellcraft","spirit",8),
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",4),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",4)
 	},
 	{
 		"Stamina": new kantia.template.npcTrait("Stamina",2),
@@ -713,7 +712,7 @@ kantia.template.npcs["Human Mage, Basic"] = new kantia.template.npc(
 		"melee": ["Dagger","Short Spear, 1H","Short Spear, 2H","Staff"],
 		"ranged": ["Dagger","Short Spear"]
 	},
-	"",
+	"Choose a magic discipline at rank 4.  Casting rank should be at least rank 6.",
 	"These NPCs often have few possessions, although what they do own is often very durable and sturdy. Wilderness types will often carry any survival equipment they need with them at all times, while urban types often only carry what they will need in the immediate future. The average brute has 1d3-1 crowns, 2d6-2 silver, and 2d10 copper.",
 	"",
 	[]

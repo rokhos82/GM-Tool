@@ -410,10 +410,11 @@ kantia.npcSVC.prototype.refreshDisciplines = function() {
 		var disc = this.dat.magic.disciplines[d];
 		panel.addButton("Remove");
 		var t = panel.addTable();
-		t.addRow([
+		var r = t.addRow([
 			"Disc Rank",
 			new db.connector(disc,"rank")
 		]);
+		r.cells[1].children[0].setUpdate(this,this.updateSpells,[d]);
 		var r = t.addRow([
 			"Casting Rank",
 			new db.connector(disc.casting,"rank"),
@@ -476,7 +477,7 @@ kantia.npcSVC.prototype.addSpell = function(popup) {
 	
 	var drank = this.dat.magic.disciplines[discipline].rank;
 	var spell = new kantia.template.spell(name,rank);
-	spell.power = rank + drank;
+	spell.power = parseInt(rank) + parseInt(drank);
 	this.dat.magic.disciplines[discipline].spells[name] = spell;
 
 	this.refreshDisciplines();
@@ -494,8 +495,38 @@ kantia.npcSVC.prototype.refreshSpells = function(disc,panel) {
 	t.addRow(["Name","Rank","Power"]);
 	for(var s in discipline.spells) {
 		var spell = discipline.spells[s];
-		t.addRow([spell.name,spell.rank,spell.power]);
+		var r = t.addRow([
+			spell.name,
+			new db.connector(spell,"rank"),
+			new db.view(spell,"power")
+		]);
+		r.cells[1].children[0].setUpdate(this,this.updateSpellRank,[disc,spell,r.cells[1].children[0]]);
 	}
+	this.mainframe.addHandler(disc + "_spell_update",disc + "_spell_table",t.refreshView,t,[]);
+};
+
+// -------------------------------------------------------------------------------------------------
+// updateSpellRank
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateSpellRank = function(disc,spell,tf) {
+	spell.rank = parseInt(tf.getValue());
+	this.updateSpells(disc);
+};
+
+// -------------------------------------------------------------------------------------------------
+// updateSpells
+// -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateSpells = function(disc) {
+	var discipline = this.dat.magic.disciplines[disc];
+	var drank = parseInt(discipline.rank);
+
+	for(var s in discipline.spells) {
+		var spell = discipline.spells[s];
+		var srank = parseInt(spell.rank);
+		spell.power = drank + srank;
+	}
+
+	this.mainframe.trigger(disc + "_spell_update");
 };
 
 // -------------------------------------------------------------------------------------------------
