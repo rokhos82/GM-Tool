@@ -410,13 +410,16 @@ kantia.npcSVC.prototype.refreshDisciplines = function() {
 		var disc = this.dat.magic.disciplines[d];
 		panel.addButton("Remove");
 		var t = panel.addTable();
-		t.addRow(["Disc Rank",new db.connector(disc,"rank")]);
+		t.addRow([
+			"Disc Rank",
+			new db.connector(disc,"rank")
+		]);
 		var r = t.addRow([
 			"Casting Rank",
 			new db.connector(disc.casting,"rank"),
 			new db.connector(disc.casting,"total")
 		]);
-		r.cells[0].setUpdate(this,this.updateDiscipline,[d,r.cells[0]]);
+		r.cells[1].children[0].setUpdate(this,this.updateDiscipline,[d,r.cells[1].children[0]]);
 		panel.addButton("Add Spell",new db.link(this,this.addSpellPopup,[disc.discipline]));
 		var p = panel.addPanel("Spells");
 		this.refreshSpells(d,p);

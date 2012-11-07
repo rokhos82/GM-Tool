@@ -7,7 +7,8 @@ kantia.template.npcList = {
 		"Human Brute, Master": "Human Brute, Master",
 		"Human Fighter, Basic": "Human Fighter, Basic",
 		"Human Fighter, Expert": "Human Fighter, Expert",
-		"Human Fighter, Master": "Human Fighter, Master"
+		"Human Fighter, Master": "Human Fighter, Master",
+		"Human Mage, Basic": "Human Mage, Basic",
 	},
 	"Lukoi": {
 		"Lukoi Brute, Basic": "Lukoi Brute, Basic",
@@ -658,6 +659,63 @@ kantia.template.npcs["Human Fighter, Master"] = new kantia.template.npc(
 	"",
 	"Experienced military NPCs like this tend to carry good to high quality equipment. Some of it may actually be much better than standard issue. While they may not always carry money on themselves, it wouldn't be uncommon to find. High-Level fighting types usually carry about 2d6 crowns, 2d12 silver, and 2d10 copper.",
 	"The fighter template focuses on NPCs that have a talent for traditional melee combat. Many are soldiers, mercenaries, town watch, bandits, and bounty hunters. They are well-skilled and capable individuals that are equally efficient if working alone or with others. They lead rough and often very dangerous lives and their personalities and attitudes will reflect that. NPC Fighters are vaguely classified into three types: basic, expert, and master.",
+	[]
+);
+
+// Human Mage, Basic -------------------------------------------------------------------------------
+kantia.template.npcs["Human Mage, Basic"] = new kantia.template.npc(
+	"Human Mage, Basic",
+	"Human",
+	{
+		"strength": new kantia.template.npcAttribute("Strength",8,11,9),
+		"size": new kantia.template.npcAttribute("Size",8,11,9),
+		"agility": new kantia.template.npcAttribute("Agility",10,13,11),
+		"reflexes": new kantia.template.npcAttribute("Reflexes",11,13,12),
+		"constitution": new kantia.template.npcAttribute("Constitution",13,15,14),
+		"fortitude": new kantia.template.npcAttribute("Fortitude",9,12,10),
+		"reasoning": new kantia.template.npcAttribute("Reasoning",10,13,11),
+		"willpower": new kantia.template.npcAttribute("Willpower",10,14,12),
+		"spirit": new kantia.template.npcAttribute("Spirit",14,17,15),
+		"perception": new kantia.template.npcAttribute("Perception",10,13,11)
+	},
+	{
+		"Brawling": new kantia.template.npcSkill("Brawling","agility",2),
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",3),
+		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",5),
+		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],4),
+		"Intimidation": new kantia.template.npcSkill("Intimidation","strength",4),
+		"Knowledge Skill": new kantia.template.npcSkill("Knowledge Skill","reasoning",6),
+		"Listen": new kantia.template.npcSkill("Listen","perception",4),
+		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],4),
+		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",4),
+		"Professional Skill": new kantia.template.npcSkill("Professional Skill","reasoning",6),
+		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",4),
+		"Smell": new kantia.template.npcSkill("Smell","perception",4),
+		"Spellcraft": new kantia.template.npcSkill("Spellcraft","spirit",8),
+		"Spot": new kantia.template.npcSkill("Spot","perception",6),
+		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
+		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",4),
+		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",4)
+	},
+	{
+		"Stamina": new kantia.template.npcTrait("Stamina",2),
+		"Thaumaturge": new kantia.template.npcTrait("Thaumaturge",1)
+	},
+	{
+	},
+	[
+		new kantia.template.npcHC("Animal Companion",1),
+		new kantia.template.npcHC("Blood Magician",1)
+	],
+	["Leather Jerkin"],
+	{
+		"melee": ["Dagger","Short Spear, 1H","Short Spear, 2H","Staff"],
+		"ranged": ["Dagger","Short Spear"]
+	},
+	"",
+	"These NPCs often have few possessions, although what they do own is often very durable and sturdy. Wilderness types will often carry any survival equipment they need with them at all times, while urban types often only carry what they will need in the immediate future. The average brute has 1d3-1 crowns, 2d6-2 silver, and 2d10 copper.",
+	"",
 	[]
 );
 
