@@ -597,34 +597,36 @@ kantia.npcSVC.prototype.combatSkillPenalties = function(hand,weapon) {
 	if(this.dat.effects.defense)
 		p += this.dat.effects.defense * 20;
 
-	if(this.dat.effects.prone)
-		p += 10;
-	
-	if(this.dat.effects.dualwield) {
-		var twm = {};
-		if(this.checkHC("Two Weapon Mastery"))
-			twm = this.getHC("Two Weapon Mastery");
+	if(weapon.type == "melee") {
+		if(this.dat.effects.prone)
+			p += 10;
+		
+		if(this.dat.effects.dualwield) {
+			var twm = {};
+			if(this.checkHC("Two Weapon Mastery"))
+				twm = this.getHC("Two Weapon Mastery");
 
-		if(this.checkTrait("Ambidextrious")) {
-			if(twm.ambi)
-				p += twm.ambi
-			else
-				p += 25;
-		}
-		else {
-			if(twm[hand]) {
-				p += twm[hand];
+			if(this.checkTrait("Ambidextrious")) {
+				if(twm.ambi)
+					p += twm.ambi
+				else
+					p += 25;
 			}
-			else if(hand == "main") {
-				p += 30;
+			else {
+				if(twm[hand]) {
+					p += twm[hand];
+				}
+				else if(hand == "main") {
+					p += 30;
+				}
+				else if(hand == "off") {
+					p += 50;
+				}
 			}
-			else if(hand == "off") {
-				p += 50;
-			}
-		}
 
-		if(kantia.weapons[weapon.type][weapon.name].other["Easy Two Weapon"])
-			p -= 10;
+			if(kantia.weapons[weapon.type][weapon.name].other["Easy Two Weapon"])
+				p -= 10;
+		}
 	}
 
 	return p;
