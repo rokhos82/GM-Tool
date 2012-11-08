@@ -10,6 +10,7 @@ kantia.npcSVC = function(dat,parent) {
 	this.panels = {};
 	
 	this.ui.addButton("Remove",new db.link(this.parent,this.parent.removeNPC,[this.dat.name]));
+	this.ui.addButton("Clone");
 
 	var stats = this.dat.stats;
 	

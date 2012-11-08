@@ -3,18 +3,18 @@
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC = function(dat,parent) {
 	this.dat = {};
-	this.name = dat.name;
+	this.name = "Group - " + dat.name;
 	this.members = {};
-	this.ui = new ui.panel("NPCs");
+	this.ui = new ui.panel();
+	this.npcs = this.ui.addPanel();
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
 	
-	this.ui.addButton("New NPC",new db.link(this,this.showPopup,[]));
-	this.ui.addButton("Clone NPC");
-	
-	this.links = new ui.panel("Quick Links");
-	this.parent.addToSidebar(this.links);
-	this.npcs = this.ui.addPanel();
+	this.controls = new ui.panel(this.name);
+	this.controls.setTitleData(new db.connector(this,"name"));
+	this.parent.addToSidebar(this.controls);
+	this.controls.addButton("New NPC",new db.link(this,this.showPopup,[]));
+	this.links = this.controls.addPanel("Quick Links");
 	
 	this.setData(dat);
 };
@@ -56,6 +56,7 @@ GM.groupSVC.prototype.refreshView = function() {
 		a.addClass("quick_link");
 	}
 	this.ui.refreshView();
+	this.controls.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
