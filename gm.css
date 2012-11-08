@@ -21,6 +21,10 @@ body {
 	z-index: 1;
 }
 
+.combat {
+	width: 500px;
+}
+
 .popup fieldset {
 	background-color: #dddddd;
 }

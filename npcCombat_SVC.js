@@ -1,4 +1,4 @@
-GM.npcCombatSVC = funciton(parent) {
+GM.npcCombatSVC = function(parent) {
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
 	this.npc = null;

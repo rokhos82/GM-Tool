@@ -15,6 +15,7 @@ GM.groupSVC = function(dat,parent) {
 	this.parent.addToSidebar(this.controls);
 	this.controls.addButton("New NPC",new db.link(this,this.showPopup,[]));
 	this.links = this.controls.addPanel("Quick Links");
+	this.controls.addButton("Start Combat",new db.link(this,this.startCombat,[]));
 	
 	this.setData(dat);
 };
@@ -117,6 +118,10 @@ GM.groupSVC.prototype.appendNPC = function(npc) {
 	this.npcs.appendChild(npc.ui);
 };
 
+GM.groupSVC.prototype.appendChild = function(ui) {
+	this.ui.appendChild(ui);
+};
+
 // -------------------------------------------------------------------------------------------------
 // removeNPC
 // -------------------------------------------------------------------------------------------------
@@ -127,4 +132,10 @@ GM.groupSVC.prototype.removeNPC = function(name) {
 	delete this.members[name];
 	delete this.dat.members[name];
 	this.refreshView();
+};
+
+GM.groupSVC.prototype.startCombat = function() {
+	var cp = new GM.groupCombatSVC(this);
+	cp.initialize();
+	cp.show();
 };
