@@ -67,10 +67,14 @@ GM.groupSVC.prototype.addNPC = function(popup) {
 	var template = popup.dat.template;
 	this.hidePopup(popup);
 	
-	this.dat.members[name] = new kantia.npcDAT(name,template);
-	this.members[name] = new kantia.npcSVC(this.dat.members[name],this);
-	this.members[name].initialize();
-	this.refreshView();
+	if(!this.dat.members[name]) {
+		this.dat.members[name] = new kantia.npcDAT(name,template);
+		this.members[name] = new kantia.npcSVC(this.dat.members[name],this);
+		this.members[name].initialize();
+		this.refreshView();
+	}
+	else
+		alert("NPC with name " + name + " already exists.  Please use a different name.");
 };
 
 // -------------------------------------------------------------------------------------------------
