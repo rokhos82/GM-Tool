@@ -4,6 +4,19 @@ body {
 	background-color: #dddddd;
 }
 
+div.debug {
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	width: 600px;
+	height: 150px;
+	overflow: scroll;
+	background-color: #000000;
+	color: #00ff00;
+	font-family: "Arial";
+	font-size: 10pt;
+}
+
 .block {
 	display: block;
 }

@@ -2,6 +2,7 @@
 // main
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC = function(root) {
+	GM.debug.log("call: GM.mainSVC","Initializing mainSVC object",2);
 	this.root = root;
 	this.mainframe = new lib.mainframe();
 	
@@ -16,12 +17,14 @@ GM.mainSVC = function(root) {
 
 	this.ui = new GM.mainINT(root,this);
 	this.ui.initialize();
+	GM.debug.log("end: GM.mainSVC","Finished initializing mainSVC object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
 // loadData
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.loadData = function() {
+GM.mainSVC.prototype.loadData = function() {
+	GM.debug.log("call: GM.mainSVC.loadData","Loading data from localStorage",2);
 	if(JSON && localStorage) {
 		var str = localStorage.getItem("kantia.gm.campaigns");
 		if(str) {
@@ -36,14 +39,14 @@ GM.main.prototype.loadData = function() {
 		}
 	}
 	else {
-		alert("JSON or localStorage is no supported!");
+		GM.debug.log("ERROR: GM.mainSVC.loadData","JSON and/or localStorage are not supported",0);
 	}
 };
 
 // -------------------------------------------------------------------------------------------------
 // saveData
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.saveData = function() {
+GM.mainSVC.prototype.saveData = function() {
 	if(JSON) {
 		var str = JSON.stringify(this.campaigns);
 		localStorage.setItem("kantia.gm.campaigns",str);
@@ -56,7 +59,7 @@ GM.main.prototype.saveData = function() {
 // -------------------------------------------------------------------------------------------------
 // clearData
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.clearData = function() {
+GM.mainSVC.prototype.clearData = function() {
 	if(localStorage) {
 		if(confirm("Clear all data?")) {
 			localStorage.removeItem("kantia.gm.campaigns");
@@ -67,79 +70,42 @@ GM.main.prototype.clearData = function() {
 // -------------------------------------------------------------------------------------------------
 // appendChild
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.appendChild = function(child) {
+GM.mainSVC.prototype.appendChild = function(child) {
 	this.panel.appendChild(child);
-};
-
-// -------------------------------------------------------------------------------------------------
-// closePopup
-// -------------------------------------------------------------------------------------------------
-GM.main.prototype.closePopup = function(popup) {
-	popup.hide();
-	this.controls.removeChild(popup);
-};
-
-// -------------------------------------------------------------------------------------------------
-// showCampaignPopup
-// -------------------------------------------------------------------------------------------------
-GM.main.prototype.showCampaignPopup = function(panel) {
-	var popup = this.controls.addPopup();
-	popup.show();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	popup.dat = {
-		name: "",
-	};
-
-	var p = popup.addPanel("New Campaign");
-	var tf = p.addTextField("Name:",new db.connector(popup.dat,"name"),false);
-	tf.focus();
-	var b = p.addButton("Ok",new db.link(this,this.addCampaign,[popup]));
-	var b = p.addButton("Cancel",new db.link(this,this.closePopup,[popup]));
 };
 
 // -------------------------------------------------------------------------------------------------
 // addCampaign
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.addCampaign = function(popup) {
-	var name = popup.dat.name;
-	
-	if(this.campaigns[name])
-		alert("Campaign named " + name + " already exists.  Please use a different name.");
+GM.mainSVC.prototype.addCampaign = function(dat) {
+	GM.debug.log("call: GM.mainSVC.addCampaign","Adding campaign: " + dat.name,2);
+	var name = dat.name;
 	
 	this.campaigns[name] = new GM.campaignDAT(name);
-	this.campaignList[name] = name;
-	this.mainframe.trigger("campaignListUpdate");
-	this.selector.selectOption(name);
-	this.selectCampaign(name,true);
-	this.closePopup(popup);
+	this.campaignList[name] = 1;
+	//this.mainframe.trigger("campaignListUpdate");
+	//this.selectCampaign(name,true);
 };
 
 // -------------------------------------------------------------------------------------------------
 // selectCampaign
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.selectCampaign = function(name,conf) {
-	if(!name)
-		name = this.selector.getValue();
-
-	if(!this.activeCampaign) {
-		this.activeCampaign = new GM.campaignSVC(this.campaigns[name],this.mainframe,this);
-		this.activeCampaign.initialize();
-		this.mainframe.trigger("campaignChange");
+GM.mainSVC.prototype.selectCampaign = function(name) {
+	var result = false;
+	if(this.campaigns[name]) {
+		this.activeCampaign = this.campaigns[name];
+		result = true;
 	}
-	else if(this.activeCampaign.name != name) {
-		if(conf || confirm("Change active campaign to: " + name)) {
-			this.activeCampaign.setData(this.campaigns[name]);
-			this.activeCampaign.refreshView();
-			this.mainframe.trigger("campaignChange");
-		}
+	else {
+		GM.debug.log("ERROR: GM.mainSVC.prototype.selectCampaign","Campaign does not exist.",0);
+		result = false;
 	}
 };
 
 // -------------------------------------------------------------------------------------------------
 // rollInitiative
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.rollInitiative = function(list) {
+GM.mainSVC.prototype.rollInitiative = function(list) {
 	list.removeChildren();
 	var init = new Array();
 	
@@ -171,7 +137,7 @@ GM.main.prototype.rollInitiative = function(list) {
 // -------------------------------------------------------------------------------------------------
 // rollGroupInitiative
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.rollGroupInitiative = function(list) {
+GM.mainSVC.prototype.rollGroupInitiative = function(list) {
 	list.removeChildren();
 	var sum = 0;
 	var cnt = 0;
@@ -189,7 +155,7 @@ GM.main.prototype.rollGroupInitiative = function(list) {
 // -------------------------------------------------------------------------------------------------
 // hidePopup
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.hidePopup = function(popup) {
+GM.mainSVC.prototype.hidePopup = function(popup) {
 	popup.hide();
 	this.controls.removeChild(popup);
 };
@@ -197,7 +163,7 @@ GM.main.prototype.hidePopup = function(popup) {
 // -------------------------------------------------------------------------------------------------
 // importDataPopup
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.importDataPopup = function() {
+GM.mainSVC.prototype.importDataPopup = function() {
 	var popup = this.controls.addPopup();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
@@ -218,7 +184,7 @@ GM.main.prototype.importDataPopup = function() {
 // -------------------------------------------------------------------------------------------------
 // importData
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.importData = function(data) {
+GM.mainSVC.prototype.importData = function(data) {
 	var str = data.json;
 	var camps = JSON.parse(str);
 	var first = null;
@@ -244,7 +210,7 @@ GM.main.prototype.importData = function(data) {
 // -------------------------------------------------------------------------------------------------
 // exportDataPopup
 // -------------------------------------------------------------------------------------------------
-GM.main.prototype.exportDataPopup = function() {
+GM.mainSVC.prototype.exportDataPopup = function() {
 	var popup = this.controls.addPopup();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
@@ -258,6 +224,6 @@ GM.main.prototype.exportDataPopup = function() {
 	var b = p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
 };
 
-GM.main.prototype.addToSidebar = function(ui) {
+GM.mainSVC.prototype.addToSidebar = function(ui) {
 	this.sidebar.appendChild(ui);
 };

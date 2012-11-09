@@ -1,3 +1,5 @@
 var root = document.getElementById("root");
 
-var gm_interface = new GM.main(root);
+GM.debug.attachLogView(root);
+
+var gm_interface = new GM.mainSVC(root);
