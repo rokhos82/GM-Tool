@@ -28,13 +28,19 @@ GM.debug.attachLogView = function(root) {
 	cmd.setAttribute("type","text");
 	GM.debug.cmd = cmd;
 	
-	var btn = document.createElement("input");
-	btn.setAttribute("type","submit");
-	btn.setAttribute("value","Exec");
+	var sbt = document.createElement("input");
+	sbt.setAttribute("type","submit");
+	sbt.setAttribute("value","Exec");
 
-	form.setAttribute("onsubmit","GM.debug.codeExec();");
+	var btn = document.createElement("input");
+	btn.setAttribute("type","button");
+	btn.setAttribute("value","Clear");
+	btn.setAttribute("onclick","GM.debug.clearLog(); return false;"); 
+
+	form.setAttribute("onsubmit","GM.debug.codeExec(); return false;");
 	
 	form.appendChild(cmd);
+	form.appendChild(sbt);
 	form.appendChild(btn);
 	dom.appendChild(form);
 
@@ -63,5 +69,13 @@ GM.debug.clearLog = function() {
 };
 
 GM.debug.codeExec = function() {
-	alert(GM.debug.cmd.value);
+	var cmd = GM.debug.cmd.value;
+	GM.debug.log("User Exec",cmd,0);
+	GM.debug.cmd.value = "";
+	try {
+		eval(cmd);
+	}
+	catch (exception) {
+		GM.debug.log("ERROR",exception,0);
+	}
 };

@@ -82,7 +82,8 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 	GM.debug.log("call: GM.mainSVC.addCampaign","Adding campaign: " + dat.name,2);
 	var name = dat.name;
 	
-	this.campaigns[name] = new GM.campaignDAT(name);
+	this.dat.campaigns[name] = new GM.campaignDAT(name);
+	//this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name]);
 	this.campaignList[name] = 1;
 	this.selectCampaign(name);
 };
@@ -226,4 +227,11 @@ GM.mainSVC.prototype.exportDataPopup = function() {
 
 GM.mainSVC.prototype.addToSidebar = function(ui) {
 	this.sidebar.appendChild(ui);
+};
+
+GM.mainSVC.prototype.getCampaigns = function() {
+	return { 
+		list: this.campaignList.slice(),
+		active: this.activeCampaign ? this.activeCampaign.name : null
+	};
 };

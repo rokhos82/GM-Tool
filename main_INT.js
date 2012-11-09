@@ -64,6 +64,7 @@ GM.mainINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.refreshView = function() {
 	GM.debug.log("call: GM.mainINT.refreshView","Refreshing the UI to reflect changes to the data",2);
+	this.refreshCampaigns();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -92,7 +93,7 @@ GM.mainINT.prototype.showCampaignPopup = function(panel) {
 	var tf = p.addTextField("Name:",new db.connector(dat,"name"),false);
 	tf.focus();
 	var seq = new db.sequence();
-	seq.addAction("add",new db.sequence.action(this,this.svc.addCampaign,[dat]));
+	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addCampaign,[dat]));
 	seq.addAction("refresh",new db.sequence.action(this,this.refreshView,[]));
 	seq.addAction("close",new db.sequence.action(this,this.closePopup,[popup]));
 	var b = p.addButton("Ok",seq);
@@ -106,4 +107,11 @@ GM.mainINT.prototype.changeCampaign = function() {
 	var name = this.selector.getValue();
 	if(!this.svc.selectCampaign(name))
 		alert("Unable to select campaign.  Check log for details.");
+};
+
+GM.mainINT.prototype.refreshCampaigns = function() {
+	GM.debug.log("call: GM.mainINT.refreshCampaigns","Refreshing the campaign list",2);
+	var campaigns = this.svc.getCampaigns();
+	this.selector.setOptions(campaigns.list);
+	this.select.selectOption(campaigns.active);
 };
