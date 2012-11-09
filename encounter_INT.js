@@ -1,0 +1,2 @@
+GM.encounterINT = function() {
+};

@@ -20,6 +20,7 @@ GM.npcINT = function(parent,svc) {
 	ta.addClass("desc_box");
 	ta.dom.setAttribute("rows",4);
 
+	// Build the attributes section --------------------
 	var p = this.ui.addPanel("Attributes");
 	var attributes = this.svc.getAttributes();
 	this.panels.attributes = p;
@@ -35,6 +36,7 @@ GM.npcINT = function(parent,svc) {
 		]);
 	}
 
+	// Build the health section ------------------------
 	var hlth = this.ui.addPanel("Health");
 	this.panels.health = hlth;
 	hlth.addClass("small");
@@ -49,6 +51,7 @@ GM.npcINT = function(parent,svc) {
 	t.addRow(["Recovery",stats.stamina.recovery]);
 	t.addRow(["Wind",stats.wind.max]);
 
+	// Build the other section -------------------------
 	var other = this.ui.addPanel("Other");
 	this.panels.other = other;
 	other.addClass("small");
@@ -60,4 +63,9 @@ GM.npcINT = function(parent,svc) {
 };
 
 GM.npcINT.prototype.initialize = function() {
+	this.parent.appendChild(this);
+	this.refreshView();
+};
+
+GM.npcINT.prototype.refreshView = function() {
 };

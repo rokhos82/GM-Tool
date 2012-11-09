@@ -1,0 +1,2 @@
+GM.encounterSVC = function() {
+};

@@ -1,0 +1,2 @@
+GM.campaignINT = function() {
+};

@@ -1,0 +1,2 @@
+GM.encounterDAT = function() {
+};
