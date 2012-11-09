@@ -22,7 +22,9 @@ body {
 }
 
 .combat {
-	width: 500px;
+	width: 1100px;
+	max-height: 800px;
+	overflow: scroll;
 }
 
 .popup fieldset {

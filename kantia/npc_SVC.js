@@ -276,6 +276,7 @@ kantia.npcSVC.prototype.selectWeapon = function(popup) {
 	this.dat.weapons[slot].type = type;
 	this.dat.weapons[slot].name = name;
 	this.dat.weapons[slot].skill = skill;
+	this.updateList("combatSkills",skill,"add");
 	
 	this.updateWeapons();
 };
@@ -338,8 +339,33 @@ kantia.npcSVC.prototype.updateWeapons = function() {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
+kantia.npcSVC.prototype.updateList = function(list,skill,action) {
+	if(!this.dat.lists[list])
+		this.dat.lists[list] = {};
+
+	if(!this.dat.lists[list][skill])
+		this.dat.lists[list][skill] = 0;
+
+	if(action === "add") {
+		this.dat.lists[list][skill]++;
+	}
+	else if(action === "remove") {
+		this.dat.lists[list][skill]--;
+
+		if(this.dat.lists[list][skill] <= 0)
+			delete this.dat.lists[list][skill];
+	}
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 kantia.npcSVC.prototype.removeWeapon = function(slot) {
 	var weapon = this.dat.weapons[slot];
+
+	var s = weapon.skill;
+	this.updateList("combatSkills",s,"remove");
+
 	weapon.type = ""; 
 	weapon.name = "";
 	weapon.skill = "";

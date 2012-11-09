@@ -1,7 +1,10 @@
-GM.npcCombatSVC = function(parent) {
+GM.npcCombatSVC = function(parent,dat) {
 	this.parent = parent;
 	this.mainframe = new lib.mainframe(parent.mainframe);
-	this.npc = null;
+	this.dat = dat;
+
+	this.ui = new ui.panel(this.dat.name);
+	this.panels = {};
 
 	var p = this.ui.addPanel("Actions");
 	var b = p.addButton("Attack",new db.link(this,this.combatPopup,[]));
@@ -19,8 +22,23 @@ GM.npcCombatSVC = function(parent) {
 
 	var p = this.ui.addPanel("Effects");
 	this.panels.effects = p;
-	this.refreshEffects();
+	//this.refreshEffects();
+
+	var p = this.ui.addPanel("Combat AVs");
+	var t = p.addTable();
+	for(var i in this.dat.lists.combatSkills) {
+		var skill = this.dat.skills[i];
+		if(skill) {
+			var r = t.addRow([
+				new db.view(skill,"name"),
+				new db.view(skill,"total")
+			]);
+		}
+	}
 };
 
 GM.npcCombatSVC.prototype.initialize = function() {
+};
+
+GM.npcCombatSVC.prototype.setData = function(dat) {
 };

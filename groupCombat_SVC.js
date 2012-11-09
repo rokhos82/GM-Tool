@@ -8,6 +8,8 @@ GM.groupCombatSVC = function(parent,players) {
 	this.players = players;
 	this.npcs = this.parent.dat.members;
 
+	this.panels = {};
+
 	this.popup = new ui.popup();
 	this.popup.addClass("popup");
 	this.popup.addClass("combat");
@@ -21,8 +23,21 @@ GM.groupCombatSVC = function(parent,players) {
 
 	var p = this.ui.addPanel("Initiative");
 	p.addClass("small");
+	p.addButton("Roll");
+	var l = p.addList();
+	this.panels.initiative = l;
+	var list = this.initiative();
+	for(var n in list) {
+		l.addItem(list[n][0] + " - " + list[n][1]);
+	}
 
-	var p = this.ui.addPanel("Actors");
+	var p = this.ui.addPanel("Quick Links");
+
+	var p = this.ui.addPanel("Combatants");
+	for(var n in this.npcs) {
+		var npc_svc = new GM.npcCombatSVC(this,this.npcs[n]);
+		p.appendChild(npc_svc.ui);
+	}
 
 	this.queue = [];
 };
@@ -54,6 +69,9 @@ GM.groupCombatSVC.prototype.hide = function() {
 	this.popup.hide();
 };
 
+GM.groupCombatSVC.prototype.appendChild = function(child) {
+};
+
 // -------------------------------------------------------------------------------------------------
 // initiative
 // -------------------------------------------------------------------------------------------------
@@ -72,6 +90,9 @@ GM.groupCombatSVC.prototype.initiative = function() {
 
 	for(var p in this.players) {
 		var player = this.players[p];
-		list.push([player.name,player.attributes.reflexes.score]);
+		var roll = kantia.func.d10(1) + player.attributes.reflexes.score;
+		list.push([player.name,roll]);
 	}
+
+	return list;
 };

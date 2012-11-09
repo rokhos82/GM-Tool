@@ -22,6 +22,7 @@ kantia.npcDAT = function(name,template) {
 	// Build the real skill objects and the skill list.
 	this.skills = {};
 	this.lists.skills = [];
+	this.lists.combatSkills = {};
 	for(var s in temp.skills) {
 		var skill = temp.skills[s];
 		var attr = null;
