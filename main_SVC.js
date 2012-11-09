@@ -1,10 +1,11 @@
 // -------------------------------------------------------------------------------------------------
 // main
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC = function(root) {
+GM.mainSVC = function(root,dat) {
 	GM.debug.log("call: GM.mainSVC","Initializing mainSVC object",2);
 	this.root = root;
 	this.mainframe = new lib.mainframe();
+	this.dat = dat;
 	
 	this.campaigns = {};
 	this.campaignList = {};
@@ -83,8 +84,7 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 	
 	this.campaigns[name] = new GM.campaignDAT(name);
 	this.campaignList[name] = 1;
-	//this.mainframe.trigger("campaignListUpdate");
-	//this.selectCampaign(name,true);
+	this.selectCampaign(name);
 };
 
 // -------------------------------------------------------------------------------------------------

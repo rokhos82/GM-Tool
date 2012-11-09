@@ -63,12 +63,14 @@ GM.mainINT.prototype.initialize = function() {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.refreshView = function() {
+	GM.debug.log("call: GM.mainINT.refreshView","Refreshing the UI to reflect changes to the data",2);
 };
 
 // -------------------------------------------------------------------------------------------------
 // closePopup
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.closePopup = function(popup) {
+	GM.debug.log("call: GM.mainINT.closePopup","Hiding and removing the popup",2);
 	popup.hide();
 	this.popups.removeChild(popup);
 };
