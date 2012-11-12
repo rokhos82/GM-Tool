@@ -13,23 +13,7 @@ GM.campaignSVC = function(dat,frame,parent) {
 	this.ui.setTitleData(new db.connector(this,"name"));
 	
 
-	// Build sidebar controls
-	var p = new ui.panel(this.name);
-	this.addToSidebar(p);
-	var b = p.addButton("New Group",new db.link(this,this.showPopup,[]));
-	var grps = p.addPanel("Groups");
-	this.groupButtons = grps.addRadioSet("groups");
-	
 	this.setData(dat);
-};
-
-// -------------------------------------------------------------------------------------------------
-//
-// -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.initialize = function() {
-	this.parent.appendChild(this.ui);
-	if(this.activeGroup)
-		this.activeGroup.initialize();
 };
 
 // -------------------------------------------------------------------------------------------------

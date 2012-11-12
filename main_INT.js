@@ -1,10 +1,11 @@
 GM.mainINT = function(root,svc) {
-	GM.debug.log("call: GM.mainINT","Initializing mainINT object",2);
+	GM.debug.log("CALL: GM.mainINT","Initializing mainINT object",2);
 
 	this.root = root;
 	this.svc = svc;
 
 	this.mainframe = this.svc.mainframe;
+	this.children = [];
 
 	this.ui = new ui.panel();
 	this.sidebar = new ui.panel();
@@ -14,26 +15,14 @@ GM.mainINT = function(root,svc) {
 	this.controls = this.sidebar.addPanel("Controls");
 
 	// Build sidebar
-	var p = this.sidebar.addPanel("Initiative");
-	var l = p.addList();
-	this.mainframe.addHandler("group_change","init_list",l.removeChildren,l,[]);
-	var b = p.addButton("Indiv. Roll",new db.link(this,this.rollInitiative,[l]));
-	var b = p.addButton("Group Roll", new db.link(this,this.rollGroupInitiative,[l]));
-	var p = this.sidebar.addPanel("Players");
-	
+		
 	// Build the popups
-	var npcPopup = this.controls.addPopup();
-	npcPopup.addClass("popup");
-	var p = npcPopup.addPanel("NPC Templates");
-	var cb = p.addComboBox("Templates:");
-	cb.setComplexOptions(kantia.template.npcList);
-	var b = p.addButton("Ok",new db.link(this,this.addNPC,[npcPopup,cb]));
-	var b = p.addButton("Cancel",new db.link(npcPopup,npcPopup.hide,[]));
 	
 	// Build the controls panel
-	var p = this.controls.addPanel();
-	var b = p.addButton("Save Data",new db.link(this,this.saveData,[]));
-	var b = p.addButton("Clear Data",new db.link(this,this.clearData,[]));
+	var p = this.controls.addPanel("Data");
+	var b = p.addButton("Load",new db.link(this.svc,this.svc.loadLocalStorage,[]));
+	var b = p.addButton("Save",new db.link(this.svc,this.svc.saveToLocalStorage,[]));
+	var b = p.addButton("Clear",new db.link(this.svc,this.svc.clearLocalStorage,[]));
 	var b = p.addButton("Import",new db.link(this,this.importDataPopup,[]));
 	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
 	
@@ -46,14 +35,14 @@ GM.mainINT = function(root,svc) {
 	var b = p.addButton("Select Campaign",new db.link(this,this.changeCampaign,[]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
 
-	GM.debug.log("end: GM.mainINT","Finished initializing mainINT object",2);
+	GM.debug.log("END: GM.mainINT","Finished initializing mainINT object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
 // initialize
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.initialize = function() {
-	GM.debug.log("call: GM.mainINT.initialize","Attaching UI elements to the DOM root",2);
+	GM.debug.log("CALL: GM.mainINT.initialize","Attaching UI elements to the DOM root",2);
 	this.root.appendChild(this.ui.dom);
 	this.root.appendChild(this.sidebar.dom);
 	this.root.appendChild(this.popups.dom);
@@ -63,7 +52,7 @@ GM.mainINT.prototype.initialize = function() {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.refreshView = function() {
-	GM.debug.log("call: GM.mainINT.refreshView","Refreshing the UI to reflect changes to the data",2);
+	GM.debug.log("CALL: GM.mainINT.refreshView","Refreshing the UI to reflect changes to the data",2);
 	this.refreshCampaigns();
 };
 
@@ -71,7 +60,7 @@ GM.mainINT.prototype.refreshView = function() {
 // closePopup
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.closePopup = function(popup) {
-	GM.debug.log("call: GM.mainINT.closePopup","Hiding and removing the popup",2);
+	GM.debug.log("CALL: GM.mainINT.closePopup","Hiding and removing the popup",2);
 	popup.hide();
 	this.popups.removeChild(popup);
 };
@@ -80,7 +69,7 @@ GM.mainINT.prototype.closePopup = function(popup) {
 // showCampaignPopup
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.showCampaignPopup = function(panel) {
-	GM.debug.log("call: GM.mainINT.showCampaignPopup","Building new campaign popup",2);
+	GM.debug.log("CALL: GM.mainINT.showCampaignPopup","Building new campaign popup",2);
 	var popup = this.controls.addPopup();
 	popup.show();
 	popup.addClass("popup");
@@ -114,8 +103,69 @@ GM.mainINT.prototype.changeCampaign = function() {
 // refreshCampaigns
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.refreshCampaigns = function() {
-	GM.debug.log("call: GM.mainINT.refreshCampaigns","Refreshing the campaign list",2);
+	GM.debug.log("CALL: GM.mainINT.refreshCampaigns","Refreshing the campaign list",2);
 	var campaigns = this.svc.getCampaigns();
 	this.selector.setOptions(campaigns.list);
 	this.selector.selectOption(campaigns.active);
+};
+
+// -------------------------------------------------------------------------------------------------
+// importDataPopup
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.importDataPopup = function() {
+	GM.debug.log("GM.mainINT.importDataPopup","Showing the data import popup",2);
+	var popup = this.controls.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+	var dat = {
+		json: ""
+	};
+
+	var p = popup.addPanel("JSON Import");
+	var ta = p.addTextArea(new db.connector(dat,"json"));
+	var seq = new db.sequence();
+	seq.addAction("import",new db.sequence.action(this.svc,this.svc.importData,[dat]));
+	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
+	var b = p.addButton("Ok",seq);
+	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+// exportDataPopup
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.exportDataPopup = function() {
+	GM.debug.log("GM.mainINT.exportDataPopup","Show the data export popup",2);
+	var popup = this.controls.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+
+	var p = popup.addPanel("JSON Export");
+	var dat = {
+		json: this.svc.exportData()
+	};
+	var ta = p.addTextArea(new db.connector(dat,"json"));
+	var b = p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+// addToSidebar
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.addToSidebar = function(ui) {
+	this.sidebar.appendChild(ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// appendChild
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.appendChild = function(child) {
+	this.children.push(child);
+	this.ui.appendChild(child.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// destroy
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.destroy = function() {
 };

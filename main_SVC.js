@@ -2,7 +2,7 @@
 // main
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC = function(root,dat) {
-	GM.debug.log("call: GM.mainSVC","Initializing mainSVC object",2);
+	GM.debug.log("CALL: GM.mainSVC","Initializing mainSVC object",2);
 	this.root = root;
 	this.mainframe = new lib.mainframe();
 	this.dat = dat;
@@ -13,19 +13,17 @@ GM.mainSVC = function(root,dat) {
 	
 	this.templates = {};
 	this.templateList = {};
-	
-	//this.loadData();
 
 	this.ui = new GM.mainINT(root,this);
 	this.ui.initialize();
-	GM.debug.log("end: GM.mainSVC","Finished initializing mainSVC object",2);
+	GM.debug.log("END: GM.mainSVC","Finished initializing mainSVC object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
-// loadData
+// loadLocalStorage
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.loadData = function() {
-	GM.debug.log("call: GM.mainSVC.loadData","Loading data from localStorage",2);
+GM.mainSVC.prototype.loadLocalStorage = function() {
+	GM.debug.log("CALL: GM.mainSVC.loadLocalStorage","Loading data from localStorage",2);
 	if(JSON && localStorage) {
 		var str = localStorage.getItem("kantia.gm.campaigns");
 		if(str) {
@@ -40,14 +38,14 @@ GM.mainSVC.prototype.loadData = function() {
 		}
 	}
 	else {
-		GM.debug.log("ERROR: GM.mainSVC.loadData","JSON and/or localStorage are not supported",0);
+		GM.debug.log("ERROR: GM.mainSVC.loadLocalStorage","JSON and/or localStorage are not supported",0);
 	}
 };
 
 // -------------------------------------------------------------------------------------------------
-// saveData
+// saveToLocalStorage
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.saveData = function() {
+GM.mainSVC.prototype.saveToLocalStorage = function() {
 	if(JSON) {
 		var str = JSON.stringify(this.campaigns);
 		localStorage.setItem("kantia.gm.campaigns",str);
@@ -58,9 +56,9 @@ GM.mainSVC.prototype.saveData = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-// clearData
+// clearLocalStorage
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.clearData = function() {
+GM.mainSVC.prototype.clearLocalStorate = function() {
 	if(localStorage) {
 		if(confirm("Clear all data?")) {
 			localStorage.removeItem("kantia.gm.campaigns");
@@ -69,17 +67,10 @@ GM.mainSVC.prototype.clearData = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-// appendChild
-// -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.appendChild = function(child) {
-	this.panel.appendChild(child);
-};
-
-// -------------------------------------------------------------------------------------------------
 // addCampaign
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.addCampaign = function(dat) {
-	GM.debug.log("call: GM.mainSVC.addCampaign","Adding campaign: " + dat.name,2);
+	GM.debug.log("CALL: GM.mainSVC.addCampaign","Adding campaign: " + dat.name,2);
 	var name = dat.name;
 	
 	this.dat.campaigns[name] = new GM.campaignDAT(name);
@@ -113,76 +104,60 @@ GM.mainSVC.prototype.getCampaignName = function(key) {
 
 
 // -------------------------------------------------------------------------------------------------
-// importDataPopup
-// -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.importDataPopup = function() {
-	var popup = this.controls.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	popup.show();
-	var dat = {
-		json: ""
-	};
-
-	var p = popup.addPanel("JSON Import");
-	var ta = p.addTextArea(new db.connector(dat,"json"));
-	var seq = new db.sequence();
-	seq.addAction("import",new db.sequence.action(this,this.importData,[dat]));
-	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
-	var b = p.addButton("Ok",seq);
-	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-};
-
-// -------------------------------------------------------------------------------------------------
 // importData
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.importData = function(data) {
-	var str = data.json;
-	var camps = JSON.parse(str);
-	var first = null;
-	for(var c in camps) {
-		if(!first) {
-			first = c;
-		}
-		this.campaigns[c] = camps[c];
-		this.campaignList[c] = c;
-	}
+GM.mainSVC.prototype.importData = function(dataStr) {
+	GM.debug.log("CALL: GM.mainSVC.importData","Overwriting existing data with import data",1);
+	// Convert the JSON string back into an object.
+	var data = JSON.parse(dataStr.json);
 
-	if(this.activeCampaign) {
-		this.activeCampaign.setData(camps[first]);
-	}
-	else {
-		this.activeCampaign = new GM.campaignSVC(camps[first],this.mainframe,this);
-		this.activeCampaign.initialize();
-	}
+	// Reset the service structure and clear the data.
+	this.reset();
 
-	this.selector.setOptions(this.campaignList);
+	// Rebuild the campaigns (DAT & SVC) and campaignList.
+	for(var c in data.campaigns) {
+		this.dat.campaigns[c] = data.campaigns[c];
+		this.campaigns[c] = new GM.campaignSVC(this.dat.campaigns[c],this);
+		this.campaignList.push(c);
+	}
 };
 
 // -------------------------------------------------------------------------------------------------
-// exportDataPopup
+// exportData
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.exportDataPopup = function() {
-	var popup = this.controls.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	popup.show();
-
-	var p = popup.addPanel("JSON Export");
-	var dat = {
-		json: JSON.stringify(this.campaigns)
-	};
-	var ta = p.addTextArea(new db.connector(dat,"json"));
-	var b = p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
+GM.mainSVC.prototype.exportData = function() {
+	GM.debug.log("CALL: GM.mainSVC.exportData","Export data as JSON string",2);
+	return JSON.stringify(this.dat);
 };
 
-GM.mainSVC.prototype.addToSidebar = function(ui) {
-	this.sidebar.appendChild(ui);
-};
-
+// -------------------------------------------------------------------------------------------------
+// getCampaigns
+// -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.getCampaigns = function() {
+	GM.debug.log("CALL: GM.mainSVC.getCampaigns","Getting the campaign list and active campaign",2);
 	return { 
 		list: this.campaignList.slice(),
 		active: this.activeCampaign ? this.activeCampaign.name : null
 	};
+};
+
+// -------------------------------------------------------------------------------------------------
+// reset - this function resets the services and data.  Child objects may also reset UI elements.
+// -------------------------------------------------------------------------------------------------
+GM.mainSVC.prototype.reset = function() {
+	GM.debug.log("CALL: GM.mainSVC.reset","Resetting the services and data",1);
+	for(var c in this.campaigns) {
+		// Destroy the children.
+		this.campaigns[c].destroy();
+	}
+
+	// Reset the campaigns hash and the campaignsList array.
+	delete this.campaigns;
+	delete this.campaignList;
+	this.campaigns = {};
+	this.campaignList = [];
+
+	// Reset the data object.
+	delete this.dat;
+	this.dat = new GM.mainDAT();
 };
