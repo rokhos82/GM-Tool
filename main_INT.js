@@ -34,60 +34,6 @@ GM.mainINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.mainINT.refreshView","Refreshing the UI to reflect changes to the data",2);
-	this.refreshCampaigns();
-};
-
-// -------------------------------------------------------------------------------------------------
-// closePopup
-// -------------------------------------------------------------------------------------------------
-GM.mainINT.prototype.closePopup = function(popup) {
-	GM.debug.log("CALL: GM.mainINT.closePopup","Hiding and removing the popup",2);
-	popup.hide();
-	this.popups.removeChild(popup);
-};
-
-// -------------------------------------------------------------------------------------------------
-// showCampaignPopup
-// -------------------------------------------------------------------------------------------------
-GM.mainINT.prototype.showCampaignPopup = function(panel) {
-	GM.debug.log("CALL: GM.mainINT.showCampaignPopup","Building new campaign popup",2);
-	var popup = this.controls.addPopup();
-	popup.show();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	var dat = {
-		name: ""
-	};
-
-	var p = popup.addPanel("New Campaign");
-	var tf = p.addTextField("Name:",new db.connector(dat,"name"),false);
-	tf.focus();
-	var seq = new db.sequence();
-	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addCampaign,[dat]));
-	seq.addAction("refresh",new db.sequence.action(this,this.refreshView,[]));
-	seq.addAction("close",new db.sequence.action(this,this.closePopup,[popup]));
-	var b = p.addButton("Ok",seq);
-	var b = p.addButton("Cancel",new db.link(this,this.closePopup,[popup]));
-};
-
-// -------------------------------------------------------------------------------------------------
-// changeCampaign
-// -------------------------------------------------------------------------------------------------
-GM.mainINT.prototype.changeCampaign = function() {
-	var key = this.selector.getValue();
-	if(!this.svc.setActiveCampaign(key))
-		alert("Unable to select campaign (" + key + ").  Check log for details.");
-};
-
-
-// -------------------------------------------------------------------------------------------------
-// refreshCampaigns
-// -------------------------------------------------------------------------------------------------
-GM.mainINT.prototype.refreshCampaigns = function() {
-	GM.debug.log("CALL: GM.mainINT.refreshCampaigns","Refreshing the campaign list",2);
-	var campaigns = this.svc.getCampaigns();
-	this.selector.setOptions(campaigns.list);
-	this.selector.selectOption(campaigns.active);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -95,7 +41,7 @@ GM.mainINT.prototype.refreshCampaigns = function() {
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.importDataPopup = function() {
 	GM.debug.log("GM.mainINT.importDataPopup","Showing the data import popup",2);
-	var popup = this.controls.addPopup();
+	var popup = this.sidebar.addPopup();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
 	popup.show();
@@ -117,7 +63,7 @@ GM.mainINT.prototype.importDataPopup = function() {
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.exportDataPopup = function() {
 	GM.debug.log("GM.mainINT.exportDataPopup","Show the data export popup",2);
-	var popup = this.controls.addPopup();
+	var popup = this.sidebar.addPopup();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
 	popup.show();
@@ -128,13 +74,6 @@ GM.mainINT.prototype.exportDataPopup = function() {
 	};
 	var ta = p.addTextArea(new db.connector(dat,"json"));
 	var b = p.addButton("Close",new db.link(this,this.hidePopup,[popup]));
-};
-
-// -------------------------------------------------------------------------------------------------
-// addToSidebar
-// -------------------------------------------------------------------------------------------------
-GM.mainINT.prototype.addToSidebar = function(ui) {
-	this.sidebar.appendChild(ui);
 };
 
 // -------------------------------------------------------------------------------------------------

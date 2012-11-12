@@ -2,16 +2,14 @@ GM.campaignINT = function(parent,svc) {
 	GM.debug.log("CALL: GM.campaignINT","Initializing campaignINT object",2);
 	this.svc = svc;
 	this.parent = parent;
+	this.mainframe = svc.mainframe;
 
 	this.label = "Campaign: " + this.svc.getName();
 	this.ui = new ui.panel();
 
 	// Build sidebar controls
-	var p = new ui.panel(this.label);
-	this.addToSidebar(p);
-	var b = p.addButton("New Group",new db.link(this,this.showPopup,[]));
-	var grps = p.addPanel("Groups");
-	this.groupButtons = grps.addRadioSet("groups");
+	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: new GM.campaignControlINT(this,this.svc)}]);
+
 	GM.debug.log("END: GM.campaignINT","Done initializing campaignINT object",2);
 };
 

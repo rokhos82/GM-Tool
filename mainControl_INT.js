@@ -14,14 +14,71 @@ GM.mainControlINT = function(parent,svc) {
 	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
 
 	var p = this.ui.addPanel("Campaign Selector");
-	var cb = p.addComboBox("Campaigns",this.campaignList,new db.local(""));
+	var cb = p.addComboBox("Campaigns",null,new db.local(""));
 	this.selector = cb;
-	this.mainframe.addHandler("campaignListUpdate","campaigns",cb.setOptions,cb,[this.campaignList]);
-	this.mainframe.addHandler("campaignChange","campaigns",cb.refreshView,cb,[]);
 	var b = p.addButton("Select Campaign",new db.link(this,this.changeCampaign,[]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
 };
 
+// -------------------------------------------------------------------------------------------------
+// initialize
+// -------------------------------------------------------------------------------------------------
 GM.mainControlINT.prototype.initialize = function() {
 	this.parent.appendChild(this);
 }
+
+// -------------------------------------------------------------------------------------------------
+// changeCampaign
+// -------------------------------------------------------------------------------------------------
+GM.mainControlINT.prototype.changeCampaign = function() {
+	var key = this.selector.getValue();
+	if(!this.svc.setActiveCampaign(key))
+		alert("Unable to select campaign (" + key + ").  Check log for details.");
+}
+
+// -------------------------------------------------------------------------------------------------
+// refreshCampaigns
+// -------------------------------------------------------------------------------------------------
+GM.mainControlINT.prototype.refreshCampaigns = function() {
+	GM.debug.log("CALL: GM.mainControlINT.refreshCampaigns","Refreshing the campaign list",2);
+	var campaigns = this.svc.getCampaigns();
+	this.selector.setOptions(campaigns.list);
+	this.selector.selectOption(campaigns.active);
+};
+
+// -------------------------------------------------------------------------------------------------
+// closePopup
+// -------------------------------------------------------------------------------------------------
+GM.mainControlINT.prototype.closePopup = function(popup) {
+	GM.debug.log("CALL: GM.mainControlINT.closePopup","Hiding and removing the popup",2);
+	popup.hide();
+	this.ui.removeChild(popup);
+};
+
+// -------------------------------------------------------------------------------------------------
+// showCampaignPopup
+// -------------------------------------------------------------------------------------------------
+GM.mainControlINT.prototype.showCampaignPopup = function(panel) {
+	GM.debug.log("CALL: GM.mainControlINT.showCampaignPopup","Building new campaign popup",2);
+	var popup = this.ui.addPopup();
+	popup.show();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	var dat = {
+		name: ""
+	};
+
+	var p = popup.addPanel("New Campaign");
+	var tf = p.addTextField("Name:",new db.connector(dat,"name"),false);
+	tf.focus();
+	var seq = new db.sequence();
+	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addCampaign,[dat]));
+	seq.addAction("refresh",new db.sequence.action(this,this.refreshView,[]));
+	seq.addAction("close",new db.sequence.action(this,this.closePopup,[popup]));
+	var b = p.addButton("Ok",seq);
+	var b = p.addButton("Cancel",new db.link(this,this.closePopup,[popup]));
+};
+
+GM.mainControlINT.prototype.refreshView = function() {
+	this.refreshCampaigns();
+};
