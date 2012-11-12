@@ -16,7 +16,7 @@ GM.mainSVC = function(root,dat) {
 
 	this.ui = new GM.mainINT(root,this);
 	this.ui.initialize();
-	GM.debug.log("END: GM.mainSVC","Finished initializing mainSVC object",2);
+	GM.debug.log("END: GM.mainSVC","Done initializing mainSVC object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -74,8 +74,7 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 	var name = dat.name;
 	
 	this.dat.campaigns[name] = new GM.campaignDAT(name);
-	//this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name]);
-	this.campaigns[name] = {};
+	this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name],this);
 	var key = this.campaignList.push(name);
 	this.setActiveCampaign(key - 1);
 };

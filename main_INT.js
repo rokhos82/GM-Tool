@@ -35,7 +35,7 @@ GM.mainINT = function(root,svc) {
 	var b = p.addButton("Select Campaign",new db.link(this,this.changeCampaign,[]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
 
-	GM.debug.log("END: GM.mainINT","Finished initializing mainINT object",2);
+	GM.debug.log("END: GM.mainINT","Done initializing mainINT object",2);
 };
 
 // -------------------------------------------------------------------------------------------------

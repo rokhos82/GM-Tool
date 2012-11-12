@@ -1,72 +1,24 @@
 // -------------------------------------------------------------------------------------------------
 // campaignSVC
 // -------------------------------------------------------------------------------------------------
-GM.campaignSVC = function(dat,frame,parent) {
-	this.dat = null;
-	this.name = dat.name + " Campaign";
-	this.mainframe = new lib.mainframe(frame);
+GM.campaignSVC = function(dat,parent) {
+	GM.debug.log("CALL: GM.campaignSVC","Initializing campaignSVC object",2);
+	this.dat = dat;
+	this.mainframe = new lib.mainframe(parent.mainframe);
 	this.parent = parent;
 	this.groups = {};
-	this.panels = {};
 	this.activeGroup = null;
-	this.ui = new ui.panel(this.name);
-	this.ui.setTitleData(new db.connector(this,"name"));
-	
+	this.ui = new GM.campaignINT(this.parent.ui,this);
 
-	this.setData(dat);
+	this.ui.initialize();
+	GM.debug.log("END: GM.campaignSVC","Done initializing campaignSVC object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.setData = function(dat) {
-	this.dat = dat;
-	this.name = dat.name + " Campaign";
-	this.groupButtons.removeChildren();
-	if(this.activeGroup)
-		this.ui.removeChild(this.activeGroup.ui);
-	this.activeGroup = null;
-	
-	var active = false;
-	for(var g in this.dat.groups) {
-		var group = this.dat.groups[g];
-		var b = this.groupButtons.addRadioButton(group.name);
-		b.setUpdate(this,this.selectGroup,[group.name]);
-		if(!active) {
-			active = true;
-			this.activeGroup = new GM.groupSVC(group,this);
-			this.activeGroup.initialize();
-			b.setChecked();
-		}
-	}
-	
-	this.refreshView();
-};
-
-// -------------------------------------------------------------------------------------------------
-//
-// -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.showPopup = function() {
-	var popup = this.ui.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	popup.dat = {
-		"name": ""
-	};
-	popup.show();
-	var p = popup.addPanel("New Group");
-	var tf = p.addTextField("Name:",new db.connector(popup.dat,"name"));
-	tf.focus();
-	var b = p.addButton("Ok",new db.link(this,this.addGroup,[popup]));
-	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-};
-
-// -------------------------------------------------------------------------------------------------
-//
-// -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.hidePopup = function(popup) {
-	popup.hide();
-	this.ui.removeChild(popup);
+GM.campaignSVC.prototype.getName = function() {
+	return this.dat.name;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -101,15 +53,4 @@ GM.campaignSVC.prototype.selectGroup = function(name) {
 	}
 	this.activeGroup.refreshView();
 	this.mainframe.trigger("group_change");
-};
-
-// -------------------------------------------------------------------------------------------------
-// refreshView
-// -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.refreshView = function() {
-	this.ui.refreshView();
-};
-
-GM.campaignSVC.prototype.addToSidebar = function(ui) {
-	this.parent.addToSidebar(ui);
 };
