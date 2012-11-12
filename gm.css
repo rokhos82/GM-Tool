@@ -32,6 +32,8 @@ div.debug input {
 
 div.debug input[type=text] {
 	width: 74%;
+	color: #ff8c00;
+	border-color: #ff8c00;
 }
 
 div.debug input[type=submit] {
