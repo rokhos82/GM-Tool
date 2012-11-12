@@ -43,7 +43,7 @@ GM.mainINT = function(root,svc) {
 	this.selector = cb;
 	this.mainframe.addHandler("campaignListUpdate","campaigns",cb.setOptions,cb,[this.campaignList]);
 	this.mainframe.addHandler("campaignChange","campaigns",cb.refreshView,cb,[]);
-	var b = p.addButton("Select Campaign",new db.link(this,this.selectCampaign,[null,false]));
+	var b = p.addButton("Select Campaign",new db.link(this,this.changeCampaign,[]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
 
 	GM.debug.log("end: GM.mainINT","Finished initializing mainINT object",2);
@@ -104,14 +104,18 @@ GM.mainINT.prototype.showCampaignPopup = function(panel) {
 // changeCampaign
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.changeCampaign = function() {
-	var name = this.selector.getValue();
-	if(!this.svc.selectCampaign(name))
-		alert("Unable to select campaign.  Check log for details.");
+	var key = this.selector.getValue();
+	if(!this.svc.setActiveCampaign(key))
+		alert("Unable to select campaign (" + key + ").  Check log for details.");
 };
 
+
+// -------------------------------------------------------------------------------------------------
+// refreshCampaigns
+// -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.refreshCampaigns = function() {
 	GM.debug.log("call: GM.mainINT.refreshCampaigns","Refreshing the campaign list",2);
 	var campaigns = this.svc.getCampaigns();
 	this.selector.setOptions(campaigns.list);
-	this.select.selectOption(campaigns.active);
+	this.selector.selectOption(campaigns.active);
 };

@@ -8,7 +8,7 @@ GM.mainSVC = function(root,dat) {
 	this.dat = dat;
 	
 	this.campaigns = {};
-	this.campaignList = {};
+	this.campaignList = [];
 	this.activeCampaign = null;
 	
 	this.templates = {};
@@ -84,82 +84,33 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 	
 	this.dat.campaigns[name] = new GM.campaignDAT(name);
 	//this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name]);
-	this.campaignList[name] = 1;
-	this.selectCampaign(name);
+	this.campaigns[name] = {};
+	var key = this.campaignList.push(name);
+	this.setActiveCampaign(key - 1);
 };
 
 // -------------------------------------------------------------------------------------------------
-// selectCampaign
+// setActiveCampaign
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.selectCampaign = function(name) {
+GM.mainSVC.prototype.setActiveCampaign = function(key) {
+	var name = this.campaignList[key];
 	var result = false;
 	if(this.campaigns[name]) {
 		this.activeCampaign = this.campaigns[name];
+		GM.debug.log("MSG: GM.mainSVC.prototype.selectCampaign","Campaign " + name + " has been set as active")
 		result = true;
 	}
 	else {
-		GM.debug.log("ERROR: GM.mainSVC.prototype.selectCampaign","Campaign does not exist.",0);
+		GM.debug.log("ERROR: GM.mainSVC.prototype.selectCampaign","Campaign, " + name + " ,does not exist",0);
 		result = false;
 	}
+	return result;
 };
 
-// -------------------------------------------------------------------------------------------------
-// rollInitiative
-// -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.rollInitiative = function(list) {
-	list.removeChildren();
-	var init = new Array();
-	
-	for(var m in this.activeCampaign.activeGroup.members) {
-		var member = this.activeCampaign.activeGroup.members[m];
-		var roll = GM.utility.d10() + member.dat.attributes.reflexes.score;
-		for(var a in member.dat.armor) {
-			var armor = member.dat.armor[a];
-			if(armor.penalties.i)
-				roll += parseInt(armor.penalties.i);
-		}
-		init.push({"name":member.dat.name,"roll":roll});
-	}
-	
-	init.sort(function(a,b) {
-		if(a.roll < b.roll)
-			return 1;
-		else if(a.roll > b.roll)
-			return -1;
-		else
-			return 0;
-	});
-	
-	for(var i in init) {
-		list.addAnchorItem(init[i].name + " - " + init[i].roll,null,"#" + init[i].name.replace(/ /g,'').toLowerCase());
-	}
+GM.mainSVC.prototype.getCampaignName = function(key) {
+	return this.campaignList[key];
 };
 
-// -------------------------------------------------------------------------------------------------
-// rollGroupInitiative
-// -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.rollGroupInitiative = function(list) {
-	list.removeChildren();
-	var sum = 0;
-	var cnt = 0;
-	for(var m in this.activeCampaign.activeGroup.members) {
-		var member = this.activeCampaign.activeGroup.members[m];
-		sum += member.dat.attributes.reflexes.score;
-		cnt++;
-	}
-	var avg = Math.round(sum/cnt);
-	var roll = kantia.func.d10(1) + avg;
-	
-	list.addItem("Group - " + roll);
-};
-
-// -------------------------------------------------------------------------------------------------
-// hidePopup
-// -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.hidePopup = function(popup) {
-	popup.hide();
-	this.controls.removeChild(popup);
-};
 
 // -------------------------------------------------------------------------------------------------
 // importDataPopup
