@@ -14,28 +14,7 @@ GM.mainINT = function(root,svc) {
 	this.sidebar.addClass("sidebar");
 	this.popups = new ui.panel();
 
-	this.controls = this.sidebar.addPanel("Controls");
-
-	// Build sidebar
-		
-	// Build the popups
-	
-	// Build the controls panel
-	var p = this.controls.addPanel("Data");
-	var b = p.addButton("Load",new db.link(this.svc,this.svc.loadLocalStorage,[]));
-	var b = p.addButton("Save",new db.link(this.svc,this.svc.saveToLocalStorage,[]));
-	var b = p.addButton("Clear",new db.link(this.svc,this.svc.clearLocalStorage,[]));
-	var b = p.addButton("Import",new db.link(this,this.importDataPopup,[]));
-	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
-	
-	var p = this.controls.addPanel("Campaign Selector");
-	var cb = p.addComboBox("Campaigns",this.campaignList,new db.local(""));
-	//cb.setUpdate(this,this.selectCampaign,[cb,false]);
-	this.selector = cb;
-	this.mainframe.addHandler("campaignListUpdate","campaigns",cb.setOptions,cb,[this.campaignList]);
-	this.mainframe.addHandler("campaignChange","campaigns",cb.refreshView,cb,[]);
-	var b = p.addButton("Select Campaign",new db.link(this,this.changeCampaign,[]));
-	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
+	this.setWidget("mainControls",new GM.mainControlINT(this,this.svc));
 
 	GM.debug.log("END: GM.mainINT","Done initializing mainINT object",2);
 };
@@ -182,4 +161,6 @@ GM.mainINT.prototype.setWidget = function(key,ui) {
 	}
 	
 	this.widgets[key] = ui;
+
+	this.sidebar.appendChild(ui.ui);
 };
