@@ -1,0 +1,2 @@
+GM.mainControlINT = function() {
+};

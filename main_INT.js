@@ -7,6 +7,8 @@ GM.mainINT = function(root,svc) {
 	this.mainframe = this.svc.mainframe;
 	this.children = [];
 
+	this.widgets = {};
+
 	this.ui = new ui.panel();
 	this.sidebar = new ui.panel();
 	this.sidebar.addClass("sidebar");
@@ -168,4 +170,16 @@ GM.mainINT.prototype.appendChild = function(child) {
 // destroy
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.destroy = function() {
+};
+
+// -------------------------------------------------------------------------------------------------
+// setWidget
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.setWidget = function(key,ui) {
+	GM.debug.log("CALL: GM.mainINT.setWidget","Adding/replacing the widget mapped to " + key,2);
+
+	if(this.widgets[key]) {
+	}
+	
+	this.widgets[key] = ui;
 };

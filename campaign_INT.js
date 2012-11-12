@@ -16,14 +16,14 @@ GM.campaignINT = function(parent,svc) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// initialize
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.initialize = function() {
 	this.parent.appendChild(this);
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// showPopup
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.showPopup = function() {
 	var popup = this.ui.addPopup();
@@ -41,7 +41,7 @@ GM.campaignINT.prototype.showPopup = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// hidePopup
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.hidePopup = function(popup) {
 	popup.hide();
@@ -55,6 +55,9 @@ GM.campaignINT.prototype.refreshView = function() {
 	this.ui.refreshView();
 };
 
+// -------------------------------------------------------------------------------------------------
+// addToSidebar
+// -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.addToSidebar = function(ui) {
 	this.parent.addToSidebar(ui);
 };

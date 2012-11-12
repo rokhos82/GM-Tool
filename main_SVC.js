@@ -4,18 +4,22 @@
 GM.mainSVC = function(root,dat) {
 	GM.debug.log("CALL: GM.mainSVC","Initializing mainSVC object",2);
 	this.root = root;
-	this.mainframe = new lib.mainframe();
 	this.dat = dat;
 	
-	this.campaigns = {};
-	this.campaignList = [];
-	this.activeCampaign = null;
+	this.mainframe = new lib.mainframe();
+	this.mainframe.setListener("setWidget",this,this.setWidget);
 	
-	this.templates = {};
-	this.templateList = {};
+	this.campaigns = {};
+	this.lists = {};
+	this.lists.campaigns = [];
+	this.lists.templates = [];
+	this.activeCampaign = null;
+
+	this.widgets = {};
 
 	this.ui = new GM.mainINT(root,this);
 	this.ui.initialize();
+
 	GM.debug.log("END: GM.mainSVC","Done initializing mainSVC object",2);
 };
 
@@ -33,7 +37,7 @@ GM.mainSVC.prototype.loadLocalStorage = function() {
 					this.activeCampaign = new GM.campaignSVC(camps[c],this.mainframe,this);
 				}
 				this.campaigns[c] = camps[c];
-				this.campaignList[c] = c;
+				this.lists.campaigns[c] = c;
 			}
 		}
 	}
@@ -75,7 +79,7 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 	
 	this.dat.campaigns[name] = new GM.campaignDAT(name);
 	this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name],this);
-	var key = this.campaignList.push(name);
+	var key = this.lists.campaigns.push(name);
 	this.setActiveCampaign(key - 1);
 };
 
@@ -83,7 +87,7 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 // setActiveCampaign
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.setActiveCampaign = function(key) {
-	var name = this.campaignList[key];
+	var name = this.lists.campaigns[key];
 	var result = false;
 	if(this.campaigns[name]) {
 		this.activeCampaign = this.campaigns[name];
@@ -98,7 +102,7 @@ GM.mainSVC.prototype.setActiveCampaign = function(key) {
 };
 
 GM.mainSVC.prototype.getCampaignName = function(key) {
-	return this.campaignList[key];
+	return this.lists.campaigns[key];
 };
 
 
@@ -113,11 +117,17 @@ GM.mainSVC.prototype.importData = function(dataStr) {
 	// Reset the service structure and clear the data.
 	this.reset();
 
-	// Rebuild the campaigns (DAT & SVC) and campaignList.
+	// Rebuild the campaigns (DAT & SVC) and campaign list.
 	for(var c in data.campaigns) {
 		this.dat.campaigns[c] = data.campaigns[c];
 		this.campaigns[c] = new GM.campaignSVC(this.dat.campaigns[c],this);
-		this.campaignList.push(c);
+		this.lists.campaigns.push(c);
+	}
+
+	// Rebuild the custom templates and template list.
+	for(var t in data.templates) {
+		this.dat.templates[t] = data.templates[t];
+		this.lists.templates.push(t);
 	}
 };
 
@@ -135,8 +145,19 @@ GM.mainSVC.prototype.exportData = function() {
 GM.mainSVC.prototype.getCampaigns = function() {
 	GM.debug.log("CALL: GM.mainSVC.getCampaigns","Getting the campaign list and active campaign",2);
 	return { 
-		list: this.campaignList.slice(),
+		list: this.lists.campaigns.slice(),
 		active: this.activeCampaign ? this.activeCampaign.name : null
+	};
+};
+
+// -------------------------------------------------------------------------------------------------
+// getTemplates
+// -------------------------------------------------------------------------------------------------
+GM.mainSVC.prototype.getTemplates = function() {
+	GM.debug.log("CALL: GM.mainSVC.getTemplates","Getting the template list and templates hash",2);
+	return {
+		list: this.lists.templates.slice(),
+		hash: this.dat.templates
 	};
 };
 
@@ -152,11 +173,28 @@ GM.mainSVC.prototype.reset = function() {
 
 	// Reset the campaigns hash and the campaignsList array.
 	delete this.campaigns;
-	delete this.campaignList;
+	delete this.lists.campaigns;
 	this.campaigns = {};
-	this.campaignList = [];
+	this.lists.campaigns = [];
 
 	// Reset the data object.
 	delete this.dat;
 	this.dat = new GM.mainDAT();
+};
+
+// -------------------------------------------------------------------------------------------------
+// setWidget
+// -------------------------------------------------------------------------------------------------
+GM.mainSVC.prototype.setWidget = function(key,widget) {
+	GM.debug.log("CALL: GM.mainSVC.setWidget","Adding/replacing the widget mapped to " + key,2);
+	var svc = widget.svc;
+	var ui = widget.ui;
+
+	if(this.widgets[key]) {
+		// Remove the existing widget.
+	}
+	
+	this.widgets[key] = svc;
+
+	this.ui.setWidget(key,ui);
 };

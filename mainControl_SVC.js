@@ -1,0 +1,2 @@
+GM.mainControlSVC = function() {
+};
