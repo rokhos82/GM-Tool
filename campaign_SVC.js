@@ -6,7 +6,7 @@ GM.campaignSVC = function(dat,parent) {
 	this.dat = dat;
 	this.mainframe = new lib.mainframe(parent.mainframe);
 	this.parent = parent;
-	this.groups = {};
+	this.encounters = {};
 	this.activeGroup = null;
 	this.ui = new GM.campaignINT(this.parent.ui,this);
 
@@ -38,6 +38,9 @@ GM.campaignSVC.prototype.addGroup = function(popup) {
 	}
 	
 	this.hidePopup(popup);
+};
+
+GM.campaignSVC.prototype.addEncounter = function() {
 };
 
 // -------------------------------------------------------------------------------------------------

@@ -4,8 +4,10 @@ GM.campaignINT = function(parent,svc) {
 	this.parent = parent;
 	this.mainframe = svc.mainframe;
 
+	this.children = [];
+
 	this.label = "Campaign: " + this.svc.getName();
-	this.ui = new ui.panel();
+	this.ui = new ui.panel(this.label);
 
 	// Build sidebar controls
 	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: new GM.campaignControlINT(this,this.svc)}]);
@@ -17,45 +19,22 @@ GM.campaignINT = function(parent,svc) {
 // initialize
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.initialize = function() {
+	GM.debug.log("CALL: GM.campaignINT.initialize","Attach UI elements to the parent",2);
 	this.parent.appendChild(this);
-};
-
-// -------------------------------------------------------------------------------------------------
-// showPopup
-// -------------------------------------------------------------------------------------------------
-GM.campaignINT.prototype.showPopup = function() {
-	var popup = this.ui.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
-	popup.dat = {
-		"name": ""
-	};
-	popup.show();
-	var p = popup.addPanel("New Group");
-	var tf = p.addTextField("Name:",new db.connector(popup.dat,"name"));
-	tf.focus();
-	var b = p.addButton("Ok",new db.link(this,this.addGroup,[popup]));
-	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-};
-
-// -------------------------------------------------------------------------------------------------
-// hidePopup
-// -------------------------------------------------------------------------------------------------
-GM.campaignINT.prototype.hidePopup = function(popup) {
-	popup.hide();
-	this.ui.removeChild(popup);
 };
 
 // -------------------------------------------------------------------------------------------------
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.refreshView = function() {
+	GM.debug.log("CALL: GM.campaignINT.refreshView","Refreshing the UI to reflect changes to the data",2);
 	this.ui.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
-// addToSidebar
+// appendChild
 // -------------------------------------------------------------------------------------------------
-GM.campaignINT.prototype.addToSidebar = function(ui) {
-	this.parent.addToSidebar(ui);
+GM.campaignINT.prototype.appendChild = function(child) {
+	this.children.push(child);
+	this.ui.appendChild(child.ui);
 };
