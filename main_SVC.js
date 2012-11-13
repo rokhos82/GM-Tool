@@ -98,9 +98,13 @@ GM.mainSVC.prototype.setActiveCampaign = function(key) {
 		GM.debug.log("ERROR: GM.mainSVC.prototype.selectCampaign","Campaign, " + name + " ,does not exist",0);
 		result = false;
 	}
+	this.ui.setActiveCampaign(this.activeCampaign.ui);
 	return result;
 };
 
+// -------------------------------------------------------------------------------------------------
+// getCampaignName
+// -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.getCampaignName = function(key) {
 	return this.lists.campaigns[key];
 };

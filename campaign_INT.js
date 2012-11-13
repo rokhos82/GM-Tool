@@ -10,9 +10,6 @@ GM.campaignINT = function(parent,svc) {
 	this.ui = new ui.panel(this.label);
 	this.widget = new GM.campaignControlINT(this,this.svc)
 
-	// Build control widget
-	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: this.widget}]);
-
 	GM.debug.log("END: GM.campaignINT","Done initializing campaignINT object",2);
 };
 
@@ -22,6 +19,7 @@ GM.campaignINT = function(parent,svc) {
 GM.campaignINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.campaignINT.initialize","Attach UI elements to the parent",2);
 	this.parent.appendChild(this);
+	this.widget.initialize();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -46,4 +44,12 @@ GM.campaignINT.prototype.appendChild = function(child) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.selectEncounter = function(name) {
 	GM.debug.log("CALL: GM.campaignINT.selectEncounter","Selecting encounter: " + name,2);
+};
+
+// -------------------------------------------------------------------------------------------------
+// detach
+// -------------------------------------------------------------------------------------------------
+GM.campaignINT.prototype.detach = function() {
+	this.ui.parent.removeChild(this.ui);
+	this.widget.detach();
 };

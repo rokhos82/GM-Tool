@@ -20,6 +20,7 @@ GM.campaignControlINT = function(parent,svc) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.campaignControlINT.initialize","Appending ui to parent",2);
+	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: this}]);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -60,4 +61,11 @@ GM.campaignControlINT.prototype.addEncounter = function(dat) {
 	GM.debug.log("CALL: GM.campaignControlINT.addEncounter","",2);
 	var name = dat.name;
 	this.svc.addEncounter(name);
+};
+
+// -------------------------------------------------------------------------------------------------
+// detach
+// -------------------------------------------------------------------------------------------------
+GM.campaignControlINT.prototype.detach = function() {
+	this.ui.parent.removeChild(this.ui);
 };

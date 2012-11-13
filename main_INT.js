@@ -7,6 +7,8 @@ GM.mainINT = function(root,svc) {
 	this.mainframe = this.svc.mainframe;
 	this.children = [];
 
+	this.activeCampaign = null;
+
 	this.widgets = {};
 
 	this.ui = new ui.panel();
@@ -81,8 +83,8 @@ GM.mainINT.prototype.exportDataPopup = function() {
 // appendChild
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.appendChild = function(child) {
-	this.children.push(child);
 	this.ui.appendChild(child.ui);
+	return this.children.push(child) - 1;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -103,4 +105,15 @@ GM.mainINT.prototype.setWidget = function(key,ui) {
 	this.widgets[key] = ui;
 
 	this.sidebar.appendChild(ui.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// setActiveCampaign
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.setActiveCampaign = function(ui) {
+	GM.debug.log("CALL: GM.mainINT.setActiveCampaign","Setting active campaign UI",2);
+	if(this.activeCampaign)
+		this.activeCampaign.detach();
+	this.activeCampaign =  ui;
+	this.activeCampaign.initialize();
 };

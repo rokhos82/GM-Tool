@@ -70,7 +70,7 @@ GM.debug.clearLog = function() {
 
 GM.debug.codeExec = function() {
 	var cmd = GM.debug.cmd.value;
-	GM.debug.log("User Exec",cmd,0);
+	GM.debug.log("MSG: User Exec",cmd,0);
 	GM.debug.cmd.value = "";
 	try {
 		eval(cmd);
@@ -78,4 +78,12 @@ GM.debug.codeExec = function() {
 	catch (exception) {
 		GM.debug.log("ERROR",exception,0);
 	}
+};
+
+GM.keyShortcuts = function(event) {
+	event.keycode;
+	event.shiftKey;
+	event.ctrlKey;
+	event.altKey;
+	event.metaKey;
 };
