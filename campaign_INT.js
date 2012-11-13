@@ -8,9 +8,10 @@ GM.campaignINT = function(parent,svc) {
 
 	this.label = "Campaign: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
+	this.widget = new GM.campaignControlINT(this,this.svc)
 
-	// Build sidebar controls
-	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: new GM.campaignControlINT(this,this.svc)}]);
+	// Build control widget
+	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: this.widget}]);
 
 	GM.debug.log("END: GM.campaignINT","Done initializing campaignINT object",2);
 };
@@ -35,6 +36,14 @@ GM.campaignINT.prototype.refreshView = function() {
 // appendChild
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.appendChild = function(child) {
+	GM.debug.log("CALL: GM.campaignINT.appendChild","Appending child UI",2);
 	this.children.push(child);
 	this.ui.appendChild(child.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// selectEncounter
+// -------------------------------------------------------------------------------------------------
+GM.campaignINT.prototype.selectEncounter = function(name) {
+	GM.debug.log("CALL: GM.campaignINT.selectEncounter","Selecting encounter: " + name,2);
 };

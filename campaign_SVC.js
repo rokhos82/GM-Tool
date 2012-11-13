@@ -7,7 +7,9 @@ GM.campaignSVC = function(dat,parent) {
 	this.mainframe = new lib.mainframe(parent.mainframe);
 	this.parent = parent;
 	this.encounters = {};
-	this.activeGroup = null;
+	this.lists = {};
+	this.lists.encounters = [];
+	this.activeEncounter = null;
 	this.ui = new GM.campaignINT(this.parent.ui,this);
 
 	this.ui.initialize();
@@ -15,45 +17,43 @@ GM.campaignSVC = function(dat,parent) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// getName
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.getName = function() {
 	return this.dat.name;
 };
 
 // -------------------------------------------------------------------------------------------------
-// addGroup
+// getEncounters
 // -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.addGroup = function(popup) {
-	var name = popup.dat.name;
-	if(this.dat.groups[name]) {
-		alert("Group with name " + name + " already exists!  Please use a different name.");
-	}
-	else {
-		this.dat.groups[name] = new GM.groupDAT(name);
-		var b = this.groupButtons.addRadioButton(name);
-		b.setUpdate(this,this.selectGroup,[name]);
-		b.setChecked();
-		this.selectGroup(name);
-	}
-	
-	this.hidePopup(popup);
-};
-
-GM.campaignSVC.prototype.addEncounter = function() {
+GM.campaignSVC.prototype.getEncounters = function() {
+	return {
+		list: this.lists.encounters.slice(),
+		encounters: this.encounters
+	};
 };
 
 // -------------------------------------------------------------------------------------------------
-// selectGroup
+// addEncounter
 // -------------------------------------------------------------------------------------------------
-GM.campaignSVC.prototype.selectGroup = function(name) {
-	if(!this.activeGroup) {
-		this.activeGroup = new GM.groupSVC(this.dat.groups[name],this);
-		this.activeGroup.initialize();
+GM.campaignSVC.prototype.addEncounter = function(name) {
+	GM.debug.log("CALL: GM.campaignSVC.addEncounter","Adding new encounter: " + name,2);
+	if(this.name.encounters[name]) {
+		GM.debug.log("ERROR: GM.campaignSVC.addEncounter","Encounter of name " + name + " already exists",2);
 	}
 	else {
-		this.activeGroup.setData(this.dat.groups[name]);
+		this.dat.encounters[name] = new GM.encounterDAT(name);
+		this.encounters[name] = new GM.encounterSVC(this.dat.encounters[name],this);
+		var key = this.lists.encounters.push(name) - 1;
+		this.selectEncounter(key);
 	}
-	this.activeGroup.refreshView();
-	this.mainframe.trigger("group_change");
+};
+
+// -------------------------------------------------------------------------------------------------
+// selectEncounter
+// -------------------------------------------------------------------------------------------------
+GM.campaignSVC.prototype.selectEncounter = function(key) {
+	GM.debug.log("CALL: GM.campaignSVC.selectEncounter","Selecting encounter with key: " + key,2);
+	var name = this.lists.encounters[key];
+	this.activeEncounter = this.encounters[name];
 };

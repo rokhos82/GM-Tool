@@ -3,7 +3,7 @@
 // -------------------------------------------------------------------------------------------------
 GM.campaignDAT = function(name) {
 	this.name = name;
-	this.groups = {};
+	this.encounters = {};
 	this.map = undefined;
 	this.players = [];
 };

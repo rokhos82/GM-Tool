@@ -10,12 +10,16 @@ GM.campaignControlINT = function(parent,svc) {
 	this.ui = new ui.panel(this.label);
 	var b = this.ui.addButton("New Encounter",new db.link(this,this.addEncounterPopup,[]));
 	var grps = this.ui.addPanel("Encounters");
-	this.groupButtons = grps.addRadioSet("groups");
+	this.groupButtons = grps.addRadioSet("encounters");
 
 	GM.debug.log("END: GM.campaignControlINT","End initializing campaignControlINT object",2);
 };
 
+// -------------------------------------------------------------------------------------------------
+// initialize
+// -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.initialize = function() {
+	GM.debug.log("CALL: GM.campaignControlINT.initialize","Appending ui to parent",2);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -33,10 +37,10 @@ GM.campaignControlINT.prototype.addEncounterPopup = function() {
 	var p = popup.addPanel("New Encounter ");
 	var tf = p.addTextField("Name:",new db.connector(dat,"name"));
 	tf.focus();
-	var seq = db.sequence();
-	seq.addAction("add",new db.link(this,this.addGroup,[dat]));
+	var seq = new db.sequence();
+	seq.addAction("add",new db.link(this,this.addEncounter,[dat]));
 	seq.addAction("close",new db.link(this,this.hidePopup,[popup]));
-	var b = p.addButton("Ok",new db.link(this,this.addGroup,[popup]));
+	var b = p.addButton("Ok",seq);
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
@@ -52,5 +56,8 @@ GM.campaignControlINT.prototype.hidePopup = function(popup) {
 // -------------------------------------------------------------------------------------------------
 // addEncounter
 // -------------------------------------------------------------------------------------------------
-GM.campaignControlINT.prototype.addEncount = function() {
+GM.campaignControlINT.prototype.addEncounter = function(dat) {
+	GM.debug.log("CALL: GM.campaignControlINT.addEncounter","",2);
+	var name = dat.name;
+	this.svc.addEncounter(name);
 };

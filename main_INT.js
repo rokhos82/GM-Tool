@@ -10,6 +10,7 @@ GM.mainINT = function(root,svc) {
 	this.widgets = {};
 
 	this.ui = new ui.panel();
+	this.ui.addClass("panel");
 	this.sidebar = new ui.panel();
 	this.sidebar.addClass("sidebar");
 	this.popups = new ui.panel();
