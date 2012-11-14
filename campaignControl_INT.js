@@ -55,6 +55,14 @@ GM.campaignControlINT.prototype.hidePopup = function(popup) {
 };
 
 // -------------------------------------------------------------------------------------------------
+// selectEncounter
+// -------------------------------------------------------------------------------------------------
+GM.campaignControlINT.prototype.selectEncounter = function(name) {
+	GM.debug.log("CALL: GM.campaignControlINT.selectEncounter","Selecting encounter: " + name,2);
+	this.svc.selectEncounter(name);
+};
+
+// -------------------------------------------------------------------------------------------------
 // addEncounter
 // -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.addEncounter = function(dat) {
@@ -64,9 +72,11 @@ GM.campaignControlINT.prototype.addEncounter = function(dat) {
 	var encounters = this.svc.getEncounters();
 	encounters.list.sort();
 	this.groupButtons.removeChildren();
+
 	for(var i in encounters.list) {
 		var n = encounters.list[i];
 		var b = this.groupButtons.addRadioButton(n);
+		b.setUpdate(this,this.selectEncounter,[n]);
 		if(n == name)
 			b.setChecked();
 	}
@@ -76,5 +86,6 @@ GM.campaignControlINT.prototype.addEncounter = function(dat) {
 // detach
 // -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.detach = function() {
+	GM.debug.log("CALL: GM.campaignControlINT.detach","Detaching interface from the parent",2);
 	this.ui.parent.removeChild(this.ui);
 };

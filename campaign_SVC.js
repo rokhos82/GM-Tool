@@ -54,7 +54,11 @@ GM.campaignSVC.prototype.addEncounter = function(name) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.selectEncounter = function(key) {
 	GM.debug.log("CALL: GM.campaignSVC.selectEncounter","Selecting encounter with key: " + key,2);
-	var name = this.lists.encounters[key];
+	var name = null;
+	if(!isNaN(key))
+		name = this.lists.encounters[key];
+	else
+		name = key;
 	this.activeEncounter = this.encounters[name];
 	this.ui.setActiveEncounter(this.activeEncounter.ui);
 };

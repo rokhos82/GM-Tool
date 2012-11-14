@@ -22,5 +22,5 @@ GM.encounterControlINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.encounterControlINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.encounterControlINT.detach","Datching interface from the parent",2);
-	this.parent.removeChild(this);
+	this.ui.parent.removeChild(this.ui);
 };

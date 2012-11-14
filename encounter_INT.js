@@ -23,6 +23,6 @@ GM.encounterINT.prototype.initialize = function() {
 // detach
 // -------------------------------------------------------------------------------------------------
 GM.encounterINT.prototype.detach = function() {
-	this.parent.removeChild(this);
+	this.ui.parent.removeChild(this.ui);
 	this.widget.detach();
 };
