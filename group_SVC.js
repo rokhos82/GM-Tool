@@ -1,8 +1,8 @@
-// -------------------------------------------------------------------------------------------------
-// groupSVC - the group service object.
-// -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// groupSVC
+////////////////////////////////////////////////////////////////////////////////////////////////////
 GM.groupSVC = function(dat,parent) {
-	this.dat = {};
+	this.dat = dat;
 	this.name = "Group - " + dat.name;
 	this.members = {};
 	this.ui = new ui.panel();
@@ -16,8 +16,6 @@ GM.groupSVC = function(dat,parent) {
 	this.controls.addButton("New NPC",new db.link(this,this.showPopup,[]));
 	this.links = this.controls.addPanel("Quick Links");
 	this.controls.addButton("Start Combat",new db.link(this,this.startCombat,[]));
-	
-	this.setData(dat);
 };
 
 // -------------------------------------------------------------------------------------------------

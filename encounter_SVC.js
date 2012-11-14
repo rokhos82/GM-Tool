@@ -30,6 +30,7 @@ GM.encounterSVC.prototype.addGroup = function(name) {
 	}
 	else {
 		var dat = new GM.groupDAT(name);
+		this.groups[name] = new GM.groupSVC();
 	}
 };
 
