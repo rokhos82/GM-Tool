@@ -32,3 +32,11 @@ GM.encounterSVC.prototype.addGroup = function(name) {
 		var dat = new GM.groupDAT(name);
 	}
 };
+
+// -------------------------------------------------------------------------------------------------
+// getDataConnector
+// -------------------------------------------------------------------------------------------------
+GM.encounterSVC.prototype.getDataConnector = function(token) {
+	GM.debug.log("CALL: GM.encounterSVC.getDataConnector","Getting connector for " + token,2);
+	return new db.connector(this.dat,token);
+};

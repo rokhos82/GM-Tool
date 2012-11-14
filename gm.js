@@ -80,7 +80,17 @@ GM.debug.codeExec = function() {
 	}
 };
 
-GM.keyShortcuts = function(event) {
+// Debug Command Line Helper Functions /////////////////////////////////////////////////////////////
+GM.debug.stringify = function(object) {
+	alert(JSON.stringify(object));
+};
+
+GM.debug.stringifyData = function(svc) {
+	GM.debug.stringify(svc.dat);
+};
+
+// Key Bindings ////////////////////////////////////////////////////////////////////////////////////
+GM.keyBindings = function(event) {
 	event.keycode;
 	event.shiftKey;
 	event.ctrlKey;
