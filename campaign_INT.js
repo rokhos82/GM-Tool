@@ -45,7 +45,7 @@ GM.campaignINT.prototype.appendChild = function(child) {
 // detach
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.detach = function() {
-	GM.debug.log("GM.campaignINT.detach","Detaching the interface from the parent",2);
+	GM.debug.log("CALL: GM.campaignINT.detach","Detaching the interface from the parent",2);
 	this.ui.parent.removeChild(this.ui);
 	this.widget.detach();
 };
@@ -54,7 +54,7 @@ GM.campaignINT.prototype.detach = function() {
 // setActiveEncounter
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.setActiveEncounter = function(ui) {
-	GM.debug.log("GM.campaignINT.setActiveEncounter","Setting the active encounter",2);
+	GM.debug.log("CALL: GM.campaignINT.setActiveEncounter","Setting the active encounter",2);
 	if(this.activeEncounter)
 		this.activeEncounter.detach();
 	this.activeEncounter = ui;

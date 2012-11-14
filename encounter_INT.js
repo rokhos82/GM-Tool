@@ -18,7 +18,7 @@ GM.encounterINT = function(parent,svc) {
 // initialize
 // -------------------------------------------------------------------------------------------------
 GM.encounterINT.prototype.initialize = function() {
-	GM.debug.log("GM.encounterINT.initialize","Attaching UI to parent",2);
+	GM.debug.log("CALL: GM.encounterINT.initialize","Attaching UI to parent",2);
 	this.parent.appendChild(this);
 	this.widget.initialize();
 };
