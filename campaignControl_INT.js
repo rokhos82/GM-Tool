@@ -58,9 +58,18 @@ GM.campaignControlINT.prototype.hidePopup = function(popup) {
 // addEncounter
 // -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.addEncounter = function(dat) {
-	GM.debug.log("CALL: GM.campaignControlINT.addEncounter","",2);
+	GM.debug.log("CALL: GM.campaignControlINT.addEncounter","Adding encounter: " + dat.name,2);
 	var name = dat.name;
 	this.svc.addEncounter(name);
+	var encounters = this.svc.getEncounters();
+	encounters.list.sort();
+	this.groupButtons.removeChildren();
+	for(var i in encounters.list) {
+		var n = encounters.list[i];
+		var b = this.groupButtons.addRadioButton(n);
+		if(n == name)
+			b.setChecked();
+	}
 };
 
 // -------------------------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ GM.campaignSVC.prototype.getEncounters = function() {
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.addEncounter = function(name) {
 	GM.debug.log("CALL: GM.campaignSVC.addEncounter","Adding new encounter: " + name,2);
-	if(this.name.encounters[name]) {
+	if(this.dat.encounters[name]) {
 		GM.debug.log("ERROR: GM.campaignSVC.addEncounter","Encounter of name " + name + " already exists",2);
 	}
 	else {
@@ -56,4 +56,5 @@ GM.campaignSVC.prototype.selectEncounter = function(key) {
 	GM.debug.log("CALL: GM.campaignSVC.selectEncounter","Selecting encounter with key: " + key,2);
 	var name = this.lists.encounters[key];
 	this.activeEncounter = this.encounters[name];
+	this.ui.setActiveEncounter(this.activeEncounter.ui);
 };

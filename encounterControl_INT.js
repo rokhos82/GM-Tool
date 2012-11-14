@@ -1,28 +1,26 @@
-GM.encounterINT = function(parent,svc) {
-	GM.debug.log("CALL: GM.encounterINT","Initializing encounterINT object",2);
+GM.encounterControlINT = function(parent,svc) {
+	GM.debug.log("CALL: GM.encounterControlINT","Initializing encounterControlINT object",2);
 	this.parent = parent;
 	this.svc = svc;
 	this.mainframe = this.svc.mainframe;
 
 	this.label = "Encounter: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
-	this.widget = new GM.encounterControlINT(this,this.svc);
-	GM.debug.log("END: GM.encounterINT","Finished initializing encounterINT object",2);
+	GM.debug.log("END: GM.encounterControlINT","Finished initializing encounterControlINT object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
 // initialize
 // -------------------------------------------------------------------------------------------------
-GM.encounterINT.prototype.initialize = function() {
-	GM.debug.log("GM.encounterINT.initialize","Attaching UI to parent",2);
-	this.parent.appendChild(this);
-	this.widget.initialize();
+GM.encounterControlINT.prototype.initialize = function() {
+	GM.debug.log("CALL: GM.encounterControlINT.initialize","Appending interface to parent",2);
+	this.mainframe.sendEvent("setWidget",["encounterControl",{svc: this.svc,ui: this}]);
 };
 
 // -------------------------------------------------------------------------------------------------
 // detach
 // -------------------------------------------------------------------------------------------------
-GM.encounterINT.prototype.detach = function() {
+GM.encounterControlINT.prototype.detach = function() {
+	GM.debug.log("CALL: GM.encounterControlINT.detach","Datching interface from the parent",2);
 	this.parent.removeChild(this);
-	this.widget.detach();
 };
