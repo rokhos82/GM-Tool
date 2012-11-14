@@ -7,6 +7,10 @@ GM.encounterINT = function(parent,svc) {
 	this.label = "Encounter: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
 	this.widget = new GM.encounterControlINT(this,this.svc);
+
+	var ta = this.ui.addTextArea();
+	ta.addClass("desc_box");
+
 	GM.debug.log("END: GM.encounterINT","Finished initializing encounterINT object",2);
 };
 

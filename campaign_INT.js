@@ -41,9 +41,6 @@ GM.campaignINT.prototype.appendChild = function(child) {
 	return this.children.push(child) - 1;
 };
 
-GM.campaignINT.prototype.removeChild = function(child) {
-};
-
 // -------------------------------------------------------------------------------------------------
 // detach
 // -------------------------------------------------------------------------------------------------
