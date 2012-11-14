@@ -1,8 +1,9 @@
-// -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // campaignDAT - the campaign data object.
-// -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
 GM.campaignDAT = function(name) {
-	GM.debug.log("GM.campaignDAT","Initailizing campaignDAT object");
+	this.version = "20121114";
+	GM.debug.log("GM.campaignDAT","Initailizing campaignDAT object - version " + this.version);
 	this.name = name;
 	this.encounters = {};
 	this.map = undefined;
