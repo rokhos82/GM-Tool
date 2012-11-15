@@ -8,15 +8,10 @@ GM.groupINT = function(parent,svc) {
 	this.svc = svc;
 	this.mainframe = svc.mainframe;
 
-	this.ui = new ui.panel();
-	this.npcs = this.ui.addPanel();
-
-	this.controls = new ui.panel(this.name);
-	this.controls.setTitleData(new db.connector(this,"name"));
-	this.parent.addToSidebar(this.controls);
-	this.controls.addButton("New NPC",new db.link(this,this.showPopup,[]));
-	this.links = this.controls.addPanel("Quick Links");
-	this.controls.addButton("Start Combat",new db.link(this,this.startCombat,[]));
+	this.label = "Group: " + this.svc.getName();
+	this.ui = new ui.panel(this.label);
+	this.widget = new GM.groupControlINT(this,this.svc);
+	this.npcs = [];
 
 	GM.debug.log("END: GM.groupINT","Finished initializing groupINT object",2);
 };
@@ -27,17 +22,22 @@ GM.groupINT = function(parent,svc) {
 GM.groupINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.groupINT.initialize","Attaching interface to parent",2);
 	this.parent.appendChild(this);
+	this.widget.initialize();
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// detach
 // -------------------------------------------------------------------------------------------------
-GM.groupINT.prototype.refreshView = function() {
-	this.links.removeChildren();
-	for(var m in this.members) {
-		var a = this.links.addAnchor(m,null,"#" + this.members[m].tag);
-		a.addClass("quick_link");
-	}
-	this.ui.refreshView();
-	this.controls.refreshView();
+GM.groupINT.prototype.detach = function() {
+	GM.debug.log("GM.groupINT.detach","Detaching interface from the parent",2);
+	this.ui.parent.removeChild(this.ui);
+	this.widget.detach();
+};
+
+// -------------------------------------------------------------------------------------------------
+// addNPC
+// -------------------------------------------------------------------------------------------------
+GM.groupINT.prototype.addNPC = function(npc) {
+	this.npcs.push(npc);
+	this.ui.appendChild(npc.ui);
 };

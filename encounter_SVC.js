@@ -8,6 +8,9 @@ GM.encounterSVC = function(dat,parent) {
 	this.mainframe = new lib.mainframe(this.parent.mainframe);
 
 	this.groups = {};
+	this.activeGroup = null;
+	this.lists = {};
+	this.lists.groups = [];
 	
 	this.ui = new GM.encounterINT(this.parent.ui,this);
 	GM.debug.log("END: GM.encounterSVC","Finished initializing encounterSVC object",2);
@@ -30,7 +33,9 @@ GM.encounterSVC.prototype.addGroup = function(name) {
 	}
 	else {
 		var dat = new GM.groupDAT(name);
-		this.groups[name] = new GM.groupSVC();
+		this.groups[name] = new GM.groupSVC(dat,this);
+		this.lists.groups.push(name);
+		this.selectGroup(name);
 	}
 };
 
@@ -40,4 +45,20 @@ GM.encounterSVC.prototype.addGroup = function(name) {
 GM.encounterSVC.prototype.getDataConnector = function(token) {
 	GM.debug.log("CALL: GM.encounterSVC.getDataConnector","Getting connector for " + token,2);
 	return new db.connector(this.dat,token);
+};
+
+// -------------------------------------------------------------------------------------------------
+// selectGroup
+// -------------------------------------------------------------------------------------------------
+GM.encounterSVC.prototype.selectGroup = function(key) {
+	GM.debug.log("CALL: GM.encounterSVC.selectGroup","Selecting group with key: " + key,2);
+	var name = null;
+	if(isNaN(key)) {
+		name = key;
+	}
+	else {
+		name = this.lists.groups[key];
+	}
+	this.activeGroup = this.groups[name];
+	this.ui.setActiveGroup(this.activeGroup.ui);
 };

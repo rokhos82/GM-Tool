@@ -11,6 +11,10 @@ GM.groupControlINT = function(parent,svc) {
 	this.label = "Group: " + svc.getName();
 	this.ui = new ui.panel(this.label);
 
+	this.ui.addButton("New NPC",new db.link(this,this.addNPCPopup,[]));
+	this.links = this.ui.addPanel("Quick Links");
+	//this.ui.addButton("Start Combat",new db.link(this,this.startCombat,[]));
+
 	GM.debug.log("END: GM.groupControlINT","Finished initializing groupControlINT object",2);
 };
 
@@ -18,12 +22,23 @@ GM.groupControlINT = function(parent,svc) {
 // initialize
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.initialize = function() {
+	GM.debug.log("CALL: GM.groupControlINT.initialize","Attaching widget to parent",2);
+	this.mainframe.sendEvent("setWidget",["groupControl",{svc: this.svc,ui: this}]);
+};
+
+// -------------------------------------------------------------------------------------------------
+// detach
+// -------------------------------------------------------------------------------------------------
+GM.groupControlINT.prototype.detach = function() {
+	GM.debug.log("CALL: GM.groupControlINT.detach","Detaching interface from the parent",2);
+	this.ui.parent.removeChild(this.ui);
 };
 
 // -------------------------------------------------------------------------------------------------
 // addNPCPopup
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.addNPCPopup = function() {
+	GM.debug.log("CALL: GM.groupControlINT.addNPCPopup","Creating new npc popup",2);
 	var popup = this.ui.addPopup("popup","fog");
 	popup.show();
 	
@@ -31,6 +46,7 @@ GM.groupControlINT.prototype.addNPCPopup = function() {
 		"name": "",
 		"template": ""
 	}
+
 	var p = popup.addPanel("New NPC");
 	var tf = p.addTextField("Name",new db.connector(dat,"name"));
 	tf.focus();
@@ -39,7 +55,11 @@ GM.groupControlINT.prototype.addNPCPopup = function() {
 	c.setData(new db.connector(popup.dat,"template"));
 	c.updateData();
 	p.appendChild(c);
-	var b = p.addButton("Ok");
+
+	var seq = db.sequence();
+	seq.addAction("add",new db.link(this,this.addNPC,[dat]));
+	seq.addAction("hide",new db.link(this,this.hidePopup,[popup]));
+	var b = p.addButton("Ok",seq);
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
@@ -47,6 +67,15 @@ GM.groupControlINT.prototype.addNPCPopup = function() {
 // hidePopup
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.hidePopup = function(popup) {
+	GM.debug.log("CALL: GM.groupControlINT.hidePopup","Closing the popup",2);
 	this.ui.removeChild(popup);
 	popup.hide();
+};
+
+// -------------------------------------------------------------------------------------------------
+// addNPC
+// -------------------------------------------------------------------------------------------------
+GM.groupControlINT.prototype.addNPC = function(dat) {
+	GM.debug.log("CALL: GM.groupControlINT.addNPC","Adding npc " + dat.name,2);
+	this.svc.addNPC(dat.name);
 };

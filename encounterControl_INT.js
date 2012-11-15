@@ -48,7 +48,7 @@ GM.encounterControlINT.prototype.addGroupPopup = function() {
 	var tf = p.addTextField("Name",new db.connector(dat,"name"));
 	tf.focus();
 	
-	var seq = db.sequence();
+	var seq = new db.sequence();
 	seq.addAction("add",new db.link(this,this.addGroup,[dat]));
 	seq.addAction("hide",new db.link(this,this.hidePopup,[popup]));
 	p.addButton("Ok",seq);
