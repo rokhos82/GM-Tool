@@ -1,7 +1,9 @@
 GM.mainControlINT = function(parent,svc) {
+	GM.debug.log("CALL: GM.mainControlINT","Initializing mainControlINT object",2);
+
 	this.parent = parent;
 	this.svc = svc;
-	this.mainframe = new lib.mainframe(this.parent.mainframe);
+	this.mainframe = this.svc.mainframe;
 
 	this.ui = new ui.panel("Controls");
 
@@ -14,10 +16,13 @@ GM.mainControlINT = function(parent,svc) {
 	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
 
 	var p = this.ui.addPanel("Campaign Selector");
-	var cb = p.addComboBox("Campaigns",null,new db.local(""));
+	var cb = p.addComboBox("Campaigns",this.svc.getCampaigns().list,new db.local(""));
+	this.mainframe.addHandler("addCampaign","campaignSelector",this.refreshCampaigns,this,[]);
 	this.selector = cb;
 	var b = p.addButton("Select Campaign",new db.link(this,this.changeCampaign,[]));
 	var b = p.addButton("Create Campaign",new db.link(this,this.showCampaignPopup,[]));
+
+	GM.debug.log("END: GM.mainControlINT","Finished initializing mainControlINT object",2);
 };
 
 // -------------------------------------------------------------------------------------------------

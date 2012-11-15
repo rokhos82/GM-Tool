@@ -2,6 +2,11 @@ var GM = {};
 
 GM.utility = {};
 
+GM.settings = {
+	version: "20121115",
+	localStorageToken: "gm-tool.data"
+};
+
 GM.debug = {};
 GM.debug.level = 2; // 0 - severe only, 1 - errors, 2 - fine detail
 GM.debug.logFile = [];
@@ -57,7 +62,13 @@ GM.debug.refreshLogView = function() {
 		var entry = GM.debug.logFile[i];
 		if(entry.level <= GM.debug.level) {
 			var line = entry.title + " - " + entry.message;
-			str += i + "> " + line + "<br />";
+			if(i < 10)
+				str += "00" + i;
+			else if(i < 100)
+				str += "0" + i;
+			else
+				str += i;
+			str += "> " + line + "<br />";
 		}
 	}
 	GM.debug.dom.innerHTML = str;

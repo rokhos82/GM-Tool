@@ -18,6 +18,7 @@ GM.mainSVC = function(root,dat) {
 	this.widgets = {};
 
 	this.ui = new GM.mainINT(root,this);
+	this.loadLocalStorage();
 	this.ui.initialize();
 
 	GM.debug.log("END: GM.mainSVC","Done initializing mainSVC object",2);
@@ -29,17 +30,25 @@ GM.mainSVC = function(root,dat) {
 GM.mainSVC.prototype.loadLocalStorage = function() {
 	GM.debug.log("CALL: GM.mainSVC.loadLocalStorage","Loading data from localStorage",2);
 	if(JSON && localStorage) {
-		var str = localStorage.getItem("kantia.gm.campaigns");
+		var str = localStorage.getItem(GM.settings.localStorageToken);
+		var first = null;
 		if(str) {
-			var camps = JSON.parse(str);
-			for(var c in camps) {
-				if(this.activeCampaign == undefined) {
-					this.activeCampaign = new GM.campaignSVC(camps[c],this.mainframe,this);
+			var data = JSON.parse(str);
+			if(data.version == GM.mainDAT.version) {
+				var camps = data.campaigns;
+				for(var c in camps) {
+					if(!first)
+						first = this.addCampaignByData(camps[c]);
+					else	
+						this.addCampaignByData(camps[c]);
 				}
-				this.campaigns[c] = camps[c];
-				this.lists.campaigns[c] = c;
+			}
+			else {
+				GM.debug.log("ERROR: GM.mainSVC.loadLocalStorage","Version of data object in localStorage is out of date",0);
 			}
 		}
+		if(first)
+			this.setActiveCampaign(first);
 	}
 	else {
 		GM.debug.log("ERROR: GM.mainSVC.loadLocalStorage","JSON and/or localStorage are not supported",0);
@@ -50,12 +59,13 @@ GM.mainSVC.prototype.loadLocalStorage = function() {
 // saveToLocalStorage
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.saveToLocalStorage = function() {
+	GM.debug.log("CALL: GM.mainSVC.saveToLocalStorage","Saving data object to localStorage: " + GM.settings.localStorageToken,2);
 	if(JSON) {
-		var str = JSON.stringify(this.campaigns);
-		localStorage.setItem("kantia.gm.campaigns",str);
+		var str = JSON.stringify(this.dat);
+		localStorage.setItem(GM.settings.localStorageToken,str);
 	}
 	else {
-		alert("JSON or localStorage is not supported!");
+		GM.debug.log("ERROR: GM.mainSVC.saveToLocalStorage","Failed to save to localStorage.  JSON or localStorage not support by browser",0);
 	}
 };
 
@@ -71,6 +81,20 @@ GM.mainSVC.prototype.clearLocalStorate = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
+// addCampaignByData
+// -------------------------------------------------------------------------------------------------
+GM.mainSVC.prototype.addCampaignByData = function(dat) {
+	GM.debug.log("CALL: GM.mainSVC.addCampaignByData","Adding a new campaign from existing data",2);
+	var name = dat.name;
+	this.dat.campaigns[name] = dat;
+	this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name],this);
+	var key = this.lists.campaigns.push(name);
+	this.setActiveCampaign(key - 1);
+	this.mainframe.trigger("addCampaign",true);
+	return key - 1;
+};
+
+// -------------------------------------------------------------------------------------------------
 // addCampaign
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.addCampaign = function(dat) {
@@ -81,6 +105,7 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 	this.campaigns[name] = new GM.campaignSVC(this.dat.campaigns[name],this);
 	var key = this.lists.campaigns.push(name);
 	this.setActiveCampaign(key - 1);
+	this.mainframe.trigger("addCampaign");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -91,14 +116,14 @@ GM.mainSVC.prototype.setActiveCampaign = function(key) {
 	var result = false;
 	if(this.campaigns[name]) {
 		this.activeCampaign = this.campaigns[name];
-		GM.debug.log("MSG: GM.mainSVC.prototype.selectCampaign","Campaign " + name + " has been set as active")
+		this.ui.setActiveCampaign(this.activeCampaign.ui);
+		GM.debug.log("MSG: GM.mainSVC.prototype.setActiveCampaign","Campaign " + name + " has been set as active")
 		result = true;
 	}
 	else {
-		GM.debug.log("ERROR: GM.mainSVC.prototype.selectCampaign","Campaign, " + name + " ,does not exist",0);
+		GM.debug.log("ERROR: GM.mainSVC.prototype.setActiveCampaign","Campaign " + name + " does not exist",0);
 		result = false;
 	}
-	this.ui.setActiveCampaign(this.activeCampaign.ui);
 	return result;
 };
 
