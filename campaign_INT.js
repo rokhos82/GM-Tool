@@ -50,11 +50,7 @@ GM.campaignINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.campaignINT.detach","Detaching the interface from the parent",2);
 	this.ui.parent.removeChild(this.ui);
 	this.widget.detach();
-	if(this.activeEncounter) {
-		this.activeEncounter.widget.detach();
-		if(this.activeEncounter.activeGroup)
-			this.activeEncounter.activeGroup.widget.detach();
-	}
+	this.mainframe.trigger("clearWidgets",true);
 };
 
 // -------------------------------------------------------------------------------------------------

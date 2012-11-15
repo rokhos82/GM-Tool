@@ -15,6 +15,8 @@ GM.groupControlINT = function(parent,svc) {
 	this.links = this.ui.addPanel("Quick Links");
 	//this.ui.addButton("Start Combat",new db.link(this,this.startCombat,[]));
 
+	this.mainframe.addHandler("clearWidgets","GCI" + this.svc.getName,this.detach,this,[]);
+
 	GM.debug.log("END: GM.groupControlINT","Finished initializing groupControlINT object",2);
 };
 

@@ -7,7 +7,7 @@ GM.groupSVC = function(dat,parent) {
 	this.dat = dat;	
 	this.members = {};
 	this.parent = parent;
-	this.mainframe = new lib.mainframe(parent.mainframe);
+	this.mainframe = this.parent.mainframe.addChildFrame();
 
 	this.ui = new GM.groupINT(this.parent.ui,this);
 

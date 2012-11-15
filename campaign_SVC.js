@@ -4,7 +4,7 @@
 GM.campaignSVC = function(dat,parent) {
 	GM.debug.log("CALL: GM.campaignSVC","Initializing campaignSVC object",2);
 	this.dat = dat;
-	this.mainframe = new lib.mainframe(parent.mainframe);
+	this.mainframe = parent.mainframe.addChildFrame();
 	this.parent = parent;
 	this.encounters = {};
 	this.lists = {};

@@ -5,7 +5,7 @@ GM.encounterSVC = function(dat,parent) {
 	GM.debug.log("CALL: GM.encounterSVC","Initializing encounterSVC object",2);
 	this.dat = dat;
 	this.parent = parent;
-	this.mainframe = new lib.mainframe(this.parent.mainframe);
+	this.mainframe = this.parent.mainframe.addChildFrame();
 
 	this.groups = {};
 	this.activeGroup = null;

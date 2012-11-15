@@ -14,6 +14,8 @@ GM.encounterControlINT = function(parent,svc) {
 	var grps = this.ui.addPanel("Groups");
 	this.groups = grps.addRadioSet("groups");
 
+	this.mainframe.addHandler("clearWidgets","ECI" + this.svc.getName,this.detach,this,[]);
+
 	GM.debug.log("END: GM.encounterControlINT","Finished initializing encounterControlINT object",2);
 };
 
