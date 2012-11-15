@@ -15,32 +15,31 @@ GM.groupControlINT = function(parent,svc) {
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// initialize
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.initialize = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// addNPCPopup
 // -------------------------------------------------------------------------------------------------
-GM.groupControlINT.prototype.showPopup = function() {
-	var popup = this.ui.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
+GM.groupControlINT.prototype.addNPCPopup = function() {
+	var popup = this.ui.addPopup("popup","fog");
 	popup.show();
-	popup.dat = {
+	
+	var dat = {
 		"name": "",
 		"template": ""
 	}
 	var p = popup.addPanel("New NPC");
-	var tf = p.addTextField("Name",new db.connector(popup.dat,"name"));
+	var tf = p.addTextField("Name",new db.connector(dat,"name"));
 	tf.focus();
 	var c = new ui.comboBox("Template");
 	c.setComplexOptions(kantia.template.npcList);
 	c.setData(new db.connector(popup.dat,"template"));
 	c.updateData();
 	p.appendChild(c);
-	var b = p.addButton("Ok",new db.link(this,this.addNPC,[popup]));
+	var b = p.addButton("Ok");
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
