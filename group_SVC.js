@@ -25,17 +25,18 @@ GM.groupSVC.prototype.getName = function() {
 // getDataConnector
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.getDataConnector = function(token) {
+	return new db.connector(this.dat,token);
 };
 
 // -------------------------------------------------------------------------------------------------
 // addNPC
 // -------------------------------------------------------------------------------------------------
-GM.groupSVC.prototype.addNPC = function(name) {
+GM.groupSVC.prototype.addNPC = function(name,template) {
 	GM.debug.log("CALL: GM.groupSVC.addNPC","Adding NPC " + name,2);
 	if(!this.dat.members[name]) {
-		this.dat.members[name] = new kantia.npcDAT(name,template);
-		this.members[name] = new kantia.npcSVC(this.dat.members[name],this);
-		this.members[name].initialize();
+		this.dat.members[name] = new GM.npcDAT(name,template);
+		this.members[name] = new GM.npcSVC(this.dat.members[name],this);
+		this.ui.addNPC(this.members[name].ui);
 	}
 	else {
 		GM.debug.log("ERROR: GM.groupSVC.addNPC","NPC " + name + " already exisits",0);

@@ -54,11 +54,11 @@ GM.groupControlINT.prototype.addNPCPopup = function() {
 	tf.focus();
 	var c = new ui.comboBox("Template");
 	c.setComplexOptions(kantia.template.npcList);
-	c.setData(new db.connector(popup.dat,"template"));
+	c.setData(new db.connector(dat,"template"));
 	c.updateData();
 	p.appendChild(c);
 
-	var seq = db.sequence();
+	var seq = new db.sequence();
 	seq.addAction("add",new db.link(this,this.addNPC,[dat]));
 	seq.addAction("hide",new db.link(this,this.hidePopup,[popup]));
 	var b = p.addButton("Ok",seq);
@@ -79,5 +79,5 @@ GM.groupControlINT.prototype.hidePopup = function(popup) {
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.addNPC = function(dat) {
 	GM.debug.log("CALL: GM.groupControlINT.addNPC","Adding npc " + dat.name,2);
-	this.svc.addNPC(dat.name);
+	this.svc.addNPC(dat.name,dat.template);
 };

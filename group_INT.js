@@ -35,9 +35,16 @@ GM.groupINT.prototype.detach = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
+// appendChild
+// -------------------------------------------------------------------------------------------------
+GM.groupINT.prototype.appendChild = function(child) {
+	this.ui.appendChild(child.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
 // addNPC
 // -------------------------------------------------------------------------------------------------
 GM.groupINT.prototype.addNPC = function(npc) {
 	this.npcs.push(npc);
-	this.ui.appendChild(npc.ui);
+	npc.initialize();
 };

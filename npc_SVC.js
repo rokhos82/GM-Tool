@@ -1,8 +1,7 @@
 GM.npcSVC = function(dat,parent) {
 	GM.debug.log("CALL: GM.npcSVC","Initializing npcSVC object",2);
+	
 	this.dat = dat;
-	this.name = dat.name;
-	this.tag = this.name.replace(/ /g,'').toLowerCase();
 	this.parent = parent;
 	this.mainframe = this.parent.mainframe.addChildFrame();
 	
@@ -17,6 +16,27 @@ GM.npcSVC = function(dat,parent) {
 GM.npcSVC.prototype.getName = function() {
 	return this.dat.name;
 };
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.getTemplate = function() {
+	return this.dat.template;
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.getData = function(token) {
+	return this.dat[token];
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.getList = function(token) {
+	return this.dat.lists[token];
+}
 
 // -------------------------------------------------------------------------------------------------
 //

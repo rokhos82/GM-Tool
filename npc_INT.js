@@ -1,6 +1,7 @@
 GM.npcINT = function(parent,svc) {
 	this.svc = svc;
 	this.parent = parent;
+	this.mainframe = this.svc.mainframe;
 
 	this.name = this.svc.getName();
 	this.klass = this.svc.getTemplate();
@@ -12,17 +13,17 @@ GM.npcINT = function(parent,svc) {
 	this.ui.addButton("Remove");
 	this.ui.addButton("Clone");
 
-	var stats = this.svc.getStats();
+	var stats = this.svc.getData("stats");
 
 	var p = this.ui.addPanel("Notes");
-	var desc = this.svc.getDescription();
+	var desc = this.svc.getData("description");
 	var ta = p.addTextArea(new db.connector(desc,"text"));
 	ta.addClass("desc_box");
 	ta.dom.setAttribute("rows",4);
 
 	// Build the attributes section --------------------
 	var p = this.ui.addPanel("Attributes");
-	var attributes = this.svc.getAttributes();
+	var attributes = this.svc.getData("attributes");
 	this.panels.attributes = p;
 	p.addClass("small");
 	var t = p.addTable();
@@ -65,7 +66,7 @@ GM.npcINT = function(parent,svc) {
 	traits.addClass("small");
 	var l = traits.addTable();
 	this.panels.traits = l;
-	this.refreshTraits();
+	//this.refreshTraits();
 	traits.addButton("+",new db.link(this,this.addTraitPopup,[]));
 
 	// Build the HC section ---------------------------
@@ -73,7 +74,7 @@ GM.npcINT = function(parent,svc) {
 	hc.addClass("small");
 	var t = hc.addTable();
 	this.panels.hc = t;
-	this.refreshHC();
+	//this.refreshHC();
 	var b = hc.addButton("+",new db.link(this,this.addHCPopup,[]));
 	
 	// Build the combat section -----------------------
@@ -97,8 +98,9 @@ GM.npcINT = function(parent,svc) {
 	t.addClass("attr_table");
 	this.mainframe.addHandler("armor_update","armor_table",t.refreshView,t,[]);
 	t.addRow(["Slot","Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
-	for(var a in this.dat.armor) {
-		var armor = this.dat.armor[a];
+	var armorObj = this.svc.getData("armor");
+	for(var a in armorObj) {
+		var armor = armorObj[a];
 		var r = [];
 		r.push(new ui.text(a));
 		r.push(new ui.text(new db.view(armor,"name")));
@@ -111,7 +113,7 @@ GM.npcINT = function(parent,svc) {
 		r.push(new ui.button("X",new db.link(this,this.removeArmor,[a])));
 		t.addCustomRow(r);
 	}
-	this.updateDefense();
+	this.svc.updateDefense();
 
 	// Build the combat av section
 	var cav = this.ui.addPanel("Combat AVs");
@@ -120,8 +122,9 @@ GM.npcINT = function(parent,svc) {
 	t.addClass("attr_table");
 	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
 	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","4th","5th","Staging","Damage"]);
-	for(var w in this.dat.weapons) {
-		var weap = this.dat.weapons[w];
+	var weapons = this.svc.getData("weapons");
+	for(var w in weapons) {
+		var weap = weapons[w];
 		var r = [
 			new ui.text(w),
 			new ui.text(new db.view(weap,"name")),
@@ -144,7 +147,7 @@ GM.npcINT = function(parent,svc) {
 	var t = mastery.addTable();
 	t.addClass("attr_table");
 	this.panels.mastery = t;
-	this.refreshMastery();
+	//this.refreshMastery();
 	mastery.addButton("+",new db.link(this,this.addMasteryPopup,[]));
 	
 	// Build the skills section ------------------------
@@ -160,39 +163,44 @@ GM.npcINT = function(parent,svc) {
 	t2.addClass("attr_table");
 	t2.addRow(["Skill","Rank","AV"]);
 	this.mainframe.addHandler("skill_update","skill_table2",t2.refreshView,t2,[]);
-	var l = this.dat.lists.skills.length;
+	var skillsList = this.svc.getList("skills");
+	var skills = this.svc.getData("skills");
+	var l = skillsList.length;
 	var shift = Math.ceil(l/2);
 	for(var i = 0;i < shift;i++) {
-		var name1 = this.dat.lists.skills[i];
-		var skill1 = this.dat.skills[name1];
+		var name1 = skillsList[i];
+		var skill1 = skills[name1];
 		var r = t1.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
 		var c = r.cells[1].children[0];
-		c.setUpdate(this,this.updateSkill,[name1,c]);
+		c.setUpdate(this,this.svc.updateSkill,[name1,c]);
 
 		if(i + shift < l) {
-			var name2 = this.dat.lists.skills[i + shift];
-			var skill2 = this.dat.skills[name2];
+			var name2 = skillsList[i + shift];
+			var skill2 = skills[name2];
 			var r = t2.addRow([
 				skill2.name,
 				new db.connector(skill2,"rank"),
 				new db.view(skill2,"total")
 			]);
 			var c = r.cells[1].children[0];
-			c.setUpdate(this,this.updateSkill,[name2,c]);
+			c.setUpdate(this,this.svc.updateSkill,[name2,c]);
 		}
 	}
 	
 	// Build the spell section
 	var spell = this.ui.addPanel("Magic");
-	var t = spell.addText(this.dat.magic.text);
+	var t = spell.addText(this.svc.getData("magic").text);
 	t.addClass("block");
 	var b = spell.addButton("Add Discipline",new db.link(this,this.addDisciplinePopup,[]));
 	var disc = spell.addPanel();
 	this.panels.disciplines = disc;
 	this.mainframe.addHandler("disc_update","disc_table",disc.refreshView,disc,[]);
-	this.refreshDisciplines();
+	//this.refreshDisciplines();
 };
 
+// -------------------------------------------------------------------------------------------------
+// initialize
+// -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.initialize = function() {
 	this.parent.appendChild(this);
 };
