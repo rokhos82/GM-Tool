@@ -3,9 +3,12 @@
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC = function(dat,parent) {
 	GM.debug.log("CALL: GM.campaignSVC","Initializing campaignSVC object",2);
+
 	this.dat = dat;
-	this.mainframe = parent.mainframe.addChildFrame();
 	this.parent = parent;
+	this.mainframe = parent.mainframe.addChildFrame();
+	this.mainframe.addHandler("addCampaign","campaignLoad",this.load,this,[]);
+	
 	this.encounters = {};
 	this.lists = {};
 	this.lists.encounters = [];
@@ -14,6 +17,24 @@ GM.campaignSVC = function(dat,parent) {
 
 	this.ui.initialize();
 	GM.debug.log("END: GM.campaignSVC","Done initializing campaignSVC object",2);
+};
+
+// -------------------------------------------------------------------------------------------------
+// load - this function assumes that the data object is populated but the local encounter services
+// and lists are blank.  It will build those services and lists.
+// -------------------------------------------------------------------------------------------------
+GM.campaignSVC.prototype.load = function() {
+	GM.debug.log("CALL: GM.campaignSVC.load","Building services and lists from data object",1);
+
+	// Walk through the data object encounters and build service objects.
+	for(var e in this.dat.encounters) {
+		this.encounters[e] = new GM.encounterSVC(this.dat.encounters[e],this);
+		if(!this.activeEncounter)
+			this.activeEncounter = this.encounters[e];
+	}
+
+	// Rebuild the lists.
+	this.refreshLists();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -29,7 +50,8 @@ GM.campaignSVC.prototype.getName = function() {
 GM.campaignSVC.prototype.getEncounters = function() {
 	return {
 		list: this.lists.encounters.slice(),
-		encounters: this.encounters
+		encounters: this.encounters,
+		active: this.activeEncounter ? this.activeEncounter.ui : null
 	};
 };
 
@@ -61,4 +83,15 @@ GM.campaignSVC.prototype.selectEncounter = function(key) {
 		name = key;
 	this.activeEncounter = this.encounters[name];
 	this.ui.setActiveEncounter(this.activeEncounter.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshLists
+// -------------------------------------------------------------------------------------------------
+GM.campaignSVC.prototype.refreshLists = function() {
+	GM.debug.log("CALL: GM.campaignSVC.refreshLists","Rebuilding list from data object",2);
+	this.lists.encounters = [];
+	for(var e in this.encounters) {
+		this.lists.encounters.push(e);
+	}
 };

@@ -4,6 +4,7 @@ GM.campaignControlINT = function(parent,svc) {
 	this.parent = parent;
 	this.svc = svc;
 	this.mainframe = svc.mainframe;
+	this.mainframe.addHandler("addCampaign","encounterList",this.refreshEncounters,this,[]);
 
 	this.label = "Campaign: " + this.svc.getName();
 
@@ -69,17 +70,8 @@ GM.campaignControlINT.prototype.addEncounter = function(dat) {
 	GM.debug.log("CALL: GM.campaignControlINT.addEncounter","Adding encounter: " + dat.name,2);
 	var name = dat.name;
 	this.svc.addEncounter(name);
-	var encounters = this.svc.getEncounters();
-	encounters.list.sort();
-	this.groupButtons.removeChildren();
-
-	for(var i in encounters.list) {
-		var n = encounters.list[i];
-		var b = this.groupButtons.addRadioButton(n);
-		b.setUpdate(this,this.selectEncounter,[n]);
-		if(n == name)
-			b.setChecked();
-	}
+	this.refreshEncounters();
+	this.groupButtons.selectButton(name);	
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -88,4 +80,26 @@ GM.campaignControlINT.prototype.addEncounter = function(dat) {
 GM.campaignControlINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.campaignControlINT.detach","Detaching interface from the parent",2);
 	this.ui.parent.removeChild(this.ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshEncounters
+// -------------------------------------------------------------------------------------------------
+GM.campaignControlINT.prototype.refreshEncounters = function() {
+	GM.debug.log("CALL: GM.campaignControlINT.refreshEncounters","Rebuilding the encounter list",2);
+	
+	var encounters = this.svc.getEncounters();
+	encounters.list.sort();
+	this.groupButtons.removeChildren();
+
+	var checked = false;
+	for(var i in encounters.list) {
+		var n = encounters.list[i];
+		var b = this.groupButtons.addRadioButton(n);
+		b.setUpdate(this,this.selectEncounter,[n]);
+		if(!checked) {
+			checked = true;
+			b.setChecked();
+		}
+	}
 };

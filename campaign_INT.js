@@ -1,8 +1,10 @@
 GM.campaignINT = function(parent,svc) {
 	GM.debug.log("CALL: GM.campaignINT","Initializing campaignINT object",2);
+	
 	this.svc = svc;
 	this.parent = parent;
 	this.mainframe = svc.mainframe;
+	this.mainframe.addHandler("addCampaign","refreshView",this.refreshView,this,[]);
 
 	this.children = [];
 
@@ -30,8 +32,11 @@ GM.campaignINT.prototype.initialize = function() {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.refreshView = function() {
-	GM.debug.log("CALL: GM.campaignINT.refreshView","Refreshing the UI to reflect changes to the data",2);
-	this.ui.refreshView();
+	GM.debug.log("CALL: GM.campaignINT.refreshView","Refreshing the interface to reflect changes to the data",2);
+	var ui = this.svc.getEncounters().active;
+	if(ui) {
+		this.setActiveEncounter(ui);
+	}
 };
 
 // -------------------------------------------------------------------------------------------------
