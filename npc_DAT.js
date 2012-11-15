@@ -2,27 +2,40 @@
 // npcDAT
 // -------------------------------------------------------------------------------------------------
 GM.npcDAT = function(name,template) {
+	this.version = "20121115";
+	GM.debug.log("INIT: GM.npcDAT","Creating GM.npcDAT object - version " + this.version,2);
+	
 	this.name = name;
 	this.template = template;
+	
+	this.lists = {};
+	this.lists.skills = [];
+	this.lists.combatSkills = {};
+	this.lists.melee = [];
+	this.lists.ranged = [];
+	this.lists.hc = [];
+	this.lists.traits = [];
+	this.lists.mastery = [];
+	
+	this.attributes = {};
+	this.skills = {};
+	this.effects = {};
+	this.traits = {};
+	this.hc = {};
+	this.mastery = {};
 	
 	var temp = kantia.template.npcs[template];
 	
 	this.description = temp.description;
 	this.race = temp.race;
 	
-	// Build the real attribute objects.
-	this.attributes = {};
+	// Build the real attribute objects
 	for(var a in temp.attributes) {
 		var attr = temp.attributes[a];
 		this.attributes[a] = new kantia.attributeDAT(attr.name,attr.min,attr.max,attr.avg);
 	}
-
-	this.lists = {};
 	
 	// Build the real skill objects and the skill list.
-	this.skills = {};
-	this.lists.skills = [];
-	this.lists.combatSkills = {};
 	for(var s in temp.skills) {
 		var skill = temp.skills[s];
 		var attr = null;
@@ -73,22 +86,14 @@ GM.npcDAT = function(name,template) {
 		ranged: { type: "", name: "", skill: "", av: [0,-20,-40,-60,-80], attacks: "", staging: "", damage: ""}
 	};
 	
-	this.effects = {};
-	
-	this.traits = {};
-	this.lists.traits = [];
 	for(var t in temp.traits) {
 		this.lists.traits.push(temp.traits[t].name);
 	}
 
-	this.hc = {};
-	this.lists.hc = [];
 	for(var h in temp.hc) {
 		this.lists.hc.push(temp.hc[h].name);
 	}
 
-	this.mastery = {};
-	this.lists.mastery = [];
 	for(var m in temp.masteries) {
 		this.lists.mastery.push(temp.masteries[m].name);
 	}
@@ -98,3 +103,5 @@ GM.npcDAT = function(name,template) {
 		disciplines: {}
 	};
 };
+
+GM.npcDAT.version = "20121115";
