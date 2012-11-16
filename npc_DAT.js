@@ -105,3 +105,17 @@ GM.npcDAT = function(name,template) {
 };
 
 GM.npcDAT.version = "20121115";
+
+//
+//	Version Change Log
+//		20121115 - base
+//
+
+GM.npcDAT.upgrade = function(dat) {
+	if(dat.version == GM.npcDAT.version) {
+		// Version is up to date.  Stop upgrading.
+	}
+	else {
+		GM.debug.log("ERROR: GM.npcDAT.upgrade","npcDAT version not found",0);
+	}
+};

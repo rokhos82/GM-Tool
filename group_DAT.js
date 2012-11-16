@@ -8,4 +8,19 @@ GM.groupDAT = function(name) {
 	this.notes = "";
 	this.members = {};
 };
+
 GM.groupDAT.version = "20121114";
+
+//
+//	Version Change Log
+//		20121114 - base
+//
+
+GM.groupDAT.upgrade = function(dat) {
+	if(dat.version == "20121114") {
+		// Version is up to date.  Stop upgrading.
+	}
+	else {
+		GM.debug.log("ERROR: GM.groupDAT.upgrade","groupDAT version not found",0);
+	}
+};

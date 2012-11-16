@@ -3,6 +3,7 @@ GM.encounterINT = function(parent,svc) {
 	this.parent = parent;
 	this.svc = svc;
 	this.mainframe = this.svc.mainframe;
+	this.mainframe.addHandler("addCampaign","refreshView",this.refreshView,this,[]);
 
 	this.label = "Encounter: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
@@ -54,4 +55,15 @@ GM.encounterINT.prototype.setActiveGroup = function(ui) {
 		this.activeGroup.detach();
 	this.activeGroup = ui;
 	this.activeGroup.initialize();
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshView
+// -------------------------------------------------------------------------------------------------
+GM.encounterINT.prototype.refreshView = function() {
+	GM.debug.log("CALL: GM.encounterINT.refreshView","Refreshing interface to match data",2);
+	var ui = this.svc.getGroups().active;
+	if(ui) {
+		this.setActiveGroup(ui);
+	}
 };

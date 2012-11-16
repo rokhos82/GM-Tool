@@ -11,3 +11,17 @@ GM.campaignDAT = function(name) {
 };
 
 GM.campaignDAT.version = "20121114";
+
+//
+// Version Change Log
+//		20121114 - base
+//
+
+GM.campaignDAT.upgrade = function(dat) {
+	if(dat.version == "20121114") {
+		// Version is up to date.  Stop upgrading.
+	}
+	else {
+		GM.debug.log("ERROR: GM.campaignDAT.upgrade","campaignDAT version not found",0);
+	}
+};

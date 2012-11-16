@@ -32,7 +32,7 @@ GM.campaignINT.prototype.initialize = function() {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.refreshView = function() {
-	GM.debug.log("CALL: GM.campaignINT.refreshView","Refreshing the interface to reflect changes to the data",2);
+	GM.debug.log("CALL: GM.campaignINT.refreshView","Refreshing the interface to match data",2);
 	var ui = this.svc.getEncounters().active;
 	if(ui) {
 		this.setActiveEncounter(ui);
