@@ -31,7 +31,7 @@ GM.encounterSVC = function(dat,parent) {
 // lists are not.  The function will build those services and lists.
 // -------------------------------------------------------------------------------------------------
 GM.encounterSVC.prototype.load = function() {
-	GM.debug.log("CALL: GM.encounterSVC.load","Building services and lists from data objects",1);
+	GM.debug.log("CALL: GM.encounterSVC.load","Building services and lists from data object",1);
 
 	for(var g in this.dat.groups) {
 		this.groups[g] = new GM.groupSVC(this.dat.groups[g],this);
