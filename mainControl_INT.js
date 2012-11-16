@@ -87,3 +87,7 @@ GM.mainControlINT.prototype.showCampaignPopup = function(panel) {
 GM.mainControlINT.prototype.refreshView = function() {
 	this.refreshCampaigns();
 };
+
+GM.mainControlINT.prototype.reset = function() {
+	this.selector.setOptions(null);
+};

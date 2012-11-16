@@ -28,7 +28,7 @@ GM.mainSVC = function(root,dat) {
 // loadLocalStorage
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.loadLocalStorage = function() {
-	GM.debug.log("CALL: GM.mainSVC.loadLocalStorage","Loading data from localStorage",2);
+	GM.debug.log("CALL: GM.mainSVC.loadLocalStorage","Loading data from localStorage",1);
 	if(JSON && localStorage) {
 		var str = localStorage.getItem(GM.settings.localStorageToken);
 		var first = null;
@@ -59,7 +59,7 @@ GM.mainSVC.prototype.loadLocalStorage = function() {
 // saveToLocalStorage
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.saveToLocalStorage = function() {
-	GM.debug.log("CALL: GM.mainSVC.saveToLocalStorage","Saving data object to localStorage: " + GM.settings.localStorageToken,2);
+	GM.debug.log("CALL: GM.mainSVC.saveToLocalStorage","Saving data object to localStorage: " + GM.settings.localStorageToken,1);
 	if(JSON) {
 		var str = JSON.stringify(this.dat);
 		localStorage.setItem(GM.settings.localStorageToken,str);
@@ -72,10 +72,11 @@ GM.mainSVC.prototype.saveToLocalStorage = function() {
 // -------------------------------------------------------------------------------------------------
 // clearLocalStorage
 // -------------------------------------------------------------------------------------------------
-GM.mainSVC.prototype.clearLocalStorate = function() {
+GM.mainSVC.prototype.clearLocalStorage = function() {
+	GM.debug.log("CALL: GM.mainSVC.clearLocalStorage","Removing the localStorage token: " + GM.settings.localStorageToken,1);
 	if(localStorage) {
 		if(confirm("Clear all data?")) {
-			localStorage.removeItem("kantia.gm.campaigns");
+			localStorage.removeItem(GM.settings.localStorageToken);
 		}
 	}
 };
@@ -202,9 +203,16 @@ GM.mainSVC.prototype.reset = function() {
 
 	// Reset the campaigns hash and the campaignsList array.
 	delete this.campaigns;
-	delete this.lists.campaigns;
 	this.campaigns = {};
-	this.lists.campaigns = [];
+	
+	for(var l in this.lists) {
+		this.lists[l] = [];
+	}
+
+	this.activeCampaign = null;
+
+	// Reset the main interface.
+	this.ui.reset();
 
 	// Reset the data object.
 	delete this.dat;

@@ -38,6 +38,26 @@ GM.campaignSVC.prototype.load = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
+// destroy - this will remove interfaces and destroy child services.
+// -------------------------------------------------------------------------------------------------
+GM.campaignSVC.prototype.destroy = function() {
+	GM.debug.log("CALL: GM.campaignSVC.destroy","Removing interfaces and services",2);
+	
+	for(var e in this.encounters) {
+		this.encounters[e].destroy();
+	}
+
+	for(var l in this.lists) {
+		this.lists[l] = [];
+	}
+	
+	this.ui.detach();
+	delete this.ui;
+	this.activeEncounter = null;
+	delete this.encounters;
+};
+
+// -------------------------------------------------------------------------------------------------
 // getName
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.getName = function() {

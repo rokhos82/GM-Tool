@@ -10,6 +10,7 @@ GM.mainINT = function(root,svc) {
 	this.activeCampaign = null;
 
 	this.widgets = {};
+	this.widget = null;
 
 	this.ui = new ui.panel();
 	this.ui.addClass("panel");
@@ -17,7 +18,8 @@ GM.mainINT = function(root,svc) {
 	this.sidebar.addClass("sidebar");
 	this.popups = new ui.panel();
 
-	this.setWidget("mainControls",new GM.mainControlINT(this,this.svc));
+	this.widget = new GM.mainControlINT(this,this.svc);
+	this.setWidget("mainControls",this.widget);
 
 	GM.debug.log("END: GM.mainINT","Done initializing mainINT object",2);
 };
@@ -116,4 +118,14 @@ GM.mainINT.prototype.setActiveCampaign = function(ui) {
 		this.activeCampaign.detach();
 	this.activeCampaign =  ui;
 	this.activeCampaign.initialize();
+};
+
+// -------------------------------------------------------------------------------------------------
+// reset
+// -------------------------------------------------------------------------------------------------
+GM.mainINT.prototype.reset = function() {
+	GM.debug.log("GM.mainINT.reset","Resting the interface",2);
+	this.widget.reset();
+	this.children = [];
+	this.activeCampaign = null;
 };

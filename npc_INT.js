@@ -205,6 +205,11 @@ GM.npcINT.prototype.initialize = function() {
 	this.parent.appendChild(this);
 };
 
+GM.npcINT.prototype.detach = function() {
+	GM.debug.log("CALL: GM.npcINT.detach","Removing interface from parent",2);
+	this.ui.parent.removeChild(this.ui);
+};
+
 // -------------------------------------------------------------------------------------------------
 // selectWeaponPopup
 // -------------------------------------------------------------------------------------------------

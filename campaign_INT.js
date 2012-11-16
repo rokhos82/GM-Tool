@@ -55,7 +55,7 @@ GM.campaignINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.campaignINT.detach","Detaching the interface from the parent",2);
 	this.ui.parent.removeChild(this.ui);
 	this.widget.detach();
-	this.mainframe.trigger("clearWidgets",true);
+	//this.mainframe.trigger("clearWidgets",true);
 };
 
 // -------------------------------------------------------------------------------------------------

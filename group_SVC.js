@@ -22,7 +22,7 @@ GM.groupSVC = function(dat,parent) {
 // load
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.load = function() {
-	GM.debug.log("GM.groupSVC.load","Building services and lists from data object",1);
+	GM.debug.log("CALL: GM.groupSVC.load","Building services and lists from data object",1);
 
 	for(var m in this.dat.members) {
 		this.members[m] = new GM.npcSVC(this.dat.members[m],this);
@@ -35,12 +35,31 @@ GM.groupSVC.prototype.load = function() {
 // refreshLists
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.refreshLists = function() {
-	GM.debug.log("GM.groupSVC.refreshLists","",2);
+	GM.debug.log("CALL: GM.groupSVC.refreshLists","",2);
 	this.lists.members = [];
 
 	for(var m in this.members) {
 		this.lists.members.push(m);
 	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// destroy
+// -------------------------------------------------------------------------------------------------
+GM.groupSVC.prototype.destroy = function() {
+	GM.debug.log("CALL: GM.groupSVC.destroy","Removing interfaces and services",2);
+
+	for(var m in this.members) {
+		this.members[m].destroy();
+	}
+
+	for(var l in this.lists) {
+		this.lists[l] = [];
+	}
+
+	this.ui.detach();
+	delete this.ui;
+	delete this.members;
 };
 
 // -------------------------------------------------------------------------------------------------

@@ -54,6 +54,26 @@ GM.encounterSVC.prototype.refreshLists = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
+// destroy
+// -------------------------------------------------------------------------------------------------
+GM.encounterSVC.prototype.destroy = function() {
+	GM.debug.log("CALL: GM.encounterSVC.destroy","Removing interfaces and services",2);
+
+	for(var g in this.groups) {
+		this.groups[g].destroy();
+	}
+
+	for(var l in this.lists) {
+		this.lists[l] = [];
+	}
+
+	this.ui.detach();
+	delete this.ui;
+	this.activeGroup = null;
+	delete this.groups;
+};
+
+// -------------------------------------------------------------------------------------------------
 // getName
 // -------------------------------------------------------------------------------------------------
 GM.encounterSVC.prototype.getName = function() {

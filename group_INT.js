@@ -30,7 +30,7 @@ GM.groupINT.prototype.initialize = function() {
 // detach
 // -------------------------------------------------------------------------------------------------
 GM.groupINT.prototype.detach = function() {
-	GM.debug.log("GM.groupINT.detach","Detaching interface from the parent",2);
+	GM.debug.log("CALL: GM.groupINT.detach","Detaching interface from the parent",2);
 	this.ui.parent.removeChild(this.ui);
 	this.widget.detach();
 };
