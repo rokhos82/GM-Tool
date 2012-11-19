@@ -15,9 +15,9 @@ GM.npcINT = function(parent,svc) {
 
 	var stats = this.svc.getData("stats");
 
+	// Populate the notes section ----------------------
 	var p = this.ui.addPanel("Notes");
-	var desc = this.svc.getData("description");
-	var ta = p.addTextArea(new db.connector(desc,"text"));
+	var ta = p.addTextArea(this.svc.getDataObject("description"));
 	ta.addClass("desc_box");
 	ta.dom.setAttribute("rows",4);
 
@@ -30,11 +30,13 @@ GM.npcINT = function(parent,svc) {
 	t.addClass("attr_table");
 	for(var a in attributes) {
 		var attr = attributes[a];
-		t.addRow([
+		var row = t.addRow([
 			attr.name,
 			new db.connector(attr,"score"),
 			new db.view(attr,"adjust")
 		]);
+		row.cells[1].children[0].setUpdate(this.svc,this.svc.updateAttribute,[a]);
+		this.mainframe.addHandler(a + "Update","attributeAdjust",row.cells[2].children[0].refreshView,row.cells[2].children[0],[]);
 	}
 
 	// Build the health section ------------------------
@@ -43,14 +45,17 @@ GM.npcINT = function(parent,svc) {
 	hlth.addClass("small");
 	var p = hlth.addPanel("Hitpoints");
 	var t = p.addTable();
-	t.addRow(["Bludgeon",stats.health.hitpoints.bludgeon]);
-	t.addRow(["Wound",stats.health.hitpoints.wound]);
+	var row = t.addRow(["Bludgeon",new db.view(stats.health.hitpoints,"bludgeon")]);
+	this.mainframe.addHandler("updateHitpoints","bludgeonPoints",row.cells[1].children[0].refreshView,row.cells[1].children[0],[]);
+	var row = t.addRow(["Wound",new db.view(stats.health.hitpoints,"wound")]);
+	this.mainframe.addHandler("updateHitpoints","woundPoints",row.cells[1].children[0].refreshView,row.cells[1].children[0],[]);
 
 	var p = hlth.addPanel("Stamina");
 	var t = p.addTable();
-	t.addRow(["Max",stats.stamina.max]);
-	t.addRow(["Recovery",stats.stamina.recovery]);
-	t.addRow(["Wind",stats.wind.max]);
+	this.mainframe.addHandler("updateStamina","staminaTable",t.refreshView,t,[]);
+	var row = t.addRow(["Max",new db.view(stats.stamina,"max")]);
+	var row = t.addRow(["Recovery",new db.view(stats.stamina,"recovery")]);
+	var row = t.addRow(["Wind",new db.view(stats.wind,"max")]);
 
 	// Build the other section -------------------------
 	var other = this.ui.addPanel("Other");

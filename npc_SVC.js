@@ -7,6 +7,15 @@ GM.npcSVC = function(dat,parent) {
 	
 	this.ui = new GM.npcINT(this.parent.ui,this);
 
+	this.mainframe.addHandler("sizeUpdate","hitpoints",this.updateHitpoints,this,[]);
+	this.mainframe.addHandler("constitutionUpdate","hitpoints",this.updateHitpoints,this,[]);
+	this.mainframe.addHandler("fortitudeUpdate","hitpoints",this.updateHitpoints,this,[]);
+	this.mainframe.addHandler("willpowerUpdate","hitpoints",this.updateHitpoints,this,[]);
+	this.mainframe.addHandler("constitutionUpdate","stamina",this.updateStamina,this,[]);
+	this.mainframe.addHandler("fortitudeUpdate","stamina",this.updateStamina,this,[]);
+	this.mainframe.addHandler("willpowerUpdate","stamina",this.updateStamina,this,[]);
+	this.mainframe.addHandler("spiritUpdate","stamina",this.updateStamina,this,[]);
+
 	GM.debug.log("END: GM.npcSVC","Finished initializing npcSVC object",2);
 };
 
@@ -44,6 +53,13 @@ GM.npcSVC.prototype.getData = function(token) {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.getDataObject = function(token) {
+	return new db.connector(this.dat,token);
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.getList = function(token) {
 	return this.dat.lists[token];
 }
@@ -53,6 +69,54 @@ GM.npcSVC.prototype.getList = function(token) {
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.getTag = function() {
 	return this.dat.name.replace(/ /g,'').toLowerCase();
+};
+
+// -------------------------------------------------------------------------------------------------
+// updateAttribute
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.updateAttribute = function(a) {
+	GM.debug.log("GM.npcSVC.updateAttribute","Updating attribute: " + a,3);
+	var attr = this.dat.attributes[a];
+	attr.adjust = (attr.score < 10) ? kantia.attributes.adjust[attr.score] : (attr.score - 10) * 2 ;
+	this.mainframe.trigger(a + "Update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.updateHitpoints = function() {
+	GM.debug.log("GM.npcSVC.updateHitpoints","Recalculating hitpoints",3);
+	var size = parseInt(this.dat.attributes.size.score);
+	var fort = parseInt(this.dat.attributes.fortitude.score);
+	var con = parseInt(this.dat.attributes.constitution.score);
+	var wil = parseInt(this.dat.attributes.willpower.score);
+
+	var total_hp = (size * 2) + fort + con + wil - 10;
+	var wound = Math.ceil(total_hp / 2);
+	var bludgeon = total_hp - wound;
+
+	this.dat.stats.health.hitpoints.wound = wound;
+	this.dat.stats.health.hitpoints.bludgeon = bludgeon;
+	this.mainframe.trigger("updateHitpoints");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.updateStamina = function() {
+	GM.debug.log("GM.npcSVC.updateStamina","Recalculating stamina",3);
+	var con = parseInt(this.dat.attributes.constitution.score);
+	var fort = parseInt(this.dat.attributes.fortitude.score);
+	var wil = parseInt(this.dat.attributes.willpower.score);
+	var spr = parseInt(this.dat.attributes.spirit.score);
+
+	var stam = con + fort + wil + spr;
+	var rec = Math.ceil(con / 3);
+
+	this.dat.stats.stamina.max = stam;
+	this.dat.stats.stamina.current = stam;
+	this.dat.stats.stamina.recovery = rec;
+	this.mainframe.trigger("updateStamina");
 };
 
 // -------------------------------------------------------------------------------------------------
