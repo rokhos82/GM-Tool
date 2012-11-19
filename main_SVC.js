@@ -149,15 +149,7 @@ GM.mainSVC.prototype.importData = function(dataStr) {
 
 	// Rebuild the campaigns (DAT & SVC) and campaign list.
 	for(var c in data.campaigns) {
-		this.dat.campaigns[c] = data.campaigns[c];
-		this.campaigns[c] = new GM.campaignSVC(this.dat.campaigns[c],this);
-		this.lists.campaigns.push(c);
-	}
-
-	// Rebuild the custom templates and template list.
-	for(var t in data.templates) {
-		this.dat.templates[t] = data.templates[t];
-		this.lists.templates.push(t);
+		this.addCampaignByData(data.campaigns[c]);
 	}
 };
 

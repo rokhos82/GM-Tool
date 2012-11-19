@@ -113,8 +113,13 @@ GM.mainControlINT.prototype.exportDataPopup = function() {
 	var popup = this.ui.addPopup("popup","fog");
 	popup.show();
 	var dat = {
-		json: JSON.stringify(this.dat)
+		json: this.svc.exportData()
 	};
+
+	var p = popup.addPanel("Export Data");
+	var ta = p.addTextArea(new db.connector(dat,"json"));
+	ta.focus();
+	var b = p.addButton("Close",new db.link(this,this.closePopup,[popup]));
 };
 
 // -------------------------------------------------------------------------------------------------
