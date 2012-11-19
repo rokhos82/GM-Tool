@@ -113,12 +113,13 @@ GM.mainSVC.prototype.addCampaign = function(dat) {
 // setActiveCampaign
 // -------------------------------------------------------------------------------------------------
 GM.mainSVC.prototype.setActiveCampaign = function(key) {
+	GM.debug.log("CALL: GM.mainSVC.setActiveCampaign","Seting active campaign to " + key,2);
 	var name = this.lists.campaigns[key];
 	var result = false;
 	if(this.campaigns[name]) {
 		this.activeCampaign = this.campaigns[name];
 		this.ui.setActiveCampaign(this.activeCampaign.ui);
-		GM.debug.log("MSG: GM.mainSVC.prototype.setActiveCampaign","Campaign " + name + " has been set as active")
+		GM.debug.log("MSG: GM.mainSVC.prototype.setActiveCampaign","Campaign " + name + " has been set as active",1)
 		result = true;
 	}
 	else {

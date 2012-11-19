@@ -8,8 +8,6 @@ GM.mainControlINT = function(parent,svc) {
 	this.svc = svc;
 	this.mainframe = this.svc.mainframe;
 
-	this.attached = false;
-
 	this.ui = new ui.panel("Controls");
 
 	// Build the controls panel
@@ -35,7 +33,6 @@ GM.mainControlINT = function(parent,svc) {
 // -------------------------------------------------------------------------------------------------
 GM.mainControlINT.prototype.initialize = function() {
 	this.parent.appendChild(this);
-	this.attached = true;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -132,7 +129,7 @@ GM.mainControlINT.prototype.exportDataPopup = function() {
 // refreshView
 // -------------------------------------------------------------------------------------------------
 GM.mainControlINT.prototype.refreshView = function() {
-	GM.debug.log("GM.mainControlINT.refreshView","Refreshing interface to match data",2);
+	GM.debug.log("CALL: GM.mainControlINT.refreshView","Refreshing interface to match data",2);
 	this.refreshCampaigns();
 };
 

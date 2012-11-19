@@ -7,6 +7,7 @@ GM.encounterControlINT = function(parent,svc) {
 	this.parent = parent;
 	this.svc = svc;
 	this.mainframe = this.svc.mainframe;
+	this.attached = false;
 
 	this.label = "Encounter: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
@@ -25,6 +26,7 @@ GM.encounterControlINT = function(parent,svc) {
 GM.encounterControlINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.encounterControlINT.initialize","Appending interface to parent",2);
 	this.mainframe.sendEvent("setWidget",["encounterControl",{svc: this.svc,ui: this}]);
+	this.attached = true;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -32,7 +34,9 @@ GM.encounterControlINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.encounterControlINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.encounterControlINT.detach","Datching interface from the parent",2);
-	this.ui.parent.removeChild(this.ui);
+	if(this.attached)
+		this.ui.parent.removeChild(this.ui);
+	this.attached = false;
 };
 
 // -------------------------------------------------------------------------------------------------

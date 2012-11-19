@@ -8,6 +8,7 @@ GM.groupControlINT = function(parent,svc) {
 	this.svc = svc;
 	this.mainframe = svc.mainframe;
 
+	this.attached = false;
 	this.label = "Group: " + svc.getName();
 	this.ui = new ui.panel(this.label);
 
@@ -26,6 +27,7 @@ GM.groupControlINT = function(parent,svc) {
 GM.groupControlINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.groupControlINT.initialize","Attaching widget to parent",2);
 	this.mainframe.sendEvent("setWidget",["groupControl",{svc: this.svc,ui: this}]);
+	this.attached = true;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -33,7 +35,9 @@ GM.groupControlINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.groupControlINT.detach","Detaching interface from the parent",2);
-	this.ui.parent.removeChild(this.ui);
+	if(this.attached)
+		this.ui.parent.removeChild(this.ui);
+	this.attached = false;
 };
 
 // -------------------------------------------------------------------------------------------------

@@ -62,7 +62,7 @@ GM.campaignINT.prototype.detach = function() {
 		this.ui.parent.removeChild(this.ui);
 	this.attached = false;
 	this.widget.detach();
-	//this.mainframe.trigger("clearWidgets",true);
+	this.mainframe.trigger("clearWidgets",true);
 };
 
 // -------------------------------------------------------------------------------------------------
