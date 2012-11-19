@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// campaignINT
+////////////////////////////////////////////////////////////////////////////////////////////////////
 GM.campaignINT = function(parent,svc) {
 	GM.debug.log("CALL: GM.campaignINT","Initializing campaignINT object",2);
 	
@@ -10,7 +13,8 @@ GM.campaignINT = function(parent,svc) {
 
 	this.label = "Campaign: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
-	this.widget = new GM.campaignControlINT(this,this.svc)
+	this.widget = new GM.campaignControlINT(this,this.svc);
+	this.attached = false;
 
 	this.activeEncounter = null;
 
@@ -23,6 +27,7 @@ GM.campaignINT = function(parent,svc) {
 GM.campaignINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.campaignINT.initialize","Attach UI elements to the parent",2);
 	this.parent.appendChild(this);
+	this.attached = true;
 	this.widget.initialize();
 	if(this.activeEncounter)
 		this.activeEncounter.initialize();
@@ -53,7 +58,9 @@ GM.campaignINT.prototype.appendChild = function(child) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.campaignINT.detach","Detaching the interface from the parent",2);
-	this.ui.parent.removeChild(this.ui);
+	if(this.attached)
+		this.ui.parent.removeChild(this.ui);
+	this.attached = false;
 	this.widget.detach();
 	//this.mainframe.trigger("clearWidgets",true);
 };

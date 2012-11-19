@@ -7,6 +7,7 @@ GM.campaignControlINT = function(parent,svc) {
 	this.mainframe.addHandler("addCampaign","encounterList",this.refreshEncounters,this,[]);
 
 	this.label = "Campaign: " + this.svc.getName();
+	this.attached = false;
 
 	this.ui = new ui.panel(this.label);
 	var b = this.ui.addButton("New Encounter",new db.link(this,this.addEncounterPopup,[]));
@@ -22,6 +23,7 @@ GM.campaignControlINT = function(parent,svc) {
 GM.campaignControlINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.campaignControlINT.initialize","Appending ui to parent",2);
 	this.mainframe.sendEvent("setWidget",["campaignControl",{svc: this.svc,ui: this}]);
+	this.attached = true;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -79,7 +81,9 @@ GM.campaignControlINT.prototype.addEncounter = function(dat) {
 // -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.campaignControlINT.detach","Detaching interface from the parent",2);
-	this.ui.parent.removeChild(this.ui);
+	if(this.attached)
+		this.ui.parent.removeChild(this.ui);
+	this.attached = false;
 };
 
 // -------------------------------------------------------------------------------------------------

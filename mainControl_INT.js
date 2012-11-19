@@ -1,9 +1,14 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// mainControlINT
+////////////////////////////////////////////////////////////////////////////////////////////////////
 GM.mainControlINT = function(parent,svc) {
 	GM.debug.log("CALL: GM.mainControlINT","Initializing mainControlINT object",2);
 
 	this.parent = parent;
 	this.svc = svc;
 	this.mainframe = this.svc.mainframe;
+
+	this.attached = false;
 
 	this.ui = new ui.panel("Controls");
 
@@ -30,6 +35,7 @@ GM.mainControlINT = function(parent,svc) {
 // -------------------------------------------------------------------------------------------------
 GM.mainControlINT.prototype.initialize = function() {
 	this.parent.appendChild(this);
+	this.attached = true;
 }
 
 // -------------------------------------------------------------------------------------------------

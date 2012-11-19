@@ -41,7 +41,7 @@ GM.campaignSVC.prototype.load = function() {
 // destroy - this will remove interfaces and destroy child services.
 // -------------------------------------------------------------------------------------------------
 GM.campaignSVC.prototype.destroy = function() {
-	GM.debug.log("CALL: GM.campaignSVC.destroy","Removing interfaces and services",2);
+	GM.debug.log("CALL: GM.campaignSVC.destroy","Removing interfaces and services for " + this.dat.name,2);
 	
 	for(var e in this.encounters) {
 		this.encounters[e].destroy();

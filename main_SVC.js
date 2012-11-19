@@ -1,6 +1,6 @@
-// -------------------------------------------------------------------------------------------------
-// main
-// -------------------------------------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// mainSVC
+////////////////////////////////////////////////////////////////////////////////////////////////////
 GM.mainSVC = function(root,dat) {
 	GM.debug.log("CALL: GM.mainSVC","Initializing mainSVC object",2);
 	this.root = root;
@@ -189,7 +189,7 @@ GM.mainSVC.prototype.getTemplates = function() {
 GM.mainSVC.prototype.reset = function() {
 	GM.debug.log("CALL: GM.mainSVC.reset","Resetting the services and data",1);
 	for(var c in this.campaigns) {
-		// Destroy the children.
+		// Destroy the campaigns.
 		this.campaigns[c].destroy();
 	}
 
