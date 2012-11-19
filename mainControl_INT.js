@@ -84,10 +84,51 @@ GM.mainControlINT.prototype.showCampaignPopup = function(panel) {
 	var b = p.addButton("Cancel",new db.link(this,this.closePopup,[popup]));
 };
 
+// -------------------------------------------------------------------------------------------------
+// importDataPopup
+// -------------------------------------------------------------------------------------------------
+GM.mainControlINT.prototype.importDataPopup = function() {
+	GM.debug.log("GM.mainControlINT.importDataPopup","Building import data popup",2);
+	var popup = this.ui.addPopup("popup","fog");
+	popup.show();
+	var dat = {
+		json: ""
+	};
+
+	var p = popup.addPanel("Import Data");
+	var ta = p.addTextArea(new db.connector(dat,"json"));
+	ta.focus();
+	var seq = new db.sequence();
+	seq.addAction("import",new db.sequence.action(this.svc,this.svc.importData,[dat]));
+	seq.addAction("close",new db.sequence.action(this,this.closePopup,[popup]));
+	var b = p.addButton("Ok",seq);
+	var b = p.addButton("Cancel",new db.link(this,this.closePopup,[popup]));
+};
+
+// -------------------------------------------------------------------------------------------------
+// exportDataPopup
+// -------------------------------------------------------------------------------------------------
+GM.mainControlINT.prototype.exportDataPopup = function() {
+	GM.debug.log("GM.mainControlINT.exportDataPopup","Building export data popup",2);
+	var popup = this.ui.addPopup("popup","fog");
+	popup.show();
+	var dat = {
+		json: JSON.stringify(this.dat)
+	};
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshView
+// -------------------------------------------------------------------------------------------------
 GM.mainControlINT.prototype.refreshView = function() {
+	GM.debug.log("GM.mainControlINT.refreshView","Refreshing interface to match data",2);
 	this.refreshCampaigns();
 };
 
+// -------------------------------------------------------------------------------------------------
+// reset
+// -------------------------------------------------------------------------------------------------
 GM.mainControlINT.prototype.reset = function() {
+	GM.debug.log("GM.mainControlINT.reset","Reseting widget interface",2);
 	this.selector.setOptions(null);
 };
