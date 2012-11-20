@@ -7,7 +7,9 @@ GM.npcSVC = function(dat,parent) {
 	
 	this.ui = new GM.npcINT(this.parent.ui,this);
 
+	this.mainframe.addHandler("strengthUpdate","movement",this.updateMovement,this,[]);
 	this.mainframe.addHandler("sizeUpdate","hitpoints",this.updateHitpoints,this,[]);
+	this.mainframe.addHandler("sizeUpdate","movement",this.updateMovement,this,[]);
 	this.mainframe.addHandler("constitutionUpdate","hitpoints",this.updateHitpoints,this,[]);
 	this.mainframe.addHandler("fortitudeUpdate","hitpoints",this.updateHitpoints,this,[]);
 	this.mainframe.addHandler("willpowerUpdate","hitpoints",this.updateHitpoints,this,[]);
@@ -117,6 +119,48 @@ GM.npcSVC.prototype.updateStamina = function() {
 	this.dat.stats.stamina.current = stam;
 	this.dat.stats.stamina.recovery = rec;
 	this.mainframe.trigger("updateStamina");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.updateMovement = function() {
+	GM.debug.log("GM.npcSVC.updateMovement","Recalculating movement rates",2);
+
+	var str = parseInt(this.dat.attributes.strength.score);
+	var siz = parseInt(this.dat.attributes.size.score);
+
+	var major = 10;
+	if(str - siz >= 3)
+		major += 3;
+	else
+		major += (str - siz);
+
+	// Get armor penalties for initiavite.
+
+	// Adjust for short stride (every 6" under 5') and long stride (every 1' over 6').
+	var height = kantia.attributes.height[siz];
+	if(siz < 9) {
+		// Short stride
+		var diff = 60 - height;
+		var mod = Math.round(diff / 6);
+		major += (mod < -3) ? -3 : mod;
+	}
+	else if(siz > 12) {
+		// Long stride
+		var diff = height - 72;
+		var mod = Math.round(diff / 12);
+		major += mod;
+	}
+
+	var free = Math.round(major/3);
+	var sprint = Math.round(major * 8);
+
+	this.dat.stats.movement.major = major;
+	this.dat.stats.movement.free = free;
+	this.dat.stats.movement.sprint = sprint;
+
+	this.mainframe.trigger("updateMovement");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -377,13 +421,12 @@ GM.npcSVC.prototype.getHC = function(hc) {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.addTrait = function(popup) {
-	var index = popup.dat.index;
+GM.npcSVC.prototype.addTrait = function(dat) {
+	GM.debug.log("CALL: GM.npcSVC.addTrait","Adding trait",2);
+	var index = dat.index;
 	var name = this.dat.lists.traits[index];
 	this.dat.traits[name] = name;
-	this.refreshTraits();
-	this.hidePopup(popup);
-	this.mainframe.trigger("trait_update");
+	this.mainframe.trigger("traitUpdate");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -391,8 +434,7 @@ GM.npcSVC.prototype.addTrait = function(popup) {
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.removeTrait = function(name) {
 	delete this.dat.traits[name];
-	this.refreshTraits();
-	this.mainframe.trigger("trait_update");
+	this.mainframe.trigger("traitUpdate");
 };
 
 // -------------------------------------------------------------------------------------------------

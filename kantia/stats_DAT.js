@@ -45,20 +45,38 @@ kantia.windDAT = function(attr,race) {
 };
 
 kantia.movementDAT = function(attr,race) {
-	var move = 10;
-	var strsiz = attr.strength.score - attr.size.score;
-	if(Math.abs(strsiz) <= 5)
-		move += (attr.strength.score - attr.size.score);
-	else {
-		if(strsiz > 0)
-			move += 5;
-		else
-			move -= 5;
+	var str = parseInt(attr.strength.score);
+	var siz = parseInt(attr.size.score);
+
+	var major = 10;
+	if(str - siz >= 3)
+		major += 3;
+	else
+		major += (str - siz);
+
+	// Get race modifiers to movment.
+
+	// Adjust for short stride (every 6" under 5') and long stride (every 1' over 6').
+	var height = kantia.attributes.height[siz];
+	if(siz < 9) {
+		// Short stride
+		var diff = 60 - height;
+		var mod = Math.round(diff / 6);
+		major += (mod < -3) ? -3 : mod;
 	}
-	
-	this.major = move;
-	this.free = Math.round(move/3);
-	this.sprint = move * 8;
+	else if(siz > 12) {
+		// Long stride
+		var diff = height - 72;
+		var mod = Math.round(diff / 12);
+		major += mod;
+	}
+
+	var free = Math.round(major/3);
+	var sprint = Math.round(major * 8);
+
+	this.major = major;
+	this.free = free;
+	this.sprint = sprint;
 };
 
 kantia.defenseDAT = function(attr,race) {

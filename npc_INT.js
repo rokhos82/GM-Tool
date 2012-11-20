@@ -63,15 +63,17 @@ GM.npcINT = function(parent,svc) {
 	other.addClass("small");
 	var p = other.addPanel("Movement");
 	var t = p.addTable();
-	t.addRow(["Free",stats.movement.free]);
-	t.addRow(["Major",stats.movement.major]);
-	t.addRow(["Sprint",stats.movement.sprint]);
+	this.mainframe.addHandler("updateMovement","moveTable",t.refreshView,t,[]);
+	t.addRow(["Free",new db.view(stats.movement,"free")]);
+	t.addRow(["Major",new db.view(stats.movement,"major")]);
+	t.addRow(["Sprint",new db.view(stats.movement,"sprint")]);
 
 	var traits = other.addPanel("Traits");
 	traits.addClass("small");
 	var l = traits.addTable();
 	this.panels.traits = l;
-	//this.refreshTraits();
+	this.refreshTraits();
+	this.mainframe.addHandler("traitUpdate","traitTable",this.refreshTraits,this,[]);
 	traits.addButton("+",new db.link(this,this.addTraitPopup,[]));
 
 	// Build the HC section ---------------------------
@@ -374,30 +376,35 @@ GM.npcINT.prototype.refreshSpells = function(disc,panel) {
 // addTraitPopup
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.addTraitPopup = function() {
+	GM.debug.log("CALL: GM.npcINT.addTraitPopup","Building add trait popup",2);
 	var popup = this.ui.addPopup();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
 	popup.show();
-	popup.dat = {
+	var dat = {
 		index: 0
 	};
 	var p = popup.addPanel("Add Trait");
-	var cb = p.addComboBox("Trait",this.dat.lists.traits,new db.connector(popup.dat,"index"));
+	var cb = p.addComboBox("Trait",this.svc.getList("traits"),new db.connector(dat,"index"));
 	cb.focus();
-	p.addButton("Ok",new db.link(this,this.addTrait,[popup]));
+	var seq = new db.sequence();
+	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addTrait,[dat]));
+	seq.addAction("close",new db.sequence.action(this,this.hidePopup,[popup]));
+	p.addButton("Ok",seq);
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// refreshTraits
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshTraits = function() {
+	GM.debug.log("CALL: GM.npcINT.refreshTraits","Rebuilding traits table",2);
 	var l = this.panels.traits;
 	l.removeRows();
-	for(var t in this.dat.traits) {
+	for(var t in this.svc.getData("traits")) {
 		l.addCustomRow([
 			new ui.text(t),
-			new ui.button("X",new db.link(this,this.removeTrait,[t]))
+			new ui.button("X",new db.link(this.svc,this.svc.removeTrait,[t]))
 		]);
 	}
 };
