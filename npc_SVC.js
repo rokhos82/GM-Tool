@@ -73,6 +73,11 @@ GM.npcSVC.prototype.getTag = function() {
 	return this.dat.name.replace(/ /g,'').toLowerCase();
 };
 
+GM.npcSVC.prototype.remove = function() {
+	GM.debug.log("CALL: GM.npcSVC.remove","Self-destroy",2);
+	this.parent.removeNPC(this);
+};
+
 // -------------------------------------------------------------------------------------------------
 // updateAttribute
 // -------------------------------------------------------------------------------------------------

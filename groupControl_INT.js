@@ -13,10 +13,13 @@ GM.groupControlINT = function(parent,svc) {
 	this.ui = new ui.panel(this.label);
 
 	this.ui.addButton("New NPC",new db.link(this,this.addNPCPopup,[]));
-	this.links = this.ui.addPanel("Quick Links");
+	var p = this.ui.addPanel("Quick Links");
+	this.links = p.addList(false);
 	//this.ui.addButton("Start Combat",new db.link(this,this.startCombat,[]));
 
 	this.mainframe.addHandler("clearWidgets","GCI" + this.svc.getName,this.detach,this,[]);
+	this.mainframe.addHandler("addNPC","quicklinks",this.refreshQuickLinks,this,[]);
+	this.refreshQuickLinks();
 
 	GM.debug.log("END: GM.groupControlINT","Finished initializing groupControlINT object",2);
 };
@@ -84,4 +87,22 @@ GM.groupControlINT.prototype.hidePopup = function(popup) {
 GM.groupControlINT.prototype.addNPC = function(dat) {
 	GM.debug.log("CALL: GM.groupControlINT.addNPC","Adding npc " + dat.name,2);
 	this.svc.addNPC(dat.name,dat.template);
+};
+
+// -------------------------------------------------------------------------------------------------
+// refreshQuickLinks
+// -------------------------------------------------------------------------------------------------
+GM.groupControlINT.prototype.refreshQuickLinks = function() {
+	GM.debug.log("CALL: GM.groupControlINT.refreshQuickLinks","Rebuilding quick links list",2);
+	this.links.removeChildren();
+	var members = this.svc.getMembers().members;
+	for(var m in members) {
+		var tag = members[m].getTag();
+		this.links.addAnchorItem(m,null,"#" + tag);
+	}
+};
+
+GM.groupControlINT.prototype.refreshView = function() {
+	GM.debug.log("CALL: GM.groupControlINT.refreshView","Refreshing interface widget",2);
+	this.refreshQuickLinks();
 };

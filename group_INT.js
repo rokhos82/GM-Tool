@@ -57,7 +57,22 @@ GM.groupINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.groupINT.refreshView","Refreshing interface to match data",2);
 	var members = this.svc.getMembers().members;
 
+	this.removeMembers();
+
 	for(var m in members) {
 		this.addMember(members[m].ui);
 	}
+
+	this.widget.refreshView();
+};
+
+// -------------------------------------------------------------------------------------------------
+// removeMembers
+// -------------------------------------------------------------------------------------------------
+GM.groupINT.prototype.removeMembers = function() {
+	GM.debug.log("CALL: GM.groupINT.removeMembers","Removing all member interfaces",2);
+	for(var m in this.members) {
+		this.members[m].detach();
+	}
+	this.members = [];
 };

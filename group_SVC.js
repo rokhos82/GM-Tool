@@ -35,7 +35,7 @@ GM.groupSVC.prototype.load = function() {
 // refreshLists
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.refreshLists = function() {
-	GM.debug.log("CALL: GM.groupSVC.refreshLists","",2);
+	GM.debug.log("CALL: GM.groupSVC.refreshLists","Rebuilding lists",2);
 	this.lists.members = [];
 
 	for(var m in this.members) {
@@ -73,6 +73,13 @@ GM.groupSVC.prototype.getMembers = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
+// getMembers
+// -------------------------------------------------------------------------------------------------
+GM.groupSVC.prototype.getMember = function(name) {
+	return this.members[name];
+};
+
+// -------------------------------------------------------------------------------------------------
 // getName
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.getName = function() {
@@ -95,6 +102,7 @@ GM.groupSVC.prototype.addNPC = function(name,template) {
 		this.dat.members[name] = new GM.npcDAT(name,template);
 		this.members[name] = new GM.npcSVC(this.dat.members[name],this);
 		this.ui.addMember(this.members[name].ui);
+		this.mainframe.trigger("addNPC");
 	}
 	else {
 		GM.debug.log("ERROR: GM.groupSVC.addNPC","NPC " + name + " already exisits",0);
@@ -104,13 +112,14 @@ GM.groupSVC.prototype.addNPC = function(name,template) {
 // -------------------------------------------------------------------------------------------------
 // removeNPC
 // -------------------------------------------------------------------------------------------------
-GM.groupSVC.prototype.removeNPC = function(name) {
+GM.groupSVC.prototype.removeNPC = function(svc) {
+	var name = svc.getName();
+	GM.debug.log("CALL: GM.groupSVC.removeNPC","Removing npc: " + name,2);
 	var member = this.members[name];
-	this.npcs.removeChild(member.ui);
 	member.destroy();
 	delete this.members[name];
 	delete this.dat.members[name];
-	this.refreshView();
+	this.ui.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------

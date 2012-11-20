@@ -10,8 +10,10 @@ GM.npcINT = function(parent,svc) {
 	this.ui = new ui.panel(this.name + " - " + this.klass);
 	this.panels = {};
 
-	this.ui.addButton("Remove");
+	this.ui.addButton("Remove",new db.link(this.svc,this.svc.remove,[]));
 	this.ui.addButton("Clone");
+
+	this.anchor = this.ui.addAnchor(null,this.tag,null);
 
 	var stats = this.svc.getData("stats");
 
