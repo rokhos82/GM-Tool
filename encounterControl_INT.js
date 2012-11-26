@@ -74,7 +74,7 @@ GM.encounterControlINT.prototype.hidePopup = function(popup) {
 // addGroup
 // -------------------------------------------------------------------------------------------------
 GM.encounterControlINT.prototype.addGroup = function(dat) {
-	GM.debug.log("CALL GM.encounterControlINT.addGroup","Adding group: " + dat.name,2);
+	GM.debug.log("CALL: GM.encounterControlINT.addGroup","Adding group: " + dat.name,2);
 	var name = dat.name;
 	this.svc.addGroup(name);
 	this.refreshGroups(name);

@@ -115,3 +115,14 @@ GM.campaignSVC.prototype.refreshLists = function() {
 		this.lists.encounters.push(e);
 	}
 };
+
+// -------------------------------------------------------------------------------------------------
+// removeEncounter
+// -------------------------------------------------------------------------------------------------
+GM.campaignSVC.prototype.removeEncounter = function(name) {
+	GM.debug.log("CALL: GM.campaignSVC.removeEncounter","Removing encounter: " + name,2);
+	delete this.encounters[name];
+	delete this.dat.encounters[name];
+	this.refreshLists();
+	this.ui.refreshView();
+};

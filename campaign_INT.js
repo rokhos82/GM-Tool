@@ -42,6 +42,7 @@ GM.campaignINT.prototype.refreshView = function() {
 	if(ui) {
 		this.setActiveEncounter(ui);
 	}
+	this.widget.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------

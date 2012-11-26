@@ -71,6 +71,8 @@ GM.encounterSVC.prototype.destroy = function() {
 	delete this.ui;
 	this.activeGroup = null;
 	delete this.groups;
+
+	this.parent.removeEncounter(this.dat.name);
 };
 
 // -------------------------------------------------------------------------------------------------

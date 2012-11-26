@@ -11,6 +11,8 @@ GM.encounterINT = function(parent,svc) {
 	this.children = [];
 	this.activeGroup = null;
 
+	var b = this.ui.addButton("Remove",new db.link(this.svc,this.svc.destroy,[]));
+
 	var ta = this.ui.addTextArea(this.svc.getDataConnector("notes"));
 	ta.addClass("desc_box");
 

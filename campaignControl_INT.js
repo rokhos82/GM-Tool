@@ -107,3 +107,8 @@ GM.campaignControlINT.prototype.refreshEncounters = function() {
 		}
 	}
 };
+
+GM.campaignControlINT.prototype.refreshView = function() {
+	GM.debug.log("CALL: GM.campaignControlINT.refreshView","Refreshing the campaign control widget",2);
+	this.refreshEncounters();
+};
