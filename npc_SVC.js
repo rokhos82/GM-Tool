@@ -594,6 +594,17 @@ GM.npcSVC.prototype.removeWeapon = function(slot) {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.addEffect = function(name) {
-	GM.debug.log("GM.npcSVC.addEffect","Adding effect:" + name,2);
-}
+GM.npcSVC.prototype.addEffect = function(cat,value) {
+	GM.debug.log("GM.npcSVC.addEffect","Adding effect:" + cat,2);
+	this.dat.effects[cat] = value;
+	this.mainframe.trigger("updateEffect");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.clearEffect = function(cat) {
+	GM.debug.log("GM.npcSVC.clearEffect","Removing effect:" + cat,2);
+	delete this.dat.effects[cat];
+	this.mainframe.trigger("updateEffect");
+};
