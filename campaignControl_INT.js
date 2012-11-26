@@ -89,7 +89,7 @@ GM.campaignControlINT.prototype.detach = function() {
 // -------------------------------------------------------------------------------------------------
 // refreshEncounters
 // -------------------------------------------------------------------------------------------------
-GM.campaignControlINT.prototype.refreshEncounters = function() {
+GM.campaignControlINT.prototype.refreshEncounters = function(skipSelect) {
 	GM.debug.log("CALL: GM.campaignControlINT.refreshEncounters","Rebuilding the encounter list",2);
 	
 	var encounters = this.svc.getEncounters();
@@ -101,14 +101,17 @@ GM.campaignControlINT.prototype.refreshEncounters = function() {
 		var n = encounters.list[i];
 		var b = this.groupButtons.addRadioButton(n);
 		b.setUpdate(this,this.selectEncounter,[n]);
-		if(!checked) {
+		if(!checked && !skipSelect) {
 			checked = true;
 			b.setChecked();
 		}
 	}
 };
 
+// -------------------------------------------------------------------------------------------------
+// refreshView
+// -------------------------------------------------------------------------------------------------
 GM.campaignControlINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.campaignControlINT.refreshView","Refreshing the campaign control widget",2);
-	this.refreshEncounters();
+	this.refreshEncounters(true);
 };

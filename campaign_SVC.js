@@ -97,10 +97,12 @@ GM.campaignSVC.prototype.addEncounter = function(name) {
 GM.campaignSVC.prototype.selectEncounter = function(key) {
 	GM.debug.log("CALL: GM.campaignSVC.selectEncounter","Selecting encounter with key: " + key,2);
 	var name = null;
-	if(!isNaN(key))
+	if(!isNaN(key)) {
 		name = this.lists.encounters[key];
+	}
 	else
 		name = key;
+
 	this.activeEncounter = this.encounters[name];
 	this.ui.setActiveEncounter(this.activeEncounter.ui);
 };
@@ -123,6 +125,16 @@ GM.campaignSVC.prototype.removeEncounter = function(name) {
 	GM.debug.log("CALL: GM.campaignSVC.removeEncounter","Removing encounter: " + name,2);
 	delete this.encounters[name];
 	delete this.dat.encounters[name];
+	this.clearActiveEncounter();
 	this.refreshLists();
 	this.ui.refreshView();
+};
+
+// -------------------------------------------------------------------------------------------------
+// clearActiveEncounter
+// -------------------------------------------------------------------------------------------------
+GM.campaignSVC.prototype.clearActiveEncounter = function() {
+	GM.debug.log("CALL: GM.campaignSVC.clearActiveEncounter","Setting the active encounter to null",2);
+	this.activeEncounter = null;
+	this.ui.clearActiveEncounter();
 };

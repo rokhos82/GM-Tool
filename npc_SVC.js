@@ -260,17 +260,16 @@ GM.npcSVC.prototype.updateList = function(list,skill,action) {
 // -------------------------------------------------------------------------------------------------
 // addDiscipline
 // -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.addDiscipline = function(popup) {
-	var name = popup.dat.name;
-	var rank = popup.dat.rank;
+GM.npcSVC.prototype.addDiscipline = function(dat) {
+	var name = dat.name;
+	var rank = dat.rank;
 	var attr = kantia.skills[name].attribute;
-	this.hidePopup(popup);
 	
 	var disc = new kantia.template.magic(name,rank,name + " - Casting",rank,attr);
 	disc.casting.adjust = this.dat.attributes[disc.casting.attribute].adjust;
 	disc.casting.total = parseInt(disc.casting.av) + parseInt(disc.casting.adjust);
 	this.dat.magic.disciplines[name] = disc;
-	this.refreshDisciplines();
+	this.mainframe.trigger("updateDisciplines");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -284,24 +283,23 @@ GM.npcSVC.prototype.updateDiscipline = function(disc,tf) {
 	d.casting.adjust = this.dat.attributes[d.casting.attribute].adjust;
 	d.casting.total = d.casting.av + d.casting.adjust;
 	
-	this.mainframe.trigger("disc_update");
+	this.mainframe.trigger("updateDisciplines");
 };
 
 // -------------------------------------------------------------------------------------------------
 // addSpell - this funciton adds a spell to a discipline.
 // -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.addSpell = function(popup) {
-	var name = popup.dat.spell;
-	var rank = popup.dat.rank;
-	var discipline = popup.dat.discipline;
-	this.hidePopup(popup);
+GM.npcSVC.prototype.addSpell = function(dat) {
+	var name = dat.spell;
+	var rank = dat.rank;
+	var discipline = dat.discipline;
 	
 	var drank = this.dat.magic.disciplines[discipline].rank;
 	var spell = new kantia.template.spell(name,rank);
 	spell.power = parseInt(rank) + parseInt(drank);
 	this.dat.magic.disciplines[discipline].spells[name] = spell;
 
-	this.refreshDisciplines();
+	this.mainframe.trigger("updateDisciplines");
 };
 
 // -------------------------------------------------------------------------------------------------

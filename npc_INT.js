@@ -204,8 +204,9 @@ GM.npcINT = function(parent,svc) {
 	var b = spell.addButton("Add Discipline",new db.link(this,this.addDisciplinePopup,[]));
 	var disc = spell.addPanel();
 	this.panels.disciplines = disc;
-	this.mainframe.addHandler("disc_update","disc_table",disc.refreshView,disc,[]);
-	//this.refreshDisciplines();
+	this.mainframe.addHandler("updateDisciplines","disc_table",disc.refreshView,disc,[]);
+	this.mainframe.addHandler("updateDisciplines","refresh",this.refreshDisciplines,this,[]);
+	this.refreshDisciplines();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -266,18 +267,21 @@ GM.npcINT.prototype.addDisciplinePopup = function() {
 	popup.show();
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
-	popup.dat = {
+	var dat = {
 		name: "",
 		rank: 0,
 	};
 
 	var p = popup.addPanel("Add Discipline");
-	var cb = p.addComboBox("Discipline",null,new db.connector(popup.dat,"name"));
+	var cb = p.addComboBox("Discipline",null,new db.connector(dat,"name"));
 	cb.setComplexOptions(kantia.disciplineList);
 	cb.updateData();
 	cb.focus();
-	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
-	p.addButton("Ok",new db.link(this,this.addDiscipline,[popup]));
+	p.addTextField("Rank",new db.connector(dat,"rank"));
+	var seq = new db.sequence();
+	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addDiscipline,[dat]));
+	seq.addAction("close",new db.sequence.action(this,this.hidePopup,[popup]));
+	p.addButton("Ok",seq);
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
@@ -287,9 +291,10 @@ GM.npcINT.prototype.addDisciplinePopup = function() {
 GM.npcINT.prototype.refreshDisciplines = function() {
 	this.panels.disciplines.removeChildren();
 	
-	for(var d in this.dat.magic.disciplines) {
+	var disciplines = this.svc.getData("magic").disciplines;
+	for(var d in disciplines) {
 		var panel = this.panels.disciplines.addPanel(d);
-		var disc = this.dat.magic.disciplines[d];
+		var disc = disciplines[d];
 		panel.addButton("Remove");
 		var t = panel.addTable();
 		var r = t.addRow([
@@ -319,18 +324,21 @@ GM.npcINT.prototype.addSpellPopup = function(disc) {
 	popup.addClass("popup");
 	popup.setOverlayClass("fog");
 	popup.show();
-	popup.dat = {
+	var dat = {
 		discipline: disc,
 		spell: "",
 		rank: 0
 	};
 
 	var p = popup.addPanel("Add Spell - " + disc);
-	var cb = p.addComboBox("Spells",kantia.spellList[disc],new db.connector(popup.dat,"spell"));
+	var cb = p.addComboBox("Spells",kantia.spellList[disc],new db.connector(dat,"spell"));
 	cb.updateData();
 	cb.focus();
-	p.addTextField("Rank",new db.connector(popup.dat,"rank"));
-	p.addButton("Ok",new db.link(this,this.addSpell,[popup]));
+	p.addTextField("Rank",new db.connector(dat,"rank"));
+	var seq = new db.sequence();
+	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addSpell,[dat]));
+	seq.addAction("close",new db.sequence.action(this,this.hidePopup,[popup]));
+	p.addButton("Ok",seq);
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 
@@ -338,7 +346,7 @@ GM.npcINT.prototype.addSpellPopup = function(disc) {
 // refreshSpells - this function refreshes the spell listing for the specified discipline.
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshSpells = function(disc,panel) {
-	var discipline = this.dat.magic.disciplines[disc];
+	var discipline = this.svc.getData("magic").disciplines[disc];
 
 	panel.removeChildren();
 	var t = panel.addTable();
@@ -465,12 +473,12 @@ GM.npcINT.prototype.addMasteryPopup = function() {
 	popup.show();
 	
 	var p = popup.addPanel("Add Mastery");
-	var cb = p.addComboBox("Mastery",this.dat.lists.mastery,new db.connector(mastery_dat,"index"));
+	var cb = p.addComboBox("Mastery",this.svc.getList("mastery"),new db.connector(mastery_dat,"index"));
 	cb.focus();
 	var tf = p.addTextField("Rank",new db.connector(mastery_dat,"rank"));
 
 	var seq = new db.sequence();
-	seq.addAction("add_mastery",new db.sequence.action(this,this.addMastery,[mastery_dat]));
+	seq.addAction("add_mastery",new db.sequence.action(this.svc,this.svc.addMastery,[mastery_dat]));
 	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
 	p.addButton("Ok",seq);
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));

@@ -10,6 +10,7 @@ GM.encounterINT = function(parent,svc) {
 	this.widget = new GM.encounterControlINT(this,this.svc);
 	this.children = [];
 	this.activeGroup = null;
+	this.attached = false;
 
 	var b = this.ui.addButton("Remove",new db.link(this.svc,this.svc.destroy,[]));
 
@@ -25,6 +26,7 @@ GM.encounterINT = function(parent,svc) {
 GM.encounterINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.encounterINT.initialize","Attaching interface to parent",2);
 	this.parent.appendChild(this);
+	this.attached = true;
 	this.widget.initialize();
 	if(this.activeGroup)
 		this.activeGroup.initialize();
@@ -35,7 +37,9 @@ GM.encounterINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.encounterINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.encounterINT.detach","Detaching interface from parent",2);
-	this.ui.parent.removeChild(this.ui);
+	if(this.attached)
+		this.ui.parent.removeChild(this.ui);
+	this.attached = false;
 	this.widget.detach();
 };
 

@@ -76,3 +76,12 @@ GM.campaignINT.prototype.setActiveEncounter = function(ui) {
 	this.activeEncounter = ui;
 	this.activeEncounter.initialize();
 };
+
+// -------------------------------------------------------------------------------------------------
+// clearActiveEncounter
+// -------------------------------------------------------------------------------------------------
+GM.campaignINT.prototype.clearActiveEncounter = function() {
+	GM.debug.log("CALL: GM.campaignINT.clearActiveEncounter","Detaching the active encounter",2);
+	this.activeEncounter.detach();
+	this.activeEncounter = null;
+};
