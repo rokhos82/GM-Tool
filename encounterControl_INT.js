@@ -81,7 +81,7 @@ GM.encounterControlINT.prototype.addGroup = function(dat) {
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// refreshGroups
 // -------------------------------------------------------------------------------------------------
 GM.encounterControlINT.prototype.refreshGroups = function(select) {
 	GM.debug.log("CALL: GM.encounterControlINT.refreshGroups","Refeshing group selectors",2);
@@ -89,14 +89,14 @@ GM.encounterControlINT.prototype.refreshGroups = function(select) {
 
 	for(var g in this.svc.getGroups().groups) {
 		var b = this.groups.addRadioButton(g);
-		b.setUpdate(this,this.selectGroup,[g]);
+		b.setUpdate(this.svc,this.svc.selectGroup,[g]);
 		if(g == select)
 			b.setChecked();
 	}
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// selectGroup
 // -------------------------------------------------------------------------------------------------
 GM.encounterControlINT.prototype.selectGroup = function(name) {
 	GM.debug.log("CALL: GM.encounterControlINT.selectGroup","Selecing group: " + name,2);

@@ -114,10 +114,12 @@ GM.mainINT.prototype.setWidget = function(key,ui) {
 // -------------------------------------------------------------------------------------------------
 GM.mainINT.prototype.setActiveCampaign = function(ui) {
 	GM.debug.log("CALL: GM.mainINT.setActiveCampaign","Setting active campaign UI",2);
-	if(this.activeCampaign)
-		this.activeCampaign.detach();
-	this.activeCampaign =  ui;
-	this.activeCampaign.initialize();
+	if(this.activeCampaign !== ui) {
+		if(this.activeCampaign)
+			this.activeCampaign.detach();
+		this.activeCampaign =  ui;
+		this.activeCampaign.initialize();
+	}
 };
 
 // -------------------------------------------------------------------------------------------------

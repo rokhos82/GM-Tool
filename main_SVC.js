@@ -207,6 +207,9 @@ GM.mainSVC.prototype.reset = function() {
 	// Reset the main interface.
 	this.ui.reset();
 
+	// Reset the mainframe.
+	this.mainframe.removeChildren();
+
 	// Reset the data object.
 	delete this.dat;
 	this.dat = new GM.mainDAT();
