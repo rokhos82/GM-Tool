@@ -94,7 +94,7 @@ GM.npcINT = function(parent,svc) {
 	this.panels.defense = defense;
 	defense.addClass("small");
 	var t = defense.addTable();
-	this.mainframe.addHandler("defense_update","def_table",t.refreshView,t,[]);
+	this.mainframe.addHandler("updateDefense","def_table",t.refreshView,t,[]);
 	t.addCustomRow([new ui.text("Normal DR"),new ui.text(new db.view(stats.defense,"dr"))]);
 	t.addCustomRow([new ui.text("No Agility DR"),new ui.text(new db.view(stats.defense,"noagldr"))]);
 	t.addCustomRow([new ui.text("Touch DR"),new ui.text(new db.view(stats.defense,"touchdr"))]);
@@ -105,8 +105,8 @@ GM.npcINT = function(parent,svc) {
 	var armor = combat.addPanel("Armor");
 	armor.addClass("small");
 	var t = armor.addTable();
+	this.mainframe.addHandler("updateArmor","armorTable",t.refreshView,t,[]);
 	t.addClass("attr_table");
-	this.mainframe.addHandler("armor_update","armor_table",t.refreshView,t,[]);
 	t.addRow(["Slot","Armor","DR","Called Shot","Staging","Absorb","Bypass"]);
 	var armorObj = this.svc.getData("armor");
 	for(var a in armorObj) {
@@ -120,7 +120,7 @@ GM.npcINT = function(parent,svc) {
 		r.push(new ui.text(new db.view(armor,"absorb")));
 		r.push(new ui.text(new db.view(armor,"bypass")));
 		r.push(new ui.button("+",new db.link(this,this.addArmorPopup,[a])));
-		r.push(new ui.button("X",new db.link(this,this.removeArmor,[a])));
+		r.push(new ui.button("X",new db.link(this.svc,this.svc.removeArmor,[a])));
 		t.addCustomRow(r);
 	}
 	this.svc.updateDefense();
@@ -416,19 +416,20 @@ GM.npcINT.prototype.refreshTraits = function() {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.addArmorPopup = function(slot) {
-	var popup = this.ui.addPopup();
-	popup.dat = {
+	var popup = this.ui.addPopup("popup","fog");
+	var dat = {
 		index: 0,
 		slot: slot
 	};
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
 	popup.show();
 	var p = popup.addPanel("Add Armor");
-	var cb = p.addComboBox("Armor",kantia.lists.armor[slot],new db.connector(popup.dat,"index"));
+	var cb = p.addComboBox("Armor",kantia.lists.armor[slot],new db.connector(dat,"index"));
 	cb.updateData();
 	cb.focus();
-	p.addButton("Ok",new db.link(this,this.addArmor,[popup]));
+	var seq = new db.sequence();
+	seq.addAction("add",new db.sequence.action(this.svc,this.svc.addArmor,[dat]));
+	seq.addAction("close",new db.sequence.action(this,this.hidePopup,[popup]));
+	p.addButton("Ok",seq);
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
 };
 

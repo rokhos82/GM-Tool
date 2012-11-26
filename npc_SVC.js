@@ -18,6 +18,8 @@ GM.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("willpowerUpdate","stamina",this.updateStamina,this,[]);
 	this.mainframe.addHandler("spiritUpdate","stamina",this.updateStamina,this,[]);
 
+	this.mainframe.addHandler("updateArmor","defense",this.updateDefense,this,[]);
+
 	GM.debug.log("END: GM.npcSVC","Finished initializing npcSVC object",2);
 };
 
@@ -445,18 +447,16 @@ GM.npcSVC.prototype.removeTrait = function(name) {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.addArmor = function(popup) {
-	var index = popup.dat.index;
-	var slot = popup.dat.slot;
+GM.npcSVC.prototype.addArmor = function(dat) {
+	var index = dat.index;
+	var slot = dat.slot;
 	var name = kantia.lists.armor[slot][index];
 	var armor = kantia.armor[name];
 
 	for(var a in armor) {
 		this.dat.armor[slot][a] = armor[a];
 	}
-
-	this.hidePopup(popup);
-	this.mainframe.trigger("armor_update");
+	this.mainframe.trigger("updateArmor");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -506,7 +506,7 @@ GM.npcSVC.prototype.updateDefense = function() {
 	this.dat.stats.defense.staging = staging;
 	this.dat.stats.defense.absorb = absorb;
 
-	this.mainframe.trigger("defense_update");
+	this.mainframe.trigger("updateDefense");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -527,7 +527,7 @@ GM.npcSVC.prototype.removeArmor = function(slot) {
 	armor.penalties = {};
 	armor.category = "";
 
-	this.mainframe.trigger("armor_update");
+	this.mainframe.trigger("updateArmor");
 };
 
 // -------------------------------------------------------------------------------------------------
