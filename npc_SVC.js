@@ -192,8 +192,9 @@ GM.npcSVC.prototype.updateSkill = function(s,tf) {
 // updateWeapons
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateWeapons = function() {
-	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "")
+	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "") {
 		this.addEffect("dualwield",1);
+	}
 	
 	// Update equiped weapons.
 	for(var w in this.dat.weapons) {
@@ -232,7 +233,7 @@ GM.npcSVC.prototype.updateWeapons = function() {
 			dat.damage = weapon.damage.text;
 		}
 	}
-	this.mainframe.trigger("weapon_update");
+	this.mainframe.trigger("updateWeapon");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -254,36 +255,6 @@ GM.npcSVC.prototype.updateList = function(list,skill,action) {
 		if(this.dat.lists[list][skill] <= 0)
 			delete this.dat.lists[list][skill];
 	}
-};
-
-// -------------------------------------------------------------------------------------------------
-//
-// -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.removeWeapon = function(slot) {
-	var weapon = this.dat.weapons[slot];
-
-	var s = weapon.skill;
-	this.updateList("combatSkills",s,"remove");
-
-	weapon.type = ""; 
-	weapon.name = "";
-	weapon.skill = "";
-	var av = 0;
-	for(var a in weapon.av) {
-		weapon.av[a] = av;
-		av -= 20;
-	}
-	weapon.attacks = "";
-	weapon.staging = "";
-	weapon.damage = "";
-
-	if(this.dat.weapons["main"].type == "" || this.dat.weapons["off"].type == "") {
-		this.clearEffect("dualwield");
-		this.updateWeapons();
-		this.mainframe.trigger("effect_update");
-	}
-	else
-		this.mainframe.trigger("weapon_update");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -570,3 +541,59 @@ GM.npcSVC.prototype.removeMastery = function(name) {
 	this.refreshMastery();
 	this.mainframe.trigger("mastery_update");
 };
+
+// -------------------------------------------------------------------------------------------------
+// selectWeapon
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.selectWeapon = function(dat) {
+	var type = dat.type;
+	var slot = dat.slot;
+	var iname = dat.name;
+	var iskill = dat.skill;
+	
+	var name = this.dat.lists[type][iname];
+	var skill = this.dat.lists.skills[iskill];
+	this.dat.weapons[slot].type = type;
+	this.dat.weapons[slot].name = name;
+	this.dat.weapons[slot].skill = skill;
+	this.updateList("combatSkills",skill,"add");
+	
+	this.updateWeapons();
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.removeWeapon = function(slot) {
+	var weapon = this.dat.weapons[slot];
+
+	var s = weapon.skill;
+	this.updateList("combatSkills",s,"remove");
+
+	weapon.type = ""; 
+	weapon.name = "";
+	weapon.skill = "";
+	var av = 0;
+	for(var a in weapon.av) {
+		weapon.av[a] = av;
+		av -= 20;
+	}
+	weapon.attacks = "";
+	weapon.staging = "";
+	weapon.damage = "";
+
+	if(this.dat.weapons["main"].type == "" || this.dat.weapons["off"].type == "") {
+		//this.clearEffect("dualwield");
+		this.updateWeapons();
+		//this.mainframe.trigger("updateEffect");
+	}
+	else
+		this.updateWeapons();
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.addEffect = function(name) {
+	GM.debug.log("GM.npcSVC.addEffect","Adding effect:" + name,2);
+}

@@ -130,7 +130,7 @@ GM.npcINT = function(parent,svc) {
 	cav.addClass("small");
 	var t = cav.addTable();
 	t.addClass("attr_table");
-	this.mainframe.addHandler("weapon_update","weap_table",t.refreshView,t,[]);
+	this.mainframe.addHandler("updateWeapon","weap_table",t.refreshView,t,[]);
 	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","4th","5th","Staging","Damage"]);
 	var weapons = this.svc.getData("weapons");
 	for(var w in weapons) {
@@ -147,7 +147,7 @@ GM.npcINT = function(parent,svc) {
 			new ui.text(new db.view(weap,"staging")),
 			new ui.text(new db.view(weap,"damage")),
 			new ui.button("+",new db.link(this,this.selectWeaponPopup,[w])),
-			new ui.button("X",new db.link(this,this.removeWeapon,[w]))
+			new ui.button("X",new db.link(this.svc,this.svc.removeWeapon,[w]))
 		];
 		t.addCustomRow(r);
 	}
@@ -224,15 +224,13 @@ GM.npcINT.prototype.detach = function() {
 // selectWeaponPopup
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.selectWeaponPopup = function(slot) {
-	var popup = this.ui.addPopup();
+	var popup = this.ui.addPopup("popup","fog");
 	popup.show();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
 	var type = "melee";
 	if(slot == "ranged")
 		type = "ranged";
 	
-	popup.dat = {
+	var dat = {
 		name: "",
 		skill: "",
 		type: type,
@@ -240,33 +238,16 @@ GM.npcINT.prototype.selectWeaponPopup = function(slot) {
 	};
 
 	var p = popup.addPanel("Select Weapon");
-	var cb = p.addComboBox("Weapon",this.dat.lists[type],new db.connector(popup.dat,"name"));
+	var cb = p.addComboBox("Weapon",this.svc.getList(type),new db.connector(dat,"name"));
 	cb.updateData();
 	cb.focus();
-	var cb = p.addComboBox("Skill",this.dat.lists.skills,new db.connector(popup.dat,"skill"));
+	var cb = p.addComboBox("Skill",this.svc.getList("skills"),new db.connector(dat,"skill"));
 	cb.updateData();
-	var b = p.addButton("Ok",new db.link(this,this.selectWeapon,[popup]));
+	var seq = new db.sequence();
+	seq.addAction("select",new db.sequence.action(this.svc,this.svc.selectWeapon,[dat]));
+	seq.addAction("close",new db.sequence.action(this,this.hidePopup,[popup]));
+	var b = p.addButton("Ok",seq);
 	var b = p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
-};
-
-// -------------------------------------------------------------------------------------------------
-// selectWeapon
-// -------------------------------------------------------------------------------------------------
-GM.npcINT.prototype.selectWeapon = function(popup) {
-	var type = popup.dat.type;
-	var slot = popup.dat.slot;
-	var iname = popup.dat.name;
-	var iskill = popup.dat.skill;
-	this.hidePopup(popup);
-
-	var name = this.dat.lists[type][iname];
-	var skill = this.dat.lists.skills[iskill];
-	this.dat.weapons[slot].type = type;
-	this.dat.weapons[slot].name = name;
-	this.dat.weapons[slot].skill = skill;
-	this.updateList("combatSkills",skill,"add");
-	
-	this.updateWeapons();
 };
 
 // -------------------------------------------------------------------------------------------------
