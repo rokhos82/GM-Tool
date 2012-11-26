@@ -83,7 +83,8 @@ GM.npcINT = function(parent,svc) {
 	hc.addClass("small");
 	var t = hc.addTable();
 	this.panels.hc = t;
-	//this.refreshHC();
+	this.refreshHC();
+	this.mainframe.addHandler("HCUpdate","HCTable",this.refreshHC,this,[])
 	var b = hc.addButton("+",new db.link(this,this.addHCPopup,[]));
 	
 	// Build the combat section -----------------------
@@ -439,18 +440,16 @@ GM.npcINT.prototype.addHCPopup = function() {
 		index: 0,
 		rank: 0
 	};
-	var popup = this.ui.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
+	var popup = this.ui.addPopup("popup","fog");
 	popup.show();
 	
 	var p = popup.addPanel("Add Heroic Characteristic");
-	var cb = p.addComboBox("HC",this.dat.lists.hc,new db.connector(hc_dat,"index"));
+	var cb = p.addComboBox("HC",this.svc.getList("hc"),new db.connector(hc_dat,"index"));
 	cb.focus();
 	var tf = p.addTextField("Rank",new db.connector(hc_dat,"rank"));
 	
 	var seq = new db.sequence();
-	seq.addAction("addhc",new db.sequence.action(this,this.addHC,[hc_dat]));
+	seq.addAction("addhc",new db.sequence.action(this.svc,this.svc.addHC,[hc_dat]));
 	seq.addAction("hide",new db.sequence.action(this,this.hidePopup,[popup]));
 	p.addButton("Ok",seq);
 	p.addButton("Cancel",new db.link(this,this.hidePopup,[popup]));
@@ -461,10 +460,11 @@ GM.npcINT.prototype.addHCPopup = function() {
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshHC = function() {
 	this.panels.hc.removeRows();
-	for(var h in this.dat.hc) {
+	var hc_dat = this.svc.getData("hc");
+	for(var h in hc_dat) {
 		this.panels.hc.addCustomRow([
-			new ui.text(h + " - " + this.dat.hc[h]),
-			new ui.button("X",new db.link(this,this.removeHC,[h]))
+			new ui.text(h + " - " + hc_dat[h]),
+			new ui.button("X",new db.link(this.svc,this.svc.removeHC,[h]))
 		]);
 	}
 };

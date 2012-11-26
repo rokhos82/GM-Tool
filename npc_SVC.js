@@ -538,8 +538,7 @@ GM.npcSVC.prototype.addHC = function(dat) {
 	var rank = dat.rank;
 
 	this.dat.hc[name] = rank;
-	this.refreshHC();
-	this.mainframe.trigger("update_hc");
+	this.mainframe.trigger("HCUpdate");
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -547,8 +546,7 @@ GM.npcSVC.prototype.addHC = function(dat) {
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.removeHC = function(name) {
 	delete this.dat.hc[name];
-	this.refreshHC();
-	this.mainframe.trigger("update_hc");
+	this.mainframe.trigger("HCUpdate");
 };
 
 // -------------------------------------------------------------------------------------------------
