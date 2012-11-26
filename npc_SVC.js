@@ -583,9 +583,8 @@ GM.npcSVC.prototype.removeWeapon = function(slot) {
 	weapon.damage = "";
 
 	if(this.dat.weapons["main"].type == "" || this.dat.weapons["off"].type == "") {
-		//this.clearEffect("dualwield");
+		this.clearEffect("dualwield");
 		this.updateWeapons();
-		//this.mainframe.trigger("updateEffect");
 	}
 	else
 		this.updateWeapons();
