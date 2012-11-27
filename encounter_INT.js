@@ -61,6 +61,7 @@ GM.encounterINT.prototype.setActiveGroup = function(ui) {
 		this.activeGroup.detach();
 	this.activeGroup = ui;
 	this.activeGroup.initialize();
+	this.widget.refreshGroups(ui.svc.getName());
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -68,7 +69,8 @@ GM.encounterINT.prototype.setActiveGroup = function(ui) {
 // -------------------------------------------------------------------------------------------------
 GM.encounterINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.encounterINT.refreshView","Refreshing interface to match data",2);
-	var ui = this.svc.getGroups().active;
+	var dat = this.svc.getGroups();
+	var ui = dat.active.ui;
 	if(ui) {
 		this.setActiveGroup(ui);
 	}

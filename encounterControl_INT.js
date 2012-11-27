@@ -102,3 +102,11 @@ GM.encounterControlINT.prototype.selectGroup = function(name) {
 	GM.debug.log("CALL: GM.encounterControlINT.selectGroup","Selecing group: " + name,2);
 	this.svc.selectGroup(name);
 };
+
+// -------------------------------------------------------------------------------------------------
+// refreshView
+// -------------------------------------------------------------------------------------------------
+GM.encounterControlINT.prototype.refreshView = function() {
+	GM.debug.log("CALL: GM.encounterControlINT.prototype","Refreshing control view",2);
+	this.refreshGroups();
+};

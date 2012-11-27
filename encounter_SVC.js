@@ -40,6 +40,7 @@ GM.encounterSVC.prototype.load = function() {
 	}
 
 	this.refreshLists();
+	this.ui.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -96,7 +97,7 @@ GM.encounterSVC.prototype.getGroups = function() {
 	return {
 		lists: this.lists.groups.slice(),
 		groups: this.groups,
-		active: this.activeGroup ? this.activeGroup.ui : null
+		active: this.activeGroup ? this.activeGroup : null
 	};
 };
 
