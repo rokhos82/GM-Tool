@@ -231,7 +231,7 @@ GM.npcSVC.prototype.updateWeapons = function() {
 			}
 			
 			if(weapon.staging.source)
-				dat.staging = this.dat.attributes[weapon.staging.source].score + weapon.staging.value;
+				dat.staging = parseInt(this.dat.attributes[weapon.staging.source].score) + weapon.staging.value;
 			else
 				dat.staging = weapon.staging.value;
 

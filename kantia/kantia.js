@@ -105,6 +105,11 @@ kantia.race = {};
 kantia.race["npc"] = new kantia.template.race();
 kantia.race["human"] = new kantia.template.race();
 
+kantia.race["wolf"] = new kantia.template.race();
+kantia.race["wolf"].defense = {
+	absorb: 1
+}
+
 kantia.race["dwarf"] = new kantia.template.race();
 kantia.race["dwarf"].attributes.agility = -2;
 kantia.race["dwarf"].attributes.constitution = 2;

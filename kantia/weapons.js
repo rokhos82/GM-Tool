@@ -205,6 +205,13 @@ kantia.weapons.melee = {
 		staging: { value: 8, source: "strength" },
 		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
 		other: { "Defensive Weapon": 1, "Double-ended": 1, "Reach": 1 }
+	},
+	"Bite (Wolf)": {
+		difficulty: { base: 17 },
+		range: { text: "Normal" },
+		staging: { value: 10, source: "strength" },
+		damage: { avg: 4, text: "1d6 + 1", roll: function() { return kantia.func.d6(1) + 1; }},
+		other: {}
 	}
 };
 

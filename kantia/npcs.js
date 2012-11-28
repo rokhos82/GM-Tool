@@ -26,6 +26,9 @@ kantia.template.npcList = {
 		"Kobald, Common": "Kobald, Common",
 		"Kobald, Warrior": "Kobald, Warrior",
 		"Kobald, Sorcerer": "Kobald, Sorcerer"
+	},
+	"Animal": {
+		"Wolf": "Wolf"
 	}
 };
 
@@ -851,4 +854,56 @@ kantia.template.npcs["Kobald, Sorcerer"] = new kantia.template.npc(
 		"ranged": ["Dagger","Short Spear"]
 	},
 	"Only female kobalds are capable of sorcery. If a thaumaturge is born, she is capable of learning any discipline, although most prefer enchantment, earth elementalism, transmutation, shadowmancy, and illusion. Typically a kobald sorcerer will have between 4 and 16 ranks in her primary discipline and each of the individual spell skills. Her discipline casting rank is typically equal to her discipline rank. Multi-disciplinary sorcerers are uncommon, but not unheard of."
+);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Animal NPC Templates
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Wolf --------------------------------------------------------------------------------------------
+kantia.template.npcs["Wolf"] = new kantia.template.npc(
+	"Wolf",
+	"Wolf",
+	{
+		"strength": new kantia.template.npcAttribute("Strength",4,13,8),
+		"size": new kantia.template.npcAttribute("Size",4,13,8),
+		"agility": new kantia.template.npcAttribute("Agility",9,20,16),
+		"reflexes": new kantia.template.npcAttribute("Reflexes",9,20,16),
+		"constitution": new kantia.template.npcAttribute("Constitution",6,16,12),
+		"fortitude": new kantia.template.npcAttribute("Fortitude",6,15,10),
+		"reasoning": new kantia.template.npcAttribute("Reasoning",2,5,4),
+		"willpower": new kantia.template.npcAttribute("Willpower",3,9,6),
+		"spirit": new kantia.template.npcAttribute("Spirit",3,9,6),
+		"perception": new kantia.template.npcAttribute("Perception",10,24,16)
+	},
+	{
+		"Bite": new kantia.template.npcSkill("Bite","agility",6),
+		"Climbing": new kantia.template.npcSkill("Climbing","strength",0),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",12),
+		"Feint": new kantia.template.npcSkill("Feint","reasoning",8),
+		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],6),
+		"Listen": new kantia.template.npcSkill("Listen","perception",12),
+		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],6),
+		"Resist Fear": new kantia.template.npcSkill("Resist Fear","fortitude",6), 
+		"Resist Magic": new kantia.template.npcSkill("Resist Magic","spirit",5),
+		"Resist Mental": new kantia.template.npcSkill("Resist Mental","spirit",5),
+		"Smell": new kantia.template.npcSkill("Smell","perception",12),
+		"Spot": new kantia.template.npcSkill("Spot","perception",6),
+		"Tracking": new kantia.template.npcSkill("Tracking","perception",8)
+	},
+	{
+		"Low Light Vision": new kantia.template.npcTrait("Low Light Vision",1),
+		"Sense of Smell": new kantia.template.npcTrait("Sense of Smell",1)
+	},
+	{},
+	[],
+	[],
+	{
+		"melee": ["Bite (Wolf)"],
+		"ranged": []
+	},
+	"",
+	"These NPCs often have few possessions, although what they do own is often very durable and sturdy. Wilderness types will often carry any survival equipment they need with them at all times, while urban types often only carry what they will need in the immediate future. The average brute has 1d3-1 crowns, 2d6-2 silver, and 2d10 copper.",
+	"Wolves are large canines that live in packs. Normally, wolves will not attack humans except during lean times. Wolves are intelligent and can be domesticated, although only wolves raised in captivity from a pup are truly worthwhile as pets or companions. Even then, a wolf is still a very dangerous pet.  A lone wolf will usually attempt to avoid conflict with other creatures, but a pack of wolves will use flanking tactics, one group of wolves feinting and fighting defensively while another group will force an attack upon the flanks and rear of their prey.",
+	[]
 );
