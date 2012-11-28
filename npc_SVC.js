@@ -75,6 +75,9 @@ GM.npcSVC.prototype.getTag = function() {
 	return this.dat.name.replace(/ /g,'').toLowerCase();
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.remove = function() {
 	GM.debug.log("CALL: GM.npcSVC.remove","Self-destroy",2);
 	this.parent.removeNPC(this);
@@ -174,6 +177,7 @@ GM.npcSVC.prototype.updateMovement = function() {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateSkill = function(s,tf) {
+	GM.debug.log("CALL: GM.npcSVC.updateSkill","Updating skill: " + s,3);
 	var rank = tf.getValue();
 	this.dat.skills[s].rank = rank;
 	var av = rank * 5;
@@ -185,7 +189,9 @@ GM.npcSVC.prototype.updateSkill = function(s,tf) {
 	this.dat.skills[s].adjust = adj;
 	this.dat.skills[s].av = av;
 	this.dat.skills[s].total = av + adj;
-	this.mainframe.trigger("skill_update");
+	this.mainframe.trigger("updateSkill");
+	if(this.checkList("combatSkills",s))
+		this.updateWeapons();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -240,6 +246,7 @@ GM.npcSVC.prototype.updateWeapons = function() {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateList = function(list,skill,action) {
+	GM.debug.log("CALL: GM.npcSVC.updateList","Updating " + skill + " of " + list + " (" + action + ")",3);
 	if(!this.dat.lists[list])
 		this.dat.lists[list] = {};
 
@@ -255,6 +262,16 @@ GM.npcSVC.prototype.updateList = function(list,skill,action) {
 		if(this.dat.lists[list][skill] <= 0)
 			delete this.dat.lists[list][skill];
 	}
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.checkList = function(list,skill) {
+	if(this.dat.lists[list][skill])
+		return true;
+	else
+		return false;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -275,8 +292,7 @@ GM.npcSVC.prototype.addDiscipline = function(dat) {
 // -------------------------------------------------------------------------------------------------
 // updateDiscipline - recalculates casting av, etc for the specified discipline.
 // -------------------------------------------------------------------------------------------------
-GM.npcSVC.prototype.updateDiscipline = function(disc,tf) {
-	var r = tf.getValue();
+GM.npcSVC.prototype.updateDiscipline = function(disc,r) {
 	var d = this.dat.magic.disciplines[disc];
 	d.casting.rank = r;
 	d.casting.av = r * 5;
@@ -290,6 +306,7 @@ GM.npcSVC.prototype.updateDiscipline = function(disc,tf) {
 // addSpell - this funciton adds a spell to a discipline.
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.addSpell = function(dat) {
+	GM.debug.log("CALL: GM.npcSVC.addSpell","Adding " + dat.spell + " to " + dat.discipline,2);
 	var name = dat.spell;
 	var rank = dat.rank;
 	var discipline = dat.discipline;
@@ -314,6 +331,7 @@ GM.npcSVC.prototype.updateSpellRank = function(disc,spell,tf) {
 // updateSpells
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateSpells = function(disc) {
+	GM.debug.log("CALL: GM.npcSVC.updateSpells","Updating spells for " + disc,2);
 	var discipline = this.dat.magic.disciplines[disc];
 	var drank = parseInt(discipline.rank);
 

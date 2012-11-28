@@ -167,12 +167,12 @@ GM.npcINT = function(parent,svc) {
 	t1.addClass("skill_table");
 	t1.addClass("attr_table");
 	t1.addRow(["Skill","Rank","AV"]);
-	this.mainframe.addHandler("skill_update","skill_table1",t1.refreshView,t1,[]);
+	this.mainframe.addHandler("updateSkill","skill_table1",t1.refreshView,t1,[]);
 	var t2 = skills.addTable();
 	t2.addClass("skill_table");
 	t2.addClass("attr_table");
 	t2.addRow(["Skill","Rank","AV"]);
-	this.mainframe.addHandler("skill_update","skill_table2",t2.refreshView,t2,[]);
+	this.mainframe.addHandler("updateSkill","skill_table2",t2.refreshView,t2,[]);
 	var skillsList = this.svc.getList("skills");
 	var skills = this.svc.getData("skills");
 	var l = skillsList.length;
@@ -182,7 +182,7 @@ GM.npcINT = function(parent,svc) {
 		var skill1 = skills[name1];
 		var r = t1.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
 		var c = r.cells[1].children[0];
-		c.setUpdate(this,this.svc.updateSkill,[name1,c]);
+		c.setUpdate(this.svc,this.svc.updateSkill,[name1,c]);
 
 		if(i + shift < l) {
 			var name2 = skillsList[i + shift];
@@ -193,7 +193,7 @@ GM.npcINT = function(parent,svc) {
 				new db.view(skill2,"total")
 			]);
 			var c = r.cells[1].children[0];
-			c.setUpdate(this,this.svc.updateSkill,[name2,c]);
+			c.setUpdate(this.svc,this.svc.updateSkill,[name2,c]);
 		}
 	}
 	
@@ -289,6 +289,7 @@ GM.npcINT.prototype.addDisciplinePopup = function() {
 // refreshDisciplines - rebuilds the UI elements for the disciplines.
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshDisciplines = function() {
+	GM.debug.log("CALL: GM.npcINT.refreshDisciplines","Refreshing discipline panels",2);
 	this.panels.disciplines.removeChildren();
 	
 	var disciplines = this.svc.getData("magic").disciplines;
@@ -301,7 +302,7 @@ GM.npcINT.prototype.refreshDisciplines = function() {
 			"Disc Rank",
 			new db.connector(disc,"rank")
 		]);
-		r.cells[1].children[0].setUpdate(this,this.updateSpells,[d]);
+		r.cells[1].children[0].setUpdate(this.svc,this.svc.updateSpells,[d]);
 		var r = t.addRow([
 			"Casting Rank",
 			new db.connector(disc.casting,"rank"),
@@ -312,17 +313,23 @@ GM.npcINT.prototype.refreshDisciplines = function() {
 		var p = panel.addPanel("Spells");
 		this.refreshSpells(d,p);
 	}
-	
-	this.mainframe.trigger("disc_update");
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcINT.prototype.updateDiscipline = function(disc,tf) {
+	GM.debug.log("CALL: GM.npcINT.updateDiscipline","Updating " + disc,2);
+	var rank = tf.getValue();
+	this.svc.updateDiscipline(disc,rank);
 };
 
 // -------------------------------------------------------------------------------------------------
 // addSpellPopup - setups and displays the popup used to add a spell to a discipline.
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.addSpellPopup = function(disc) {
-	var popup = this.ui.addPopup();
-	popup.addClass("popup");
-	popup.setOverlayClass("fog");
+	GM.debug.log("CALL: GM.npcINT.addSpellPopup","Building the add new spell popup",2);
+	var popup = this.ui.addPopup("popup","fog");
 	popup.show();
 	var dat = {
 		discipline: disc,
@@ -346,6 +353,7 @@ GM.npcINT.prototype.addSpellPopup = function(disc) {
 // refreshSpells - this function refreshes the spell listing for the specified discipline.
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshSpells = function(disc,panel) {
+	GM.debug.log("CALL: GM.npcINT.refreshSpells","Refreshing spells table for " + disc,2);
 	var discipline = this.svc.getData("magic").disciplines[disc];
 
 	panel.removeChildren();
@@ -359,7 +367,7 @@ GM.npcINT.prototype.refreshSpells = function(disc,panel) {
 			new db.connector(spell,"rank"),
 			new db.view(spell,"power")
 		]);
-		r.cells[1].children[0].setUpdate(this,this.updateSpellRank,[disc,spell,r.cells[1].children[0]]);
+		r.cells[1].children[0].setUpdate(this.svc,this.svc.updateSpellRank,[disc,spell,r.cells[1].children[0]]);
 	}
 	this.mainframe.addHandler(disc + "_spell_update",disc + "_spell_table",t.refreshView,t,[]);
 };
