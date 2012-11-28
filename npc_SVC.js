@@ -10,6 +10,7 @@ GM.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("strengthUpdate","movement",this.updateMovement,this,[]);
 	this.mainframe.addHandler("sizeUpdate","hitpoints",this.updateHitpoints,this,[]);
 	this.mainframe.addHandler("sizeUpdate","movement",this.updateMovement,this,[]);
+	this.mainframe.addHandler("sizeUpdate","defense",this.updateDefense,this,[]);
 	this.mainframe.addHandler("constitutionUpdate","hitpoints",this.updateHitpoints,this,[]);
 	this.mainframe.addHandler("fortitudeUpdate","hitpoints",this.updateHitpoints,this,[]);
 	this.mainframe.addHandler("willpowerUpdate","hitpoints",this.updateHitpoints,this,[]);
@@ -135,7 +136,7 @@ GM.npcSVC.prototype.updateStamina = function() {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateMovement = function() {
-	GM.debug.log("GM.npcSVC.updateMovement","Recalculating movement rates",2);
+	GM.debug.log("GM.npcSVC.updateMovement","Recalculating movement rates",3);
 
 	var str = parseInt(this.dat.attributes.strength.score);
 	var siz = parseInt(this.dat.attributes.size.score);
@@ -198,6 +199,7 @@ GM.npcSVC.prototype.updateSkill = function(s,tf) {
 // updateWeapons
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateWeapons = function() {
+	GM.debug.log("CALL: GM.npcSVC.updateWeapons","Updating weapon stats",3);
 	if(this.dat.weapons.main.name != "" && this.dat.weapons.off.name != "") {
 		this.addEffect("dualwield",1);
 	}
@@ -331,7 +333,7 @@ GM.npcSVC.prototype.updateSpellRank = function(disc,spell,tf) {
 // updateSpells
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateSpells = function(disc) {
-	GM.debug.log("CALL: GM.npcSVC.updateSpells","Updating spells for " + disc,2);
+	GM.debug.log("CALL: GM.npcSVC.updateSpells","Updating spells for " + disc,3);
 	var discipline = this.dat.magic.disciplines[disc];
 	var drank = parseInt(discipline.rank);
 
@@ -450,6 +452,7 @@ GM.npcSVC.prototype.addArmor = function(dat) {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.updateDefense = function() {
+	GM.debug.log("CALL: GM.npcSVC.updateDefense","Updating defense stats",3);
 	var dr = 50;
 	var noagldr = 50;
 	var touchdr = 50;

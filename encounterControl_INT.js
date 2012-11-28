@@ -12,8 +12,11 @@ GM.encounterControlINT = function(parent,svc) {
 	this.label = "Encounter: " + this.svc.getName();
 	this.ui = new ui.panel(this.label);
 	var b = this.ui.addButton("New Group",new db.link(this,this.addGroupPopup,[]));
+	var b = this.ui.addButton("Start Combat",new db.link(this,this.startCombat,[]));
 	var grps = this.ui.addPanel("Groups");
 	this.groups = grps.addRadioSet("groups");
+	this.popups = {};
+	this.addPopup("combat",new GM.combatINT(this,this.svc));
 
 	this.mainframe.addHandler("clearWidgets","ECI" + this.svc.getName,this.detach,this,[]);
 
@@ -109,4 +112,18 @@ GM.encounterControlINT.prototype.selectGroup = function(name) {
 GM.encounterControlINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.encounterControlINT.prototype","Refreshing control view",2);
 	this.refreshGroups();
+};
+
+// -------------------------------------------------------------------------------------------------
+// startCombat
+// -------------------------------------------------------------------------------------------------
+GM.encounterControlINT.prototype.startCombat = function() {
+	GM.debug.log("CALL: GM.encounterControlINT.startCombat","Showing the combat interface",2);
+	this.popups["combat"].show();
+};
+
+GM.encounterControlINT.prototype.addPopup = function(key,popup) {
+	GM.debug.log("CALL: GM.encounterControlINT.addPopup","Adding popup: " + key,2);
+	this.popups[key] = popup;
+	this.ui.appendChild(popup.ui);
 };

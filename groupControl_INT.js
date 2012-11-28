@@ -15,7 +15,6 @@ GM.groupControlINT = function(parent,svc) {
 	this.ui.addButton("New NPC",new db.link(this,this.addNPCPopup,[]));
 	var p = this.ui.addPanel("Quick Links");
 	this.links = p.addList(false);
-	//this.ui.addButton("Start Combat",new db.link(this,this.startCombat,[]));
 
 	this.mainframe.addHandler("clearWidgets","GCI" + this.svc.getName,this.detach,this,[]);
 	this.mainframe.addHandler("addNPC","quicklinks",this.refreshQuickLinks,this,[]);
@@ -102,6 +101,9 @@ GM.groupControlINT.prototype.refreshQuickLinks = function() {
 	}
 };
 
+// -------------------------------------------------------------------------------------------------
+// refreshView
+// -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.groupControlINT.refreshView","Refreshing interface widget",2);
 	this.refreshQuickLinks();
