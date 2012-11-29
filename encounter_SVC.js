@@ -141,3 +141,13 @@ GM.encounterSVC.prototype.selectGroup = function(key) {
 	this.activeGroup = this.groups[name];
 	this.ui.setActiveGroup(this.activeGroup.ui);
 };
+
+GM.encounterSVC.prototype.groupStartCombat = function(key) {
+	GM.debug.log("CALL: GM.encounterSVC.groupStartCombat","Starting combat for a group",2);
+	var name = null;
+	if(isNaN(key))
+		name = key;
+	else
+		name = this.lists.groups[key];
+	return this.groups[name].getCombatInterface();
+};

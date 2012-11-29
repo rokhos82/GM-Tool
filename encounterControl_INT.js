@@ -81,6 +81,7 @@ GM.encounterControlINT.prototype.addGroup = function(dat) {
 	var name = dat.name;
 	this.svc.addGroup(name);
 	this.refreshGroups(name);
+	this.popups["combat"].invalidate();
 };
 
 // -------------------------------------------------------------------------------------------------

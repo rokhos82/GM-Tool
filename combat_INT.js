@@ -33,7 +33,11 @@ GM.combatINT = function(parent,svc) {
 GM.combatINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.combatINT.initialize","Populating fields",2);
 	this.initialized = true;
-	this.groups.dropdown.setOptions(this.svc.getGroups().list);
+	this.groups.dropdown.setOptions(this.svc.getGroups().lists);
+};
+
+GM.combatINT.prototype.invalidate = function() {
+	this.initialized = false;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -65,6 +69,7 @@ GM.combatINT.prototype.hide = function() {
 //
 // -------------------------------------------------------------------------------------------------
 GM.combatINT.prototype.activateGroup = function() {
-	var name = this.groups.dropdown.getValue();
-	GM.debug.log("CALL: GM.combatINT.activateGroup","Activating combat for group: " + name,2);
+	var key = this.groups.dropdown.getValue();
+	GM.debug.log("CALL: GM.combatINT.activateGroup","Activating combat for group: " + key,2);
+	var ui = this.svc.groupStartCombat(key);
 };
