@@ -128,8 +128,22 @@ GM.groupSVC.prototype.removeNPC = function(svc) {
 // -------------------------------------------------------------------------------------------------
 //
 // -------------------------------------------------------------------------------------------------
-GM.groupSVC.prototype.startCombat = function() {
-	var cp = new GM.groupCombatSVC(this);
-	cp.initialize();
-	cp.show();
+GM.groupSVC.prototype.getGroupInitiative = function() {
+	GM.debug.log("CALL: GM.groupSVC.getGroupInitiative","Calculate an average initiative for the group",2);
+
+	var count = 0;
+	var sum = 0;
+	for(var m in this.members) {
+		count++;
+		sum += this.members.getInitiative();
+	}
+	var avg = Math.floor(sum/count);
+	return avg + kantia.func.d10(1);
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.groupSVC.prototype.getCombatInterface = function() {
+	GM.debug.log("CALL: GM.groupSVC.getCombatInterface","Get the combat interface for the group",2);
 };
