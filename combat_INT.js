@@ -71,5 +71,5 @@ GM.combatINT.prototype.hide = function() {
 GM.combatINT.prototype.activateGroup = function() {
 	var key = this.groups.dropdown.getValue();
 	GM.debug.log("CALL: GM.combatINT.activateGroup","Activating combat for group: " + key,2);
-	var ui = this.svc.groupStartCombat(key);
+	var ui = this.svc.groupCombatInterface(key);
 };
