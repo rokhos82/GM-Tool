@@ -96,13 +96,16 @@ GM.groupSVC.prototype.getDataConnector = function(token) {
 // -------------------------------------------------------------------------------------------------
 // addNPC
 // -------------------------------------------------------------------------------------------------
-GM.groupSVC.prototype.addNPC = function(name,template) {
+GM.groupSVC.prototype.addNPC = function(name,template,quantity) {
 	GM.debug.log("CALL: GM.groupSVC.addNPC","Adding NPC " + name,2);
 	if(!this.dat.members[name]) {
-		this.dat.members[name] = new GM.npcDAT(name,template);
-		this.members[name] = new GM.npcSVC(this.dat.members[name],this);
-		this.ui.addMember(this.members[name].ui);
-		this.mainframe.trigger("addNPC");
+		for(var i = 0;i < quantity;i++) {
+			var n = name + " " + (i + 1);
+			this.dat.members[n] = new GM.npcDAT(n,template);
+			this.members[n] = new GM.npcSVC(this.dat.members[n],this);
+			this.ui.addMember(this.members[n].ui);
+			this.mainframe.trigger("addNPC");
+		}
 	}
 	else {
 		GM.debug.log("ERROR: GM.groupSVC.addNPC","NPC " + name + " already exisits",0);

@@ -52,12 +52,14 @@ GM.groupControlINT.prototype.addNPCPopup = function() {
 	
 	var dat = {
 		"name": "",
-		"template": ""
+		"template": "",
+		"quantity": ""
 	}
 
 	var p = popup.addPanel("New NPC");
 	var tf = p.addTextField("Name",new db.connector(dat,"name"));
 	tf.focus();
+	var tf = p.addTextField("Quantity",new db.connector(dat,"quantity"));
 	var c = new ui.comboBox("Template");
 	c.setComplexOptions(kantia.template.npcList);
 	c.setData(new db.connector(dat,"template"));
@@ -85,7 +87,7 @@ GM.groupControlINT.prototype.hidePopup = function(popup) {
 // -------------------------------------------------------------------------------------------------
 GM.groupControlINT.prototype.addNPC = function(dat) {
 	GM.debug.log("CALL: GM.groupControlINT.addNPC","Adding npc " + dat.name,2);
-	this.svc.addNPC(dat.name,dat.template);
+	this.svc.addNPC(dat.name,dat.template,dat.quantity);
 };
 
 // -------------------------------------------------------------------------------------------------
