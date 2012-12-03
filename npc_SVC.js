@@ -635,10 +635,30 @@ GM.npcSVC.prototype.clearEffect = function(cat) {
 	this.mainframe.trigger("updateEffect");
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.getCombatInterface = function() {
 	GM.debug.log("GM.npcSVC.getCombatInterface","Retrieving NPC combat interface",2);
 	if(!this.combat) {
-		this.combat = null;
+		this.combat = new GM.npcCombatINT(this);
 	}
 	return this.combat;
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.getCombatSkills = function() {
+	GM.debug.log("GM.npcSVC.getCombatSkills","Return a list of combat skills",2);
+	var list = [];
+	
+	for(var s in this.dat.lists.combatSkills) {
+		list.push(s);
+	}
+
+	list.push("Resist Fear");
+	list.push("Resist Magic");
+	list.push("Resist Magic");
+	list.push("Dodge");
 };
