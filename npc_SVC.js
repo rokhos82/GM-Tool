@@ -6,6 +6,7 @@ GM.npcSVC = function(dat,parent) {
 	this.mainframe = this.parent.mainframe.addChildFrame();
 	
 	this.ui = new GM.npcINT(this.parent.ui,this);
+	this.combat = null;
 
 	this.mainframe.addHandler("strengthUpdate","movement",this.updateMovement,this,[]);
 	this.mainframe.addHandler("sizeUpdate","hitpoints",this.updateHitpoints,this,[]);
@@ -632,4 +633,12 @@ GM.npcSVC.prototype.clearEffect = function(cat) {
 	GM.debug.log("GM.npcSVC.clearEffect","Removing effect:" + cat,2);
 	delete this.dat.effects[cat];
 	this.mainframe.trigger("updateEffect");
+};
+
+GM.npcSVC.prototype.getCombatInterface = function() {
+	GM.debug.log("GM.npcSVC.getCombatInterface","Retrieving NPC combat interface",2);
+	if(!this.combat) {
+		this.combat = null;
+	}
+	return this.combat;
 };

@@ -36,6 +36,9 @@ GM.combatINT.prototype.initialize = function() {
 	this.groups.dropdown.setOptions(this.svc.getGroups().lists);
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.combatINT.prototype.invalidate = function() {
 	this.initialized = false;
 };
@@ -45,6 +48,15 @@ GM.combatINT.prototype.invalidate = function() {
 // -------------------------------------------------------------------------------------------------
 GM.combatINT.prototype.detach = function() {
 	GM.debug.log("CALL: GM.combatINT.detach","Detaching interface from the parent",2);
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.combatINT.prototype.attachGroup = function(name,grp) {
+	GM.debug.log("CALL: GM.combatINT.appendChild","Attaching group combat interface",2);
+	this.groups.panels[name] = grp;
+	this.panel.appendChild(grp.ui);
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -72,4 +84,5 @@ GM.combatINT.prototype.activateGroup = function() {
 	var key = this.groups.dropdown.getValue();
 	GM.debug.log("CALL: GM.combatINT.activateGroup","Activating combat for group: " + key,2);
 	var ui = this.svc.groupCombatInterface(key);
+	ui.initialize(this);
 };

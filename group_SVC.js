@@ -15,6 +15,8 @@ GM.groupSVC = function(dat,parent) {
 
 	this.ui = new GM.groupINT(this.parent.ui,this);
 
+	this.combat = null;
+
 	GM.debug.log("END: GM.groupSVC","Finished initializing groupSVC object",2);
 };
 
@@ -146,4 +148,8 @@ GM.groupSVC.prototype.getGroupInitiative = function() {
 // -------------------------------------------------------------------------------------------------
 GM.groupSVC.prototype.getCombatInterface = function() {
 	GM.debug.log("CALL: GM.groupSVC.getCombatInterface","Get the combat interface for the group",2);
+	if(!this.combat) {
+		this.combat = new GM.groupCombatINT(this);
+	}
+	return this.combat;
 };
