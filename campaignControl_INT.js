@@ -4,7 +4,7 @@ GM.campaignControlINT = function(parent,svc) {
 	this.parent = parent;
 	this.svc = svc;
 	this.mainframe = svc.mainframe;
-	this.mainframe.addHandler("addCampaign","encounterList",this.refreshEncounters,this,[]);
+	this.mainframe.addHandler("addCampaign","encounterList",this.refreshEncounters,this,[true]);
 
 	this.label = "Campaign: " + this.svc.getName();
 	this.attached = false;

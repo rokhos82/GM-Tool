@@ -31,6 +31,7 @@ GM.encounterControlINT.prototype.initialize = function() {
 	GM.debug.log("CALL: GM.encounterControlINT.initialize","Appending interface to parent",2);
 	this.mainframe.sendEvent("setWidget",["encounterControl",{svc: this.svc,ui: this}]);
 	this.attached = true;
+	this.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -124,6 +125,9 @@ GM.encounterControlINT.prototype.startCombat = function() {
 	this.popups["combat"].show();
 };
 
+// -------------------------------------------------------------------------------------------------
+// addPopup
+// -------------------------------------------------------------------------------------------------
 GM.encounterControlINT.prototype.addPopup = function(key,popup) {
 	GM.debug.log("CALL: GM.encounterControlINT.addPopup","Adding popup: " + key,2);
 	this.popups[key] = popup;

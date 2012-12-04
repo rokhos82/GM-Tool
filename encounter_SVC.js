@@ -33,17 +33,11 @@ GM.encounterSVC = function(dat,parent) {
 GM.encounterSVC.prototype.load = function() {
 	GM.debug.log("CALL: GM.encounterSVC.load","Building services and lists from data object",1);
 
-	var group = null;
 	for(var g in this.dat.groups) {
 		this.groups[g] = new GM.groupSVC(this.dat.groups[g],this);
-		if(!group)
-			group = g;
 	}
 
 	this.refreshLists();
-	this.mainframe.trigger("clearEncounterWidgets",true);
-	this.selectGroup(group);
-	this.ui.refreshView();
 };
 
 // -------------------------------------------------------------------------------------------------

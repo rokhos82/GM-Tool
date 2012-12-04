@@ -38,10 +38,8 @@ GM.campaignINT.prototype.initialize = function() {
 // -------------------------------------------------------------------------------------------------
 GM.campaignINT.prototype.refreshView = function() {
 	GM.debug.log("CALL: GM.campaignINT.refreshView","Refreshing the interface to match data",2);
-	var ui = this.svc.getEncounters().active;
-	if(ui) {
-		this.setActiveEncounter(ui);
-	}
+	if(this.activeEncounter)
+		this.activeEncounter.refreshView();
 	this.widget.refreshView();
 };
 
@@ -73,7 +71,7 @@ GM.campaignINT.prototype.setActiveEncounter = function(ui) {
 	GM.debug.log("CALL: GM.campaignINT.setActiveEncounter","Setting the active encounter",2);
 	if(this.activeEncounter)
 		this.activeEncounter.detach();
-	this.mainframe.trigger("clearEncounterWidgets",true);
+	this.mainframe.trigger("clearWidgets",true);
 	this.activeEncounter = ui;
 	this.activeEncounter.initialize();
 };
