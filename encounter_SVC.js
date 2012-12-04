@@ -22,7 +22,7 @@ GM.encounterSVC = function(dat,parent) {
 	
 	this.ui = new GM.encounterINT(this.parent.ui,this);
 
-	this.ui.initialize();
+	//this.ui.initialize();
 	GM.debug.log("END: GM.encounterSVC","Finished initializing encounterSVC object",2);
 };
 
@@ -33,13 +33,16 @@ GM.encounterSVC = function(dat,parent) {
 GM.encounterSVC.prototype.load = function() {
 	GM.debug.log("CALL: GM.encounterSVC.load","Building services and lists from data object",1);
 
+	var group = null;
 	for(var g in this.dat.groups) {
 		this.groups[g] = new GM.groupSVC(this.dat.groups[g],this);
-		if(!this.activeGroup)
-			this.activeGroup = this.groups[g];
+		if(!group)
+			group = g;
 	}
 
 	this.refreshLists();
+	this.mainframe.trigger("clearEncounterWidgets",true);
+	this.selectGroup(group);
 	this.ui.refreshView();
 };
 

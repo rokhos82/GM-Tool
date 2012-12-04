@@ -15,7 +15,7 @@ GM.campaignSVC = function(dat,parent) {
 	this.activeEncounter = null;
 	this.ui = new GM.campaignINT(this.parent.ui,this);
 
-	this.ui.initialize();
+	//this.ui.initialize();
 	GM.debug.log("END: GM.campaignSVC","Done initializing campaignSVC object",2);
 };
 
@@ -27,14 +27,18 @@ GM.campaignSVC.prototype.load = function() {
 	GM.debug.log("CALL: GM.campaignSVC.load","Building services and lists from data object",1);
 
 	// Walk through the data object encounters and build service objects.
+	var encounter = null;
 	for(var e in this.dat.encounters) {
 		this.encounters[e] = new GM.encounterSVC(this.dat.encounters[e],this);
-		if(!this.activeEncounter)
-			this.activeEncounter = this.encounters[e];
+		if(!encounter)
+			encounter = e;
 	}
 
 	// Rebuild the lists.
 	this.refreshLists();
+
+	this.mainframe.trigger("clearEncounterWidgets",true);
+	this.selectEncounter(e);
 };
 
 // -------------------------------------------------------------------------------------------------
