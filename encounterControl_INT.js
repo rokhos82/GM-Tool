@@ -18,7 +18,8 @@ GM.encounterControlINT = function(parent,svc) {
 	this.popups = {};
 	this.addPopup("combat",new GM.combatINT(this,this.svc));
 
-	this.mainframe.addHandler("clearWidgets","ECI" + this.svc.getName,this.detach,this,[]);
+	this.mainframe.addHandler("clearWidgets","ECI" + this.svc.getName(),this.detach,this,[]);
+	this.mainframe.addHandler("clearEncounterWidgets","ECI" + this.svc.getName(),this.detach,this,[]);;
 
 	GM.debug.log("END: GM.encounterControlINT","Finished initializing encounterControlINT object",2);
 };

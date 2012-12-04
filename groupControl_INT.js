@@ -16,7 +16,8 @@ GM.groupControlINT = function(parent,svc) {
 	var p = this.ui.addPanel("Quick Links");
 	this.links = p.addList(false);
 
-	this.mainframe.addHandler("clearWidgets","GCI" + this.svc.getName,this.detach,this,[]);
+	this.mainframe.addHandler("clearWidgets","GCI" + this.svc.getName(),this.detach,this,[]);
+	this.mainframe.addHandler("clearEncounterWidgets","GCI" + this.svc.getName(),this.detach,this,[]);;
 	this.mainframe.addHandler("addNPC","quicklinks",this.refreshQuickLinks,this,[]);
 	this.refreshQuickLinks();
 

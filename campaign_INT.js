@@ -73,6 +73,7 @@ GM.campaignINT.prototype.setActiveEncounter = function(ui) {
 	GM.debug.log("CALL: GM.campaignINT.setActiveEncounter","Setting the active encounter",2);
 	if(this.activeEncounter)
 		this.activeEncounter.detach();
+	this.mainframe.trigger("clearEncounterWidgets",true);
 	this.activeEncounter = ui;
 	this.activeEncounter.initialize();
 };
