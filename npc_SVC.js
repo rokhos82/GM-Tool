@@ -578,7 +578,8 @@ GM.npcSVC.prototype.selectWeapon = function(dat) {
 	var iname = dat.name;
 	var iskill = dat.skill;
 	
-	var name = this.dat.lists[type][iname];
+	//var name = this.dat.lists[type][iname];
+	var name = kantia.lists.weapons[type].all[iname];
 	var skill = this.dat.lists.skills[iskill];
 	this.dat.weapons[slot].type = type;
 	this.dat.weapons[slot].name = name;
@@ -661,4 +662,6 @@ GM.npcSVC.prototype.getCombatSkills = function() {
 	list.push("Resist Magic");
 	list.push("Resist Magic");
 	list.push("Dodge");
+
+	return list;
 };

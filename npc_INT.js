@@ -239,7 +239,7 @@ GM.npcINT.prototype.selectWeaponPopup = function(slot) {
 	};
 
 	var p = popup.addPanel("Select Weapon");
-	var cb = p.addComboBox("Weapon",this.svc.getList(type),new db.connector(dat,"name"));
+	var cb = p.addComboBox("Weapon",kantia.lists.weapons.melee.all,new db.connector(dat,"name"));
 	cb.updateData();
 	cb.focus();
 	var cb = p.addComboBox("Skill",this.svc.getList("skills"),new db.connector(dat,"skill"));

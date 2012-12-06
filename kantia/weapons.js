@@ -64,7 +64,8 @@ kantia.lists.weapons.melee.all = [
 	"Greatsword",
 	"Wood Axe",
 	"Pick-Axe",
-	"Light Club"
+	"Light Club",
+	"War Claws"
 ];
 
 kantia.lists.weapons.ranged = {};
@@ -212,6 +213,27 @@ kantia.weapons.melee = {
 		staging: { value: 10, source: "strength" },
 		damage: { avg: 4, text: "1d6 + 1", roll: function() { return kantia.func.d6(1) + 1; }},
 		other: {}
+	},
+	"Bite (Panther)": {
+		difficulty: { base: 16 },
+		range: { text: "Normal" },
+		staging: { value: 8, source: "strength" },
+		damage: { avg: 4, text: "1d8", roll: function() { return kantia.func.d8(1); }},
+		other: {}
+	},
+	"Claw (Panther)": {
+		difficulty: { base: 6 },
+		range: { text: "Normal" },
+		staging: { value: 6, source: "strength" },
+		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
+		other: {}
+	},
+	"War Claws": {
+		difficulty: { base: 10 },
+		range: { text: "Normal" },
+		staging: { value: 4, source: "strength" },
+		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
+		other: { "Easy Two Weapon": 1 }
 	}
 };
 
