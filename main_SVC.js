@@ -4,6 +4,12 @@
 GM.mainSVC = function(root,dat) {
 	GM.debug.log("CALL: GM.mainSVC","Initializing mainSVC object",2);
 	this.root = root;
+
+	// Check the version of the data object that was passed.  If the version is, upgrade it.
+	if(dat.version != GM.mainDAT.version) {
+		GM.debug.log("WARNING: GM.mainSVC","Data object is out of date, upgrading it",1);
+		GM.mainDAT.upgrade(dat);
+	}
 	this.dat = dat;
 	
 	this.mainframe = new lib.mainframe();
@@ -34,17 +40,19 @@ GM.mainSVC.prototype.loadLocalStorage = function() {
 		var first = null;
 		if(str) {
 			var data = JSON.parse(str);
-			if(data.version == GM.mainDAT.version) {
-				var camps = data.campaigns;
-				for(var c in camps) {
-					if(!first)
-						first = this.addCampaignByData(camps[c]);
-					else	
-						this.addCampaignByData(camps[c]);
-				}
+
+			// Check the version of the data object that was passed.  If the version is, upgrade it.
+			if(data.version != GM.mainDAT.version) {
+				GM.debug.log("WARNING: GM.mainSVC","Data object is out of date, upgrading it",1);
+				GM.mainDAT.upgrade(data);
 			}
-			else {
-				GM.debug.log("ERROR: GM.mainSVC.loadLocalStorage","Version of data object in localStorage is out of date",0);
+
+			var camps = data.campaigns;
+			for(var c in camps) {
+				if(!first)
+					first = this.addCampaignByData(camps[c]);
+				else	
+					this.addCampaignByData(camps[c]);
 			}
 		}
 		if(first)

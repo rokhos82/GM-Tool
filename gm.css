@@ -2,6 +2,13 @@ body {
 	margin: 0px;
 	padding: 10px;
 	background-color: #dddddd;
+	font-size: 10pt;
+	font-family: "Arial";
+}
+
+span {
+	font-size: 10pt;
+	font-family: "Arial";
 }
 
 div.debug {
@@ -93,6 +100,8 @@ div.debug input[type=button] {
 	margin: 2px;
 	padding: 2px;
 	text-align: center;
+	font-family: "Arial";
+	font-size: 10pt;
 }
 
 .attr_table tr {
@@ -114,6 +123,7 @@ div.debug input[type=button] {
 .small {
 	display: inline;
 	vertical-align: top;
+	font-size: 10pt;
 }
 
 .small input {
@@ -124,6 +134,7 @@ div.debug input[type=button] {
 	float: left;
 	margin-right: 10px;
 	width: 350px;
+	font-size: 10pt;
 }
 
 .skill_table table {
@@ -139,6 +150,7 @@ div.debug input[type=button] {
 	vertical-align: top;
 	width: 70%;
 	margin-right: 20px;
+	font-size: 10pt;
 }
 
 .sidebar {
