@@ -130,6 +130,7 @@ GM.npcINT = function(parent,svc) {
 	cav.addClass("small");
 	var t = cav.addTable();
 	t.addClass("attr_table");
+	this.mainframe.addHandler("updateArmor","weapTable",t.refreshView,t,[]);
 	this.mainframe.addHandler("updateWeapon","weap_table",t.refreshView,t,[]);
 	t.addRow(["Slot","Weapon/Skill","Actions","1st","2nd","3rd","4th","5th","Staging","Damage"]);
 	var weapons = this.svc.getData("weapons");
@@ -454,7 +455,7 @@ GM.npcINT.prototype.addHCPopup = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// refreshHC
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshHC = function() {
 	this.panels.hc.removeRows();
@@ -468,7 +469,7 @@ GM.npcINT.prototype.refreshHC = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// addMasteryPopup
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.addMasteryPopup = function() {
 	var mastery_dat = {
@@ -493,7 +494,7 @@ GM.npcINT.prototype.addMasteryPopup = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// refreshMastery
 // -------------------------------------------------------------------------------------------------
 GM.npcINT.prototype.refreshMastery = function() {
 	this.panels.mastery.removeRows();

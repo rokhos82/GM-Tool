@@ -21,6 +21,7 @@ GM.npcSVC = function(dat,parent) {
 	this.mainframe.addHandler("spiritUpdate","stamina",this.updateStamina,this,[]);
 
 	this.mainframe.addHandler("updateArmor","defense",this.updateDefense,this,[]);
+	this.mainframe.addHandler("updateArmor","weapons",this.updateWeapons,this,[]);
 
 	GM.debug.log("END: GM.npcSVC","Finished initializing npcSVC object",2);
 };
@@ -445,6 +446,7 @@ GM.npcSVC.prototype.removeTrait = function(name) {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.addArmor = function(dat) {
+	GM.debug.log("CALL: GM.npcSVC.addArmor","Adding armor to the NPC",2);
 	var index = dat.index;
 	var slot = dat.slot;
 	var name = kantia.lists.armor[slot][index];
@@ -511,6 +513,7 @@ GM.npcSVC.prototype.updateDefense = function() {
 //
 // -------------------------------------------------------------------------------------------------
 GM.npcSVC.prototype.removeArmor = function(slot) {
+	GM.debug.log("CALL: GM.npcSVC.removeArmor","Removing armor from NPC",2);
 	var armor = this.dat.armor[slot];
 
 	armor.name = "";
