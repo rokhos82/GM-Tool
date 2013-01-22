@@ -18,6 +18,11 @@ GM.mainControlINT = function(parent,svc) {
 	var b = p.addButton("Import",new db.link(this,this.importDataPopup,[]));
 	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
 
+	var p = this.ui.addPanel("Tools");
+	var b = p.addButton("NPCs");
+	var b = p.addButton("Armor");
+	var b = p.addButton("Weapons");
+
 	var p = this.ui.addPanel("Campaign Selector");
 	var cb = p.addComboBox("Campaigns",this.svc.getCampaigns().list,new db.local(""));
 	this.mainframe.addHandler("addCampaign","campaignSelector",this.refreshCampaigns,this,[]);
