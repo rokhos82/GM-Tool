@@ -120,13 +120,13 @@ div.debug input[type=button] {
 	text-align: center;
 }
 
-.small {
+div.small {
 	display: inline;
 	vertical-align: top;
 	font-size: 10pt;
 }
 
-.small input {
+div.small input {
 	width: 50px;
 }
 
@@ -240,7 +240,7 @@ table.small tr {
 }
 
 table.small tr:hover {
-	background-color: #777777;
+	background-color: #ff0000;
 }
 
 table.small td {

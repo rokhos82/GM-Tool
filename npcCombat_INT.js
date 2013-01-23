@@ -18,6 +18,7 @@ GM.npcCombatINT = function(svc) {
 	t.addClass("small");
 
 	var attributes = this.svc.getData("attributes");
+	var stats = this.svc.getData("stats");
 	var attr_map = {
 		"STR":"strength",
 		"SIZ":"size",
@@ -35,6 +36,20 @@ GM.npcCombatINT = function(svc) {
 		var attr = attr_map[a];
 		t.addRow([a,attributes[attr].score]);
 	};
+
+	var col = p.addPanel();
+	col.addClass("col");
+	var t = col.addTable();
+	t.addClass("small");
+	t.addRow(["STAM",stats.stamina.current]);
+	t.addRow(["Health",stats.health.hitpoints.bludgeon + "B/" + stats.health.hitpoints.wound + "W"]);
+	t.addRow(["Stun/Pain",stats.health.stunpain.threshold]);
+
+	var col = p.addPanel();
+	col.addClass("col");
+	var t = col.addTable();
+	t.addClass("small centered");
+	t.addRow(["Skill","AV"]);
 
 	GM.debug.log("END: GM.npcCombatINT","Finished initializing NPC combat interface",2);
 };
