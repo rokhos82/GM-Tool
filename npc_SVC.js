@@ -1,6 +1,10 @@
 GM.npcSVC = function(dat,parent) {
 	GM.debug.log("CALL: GM.npcSVC","Initializing npcSVC object",2);
 	
+	if(dat.version != GM.npcDAT.version) {
+		GM.debug.log("WARNING: GM.npcSVC","NPC data object out of date, upgrading it.",2);
+		GM.npcDAT.upgrade(dat);
+	}
 	this.dat = dat;
 	this.parent = parent;
 	this.mainframe = this.parent.mainframe.addChildFrame();

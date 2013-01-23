@@ -19,7 +19,6 @@ kantia.template.npcs["Lukoi Brute, Basic"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",8,14,12)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",5),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",5),
@@ -31,12 +30,12 @@ kantia.template.npcs["Lukoi Brute, Basic"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],4),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",4),
 		"Professional Skill": new kantia.template.npcSkill("Professional Skill","reasoning",4),
-		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",8),
 		"Smell": new kantia.template.npcSkill("Smell","perception",4),
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
+		"Melee": new kantia.template.npcSkill("Melee","agility",8),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",8),
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",8)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -108,7 +107,6 @@ kantia.template.npcs["Lukoi Brute, Expert"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",12),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",8),
@@ -120,12 +118,12 @@ kantia.template.npcs["Lukoi Brute, Expert"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],6),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",6),
 		"Professional Skill": new kantia.template.npcSkill("Professional Skill","reasoning",6),
-		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",12),
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
+		"Melee": new kantia.template.npcSkill("Melee","agility",12),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",12),
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",12)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -202,7 +200,6 @@ kantia.template.npcs["Lukoi Brute, Master"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",12),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",8),
@@ -214,12 +211,12 @@ kantia.template.npcs["Lukoi Brute, Master"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],6),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",6),
 		"Professional Skill": new kantia.template.npcSkill("Professional Skill","reasoning",6),
-		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",12),
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
+		"Melee": new kantia.template.npcSkill("Melee","agility",12),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",12),
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",12)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -297,7 +294,6 @@ kantia.template.npcs["Lukoi Fighter, Basic"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",9,14,12)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",6),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",4),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",6),
@@ -308,13 +304,13 @@ kantia.template.npcs["Lukoi Fighter, Basic"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],4),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",4),
 		"Professional Skills": new kantia.template.npcSkill("Professional Skills","reasoning",6),
-		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",6),
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
+		"Melee": new kantia.template.npcSkill("Melee","agility",8),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",8),
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",8)
 	},
 	{
 		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
@@ -388,7 +384,6 @@ kantia.template.npcs["Lukoi Fighter, Expert"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",9,14,12)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",10),
@@ -399,13 +394,13 @@ kantia.template.npcs["Lukoi Fighter, Expert"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],6),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",6),
 		"Professional Skills": new kantia.template.npcSkill("Professional Skills","reasoning",8),
-		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",8),
 		"Smell": new kantia.template.npcSkill("Smell","perception",8),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
+		"Melee": new kantia.template.npcSkill("Melee","agility",12),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",12),
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",12)
 	},
 	{
 		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
@@ -496,7 +491,6 @@ kantia.template.npcs["Lukoi Fighter, Master"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",9,14,12)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",10),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",8),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",12),
@@ -507,13 +501,13 @@ kantia.template.npcs["Lukoi Fighter, Master"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],8),
 		"Persuasion": new kantia.template.npcSkill("Persuasion","reasoning",6),
 		"Professional Skills": new kantia.template.npcSkill("Professional Skills","reasoning",8),
-		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",8),
 		"Smell": new kantia.template.npcSkill("Smell","perception",8),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",6),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",16),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",16)
+		"Melee": new kantia.template.npcSkill("Melee","agility",16),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",16),
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",16)
 	},
 	{
 		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),

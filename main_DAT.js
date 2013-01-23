@@ -32,10 +32,12 @@ GM.mainDAT.upgrade = function(dat) {
 		dat.templates.armor = {};
 		dat.templates.weapon = {};
 		dat.version = "20130122";
+		GM.mainDAT.upgrade(dat);
 	}
 	else if(dat.version == "20121112") {
 		dat.players = {};
-		dat.version = "20121220";	
+		dat.version = "20121220";
+		GM.mainDAT.upgrade(dat);
 	}
 	else {
 		GM.debug.log("ERROR: GM.mainDAT.upgrade","mainDAT version not found",0);

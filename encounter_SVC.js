@@ -7,7 +7,7 @@ GM.encounterSVC = function(dat,parent) {
 	// Check the version of the data object that was passed.  If the version is, upgrade it.
 	if(dat.version != GM.encounterDAT.version) {
 		GM.debug.log("WARNING: GM.encounterSVC","Data object is out of date, upgrading it",1);
-		GM.encounterDAT.upgrade(this.dat);
+		GM.encounterDAT.upgrade(dat);
 	}
 
 	this.dat = dat;
