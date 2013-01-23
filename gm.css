@@ -60,8 +60,8 @@ div.debug input[type=button] {
 }
 
 .popup {
-	left: 300px;
-	top: 200px;
+	left: 150px;
+	top: 100px;
 	position: fixed;
 	display: none;
 	background-color: #dddddd;
@@ -164,4 +164,158 @@ div.debug input[type=button] {
 
 a.quick_link {
 	margin-right: 5px;
+}
+
+/* NPC Combat Card */
+div.colset {
+	padding: 0px;
+	margin: 0px;
+	float: none;
+	width: 100%;
+	display: block;
+}
+
+div.col {
+	padding: 0px;
+	margin: 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+div.npc_card_sml {
+	width: 215px;
+	height: 300px;
+	display: inline-block;
+	border: 1px solid #000000;
+	margin: 5px;
+	padding: 5px;
+	font-family: "Arial Narrow";
+	font-style: normal;
+	font-size: 0.8em;
+}
+
+div.npc_card {
+	min-width: 295px;
+	min-height: 300px;
+	display: inline-block;
+	border: 1px solid #000000;
+	margin: 5px;
+	padding: 5px;
+	font-family: "Arial Narrow";
+	font-style: normal;
+	font-size: 0.8em;
+}
+
+span.name {
+	width: 100%;
+	text-align: left;
+	font-weight: bold;
+}
+
+table.small {
+	font-size: 1em;
+	margin: 2px;
+	border: 1px solid #000000;
+	width: 100%;
+}
+
+table.small thead {
+	padding: 0px;
+	margin: 0px;
+}
+
+table.small tfoot {
+	padding: 0px;
+	margin: 0px;
+}
+
+table.small tbody {
+	padding: 0px;
+	margin: 0px;
+}
+
+table.small tr {
+	padding: 0px;
+	margin: 0px;
+}
+
+table.small tr:hover {
+	background-color: #777777;
+}
+
+table.small td {
+	padding: 0px;
+	margin: 0px;
+}
+
+table.centered {
+	text-align: center;
+}
+
+thead.bolded {
+	font-weight: bold;
+}
+
+ul.buttons {
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+ul.buttons li {
+	font-size: 0.8em;
+	list-style: none;
+	padding: 3px;
+	margin: 5px;
+	border: 1px solid #000000;
+}
+
+ul.buttons li:hover {
+	background-color: #443155;
+}
+
+li.active {
+	font-weight: bold;
+	background-color: #340034;
+}
+
+/* CSS Tooltips */
+.tooltip td {
+	position: relative;
+}
+
+.tooltip span {
+	margin-left: -999em;
+	poisition: absolute;
+	display: none;
+}
+
+.tooltip:hover span {
+	border-radius: 5px 5px;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+	position: absolute;
+	left: 1em;
+	top: 1.5em;
+	z-index: 99;
+	margin-left: 0;
+	display: block;
+	min-width: 75px;
+}
+
+.classic {
+	padding: 3px 3px;
+	background: #aaaaff;
+	border: 1px solid #505050;
+	color: #707070;
+}
+
+.classic ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+.classic li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
 }
