@@ -2,7 +2,7 @@
 // npcDAT
 // -------------------------------------------------------------------------------------------------
 GM.npcDAT = function(name,template) {
-	this.version = "20130122";
+	this.version = "20130123";
 	GM.debug.log("INIT: GM.npcDAT","Creating GM.npcDAT object - version " + this.version,2);
 	
 	this.name = name;
@@ -23,6 +23,7 @@ GM.npcDAT = function(name,template) {
 	this.traits = {};
 	this.hc = {};
 	this.mastery = {};
+	this.actions = {};
 	
 	var temp = kantia.template.npcs[template];
 	
@@ -104,12 +105,13 @@ GM.npcDAT = function(name,template) {
 	};
 };
 
-GM.npcDAT.version = "20130122";
+GM.npcDAT.version = "20130123";
 
 //
 //	Version Change Log
 //		20121115 - base
-//		20130122 - convert old skills to new melee/aim/proficiency system
+//		20130122 - convert old skills to new melee/aim/proficiency system.
+//		20130123 - added an actions field for combat action persistance.
 //
 
 GM.npcDAT.upgrade = function(dat) {
@@ -158,6 +160,11 @@ GM.npcDAT.upgrade = function(dat) {
 			dat.lists.skills.push(s);
 		}
 		dat.version = "20130122";
+		GM.npcDAT.upgrade(dat);
+	}
+	else if(dat.version == "20130122") {
+		dat.actions = {};
+		dat.version = "20130123";
 		GM.npcDAT.upgrade(dat);
 	}
 	else {

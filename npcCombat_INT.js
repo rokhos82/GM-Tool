@@ -5,11 +5,15 @@ GM.npcCombatINT = function(svc) {
 	this.ui.addClass("npc_card");
 	this.parent = null;
 
+	// Start building the NPC card.
 	var p = this.ui.addPanel();
+
+	// Setup the name
 	p.addClass("colset");
 	var s = p.addText("Name: " + this.svc.getName());
 	s.addClass("name");
 
+	// Setup the attributes table.
 	var p = this.ui.addPanel();
 	p.addClass("colset");
 	var col = p.addPanel();
@@ -18,7 +22,6 @@ GM.npcCombatINT = function(svc) {
 	t.addClass("small");
 
 	var attributes = this.svc.getData("attributes");
-	var stats = this.svc.getData("stats");
 	var attr_map = {
 		"STR":"strength",
 		"SIZ":"size",
@@ -37,14 +40,17 @@ GM.npcCombatINT = function(svc) {
 		t.addRow([a,attributes[attr].score]);
 	};
 
+	// Setup the STATS table.
 	var col = p.addPanel();
 	col.addClass("col");
 	var t = col.addTable();
 	t.addClass("small");
+	var stats = this.svc.getData("stats");
 	t.addRow(["STAM",stats.stamina.current]);
 	t.addRow(["Health",stats.health.hitpoints.bludgeon + "B/" + stats.health.hitpoints.wound + "W"]);
 	t.addRow(["Stun/Pain",stats.health.stunpain.threshold]);
 
+	// Setup the skills table.
 	var col = p.addPanel();
 	col.addClass("col");
 	var t = col.addTable();
@@ -57,6 +63,7 @@ GM.npcCombatINT = function(svc) {
 		t.addRow([s,skills[s].total]);
 	}
 
+	// Setup the combat actions table.
 	var p = this.ui.addPanel();
 	p.addClass("colset");
 	var t = p.addTable();
