@@ -49,7 +49,20 @@ GM.npcCombatINT = function(svc) {
 	col.addClass("col");
 	var t = col.addTable();
 	t.addClass("small centered");
-	t.addRow(["Skill","AV"]);
+	t.setHeaderClass("bolded");
+	t.addHeaderRow(["Skill","AV"]);
+
+	var skills = this.svc.getData("skills");
+	for(var s in skills) {
+		t.addRow([s,skills[s].total]);
+	}
+
+	var p = this.ui.addPanel();
+	p.addClass("colset");
+	var t = p.addTable();
+	t.addClass("small centered");
+	t.setHeaderClass("bolded");
+	t.addHeaderRow(["Action","#","1st","2nd","3rd","Dmg","Stg"]);
 
 	GM.debug.log("END: GM.npcCombatINT","Finished initializing NPC combat interface",2);
 };
