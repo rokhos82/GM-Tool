@@ -14,7 +14,7 @@ GM.actionDAT = function(name,actions,skill,item) {
 		var base_av = this.skill.total;
 
 	var limit = (actions == "*") ? 4 : actions;
-	for(var i = 0;i <= limit;i++) {
+	for(var i = 0;i < limit;i++) {
 		this.avs.push(base_av - (i * 20));
 	}
 };

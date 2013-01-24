@@ -592,8 +592,23 @@ GM.npcSVC.prototype.selectWeapon = function(dat) {
 	this.dat.weapons[slot].name = name;
 	this.dat.weapons[slot].skill = skill;
 	this.updateList("combatSkills",skill,"add");
-	
+
+	this.addWeaponAction(slot);	
 	this.updateWeapons();
+};
+
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
+GM.npcSVC.prototype.addWeaponAction = function(slot) {
+	GM.debug.log("CALL: GM.npcSVC.addWeaponAction","Adding actions for weapon in slot " + slot,2);
+	var weapon = this.dat.weapons[slot];
+	var name = weapon.name;
+	var type = weapon.type;
+	var item = kantia.weapons[type][name];
+	var skill = this.dat.skills[weapon.skill];
+	var action = new GM.actionDAT(name,Math.floor(skill.rank/3),skill,item);
+	this.dat.actions[name] = action;
 };
 
 // -------------------------------------------------------------------------------------------------

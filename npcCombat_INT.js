@@ -75,6 +75,7 @@ GM.npcCombatINT = function(svc) {
 	for(var a in actions) {
 		var action = actions[a];
 		if(action.item) {
+			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],"--","--"]);
 		}
 		else {
 			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],"--","--"]);
