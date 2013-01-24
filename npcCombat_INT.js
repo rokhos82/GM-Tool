@@ -71,6 +71,16 @@ GM.npcCombatINT = function(svc) {
 	t.setHeaderClass("bolded");
 	t.addHeaderRow(["Action","#","1st","2nd","3rd","Dmg","Stg"]);
 
+	var actions = this.svc.getData("actions");
+	for(var a in actions) {
+		var action = actions[a];
+		if(action.item) {
+		}
+		else {
+			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],"--","--"]);
+		}
+	}
+
 	GM.debug.log("END: GM.npcCombatINT","Finished initializing NPC combat interface",2);
 };
 

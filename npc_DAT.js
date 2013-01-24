@@ -103,6 +103,9 @@ GM.npcDAT = function(name,template) {
 		text: temp.magic ? temp.magic : "",
 		disciplines: {}
 	};
+
+	// Setup the actions obejct
+	this.actions["Dodge"] = new GM.actionDAT("Dodge","*",this.skills["Dodge"],null);
 };
 
 GM.npcDAT.version = "20130123";
@@ -163,7 +166,7 @@ GM.npcDAT.upgrade = function(dat) {
 		GM.npcDAT.upgrade(dat);
 	}
 	else if(dat.version == "20130122") {
-		dat.actions = {};
+		dat.actions = {"Dodge": new GM.actionDAT("Dodge","*",dat.skills["Dodge"],null)};
 		dat.version = "20130123";
 		GM.npcDAT.upgrade(dat);
 	}
