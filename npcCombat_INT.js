@@ -74,8 +74,10 @@ GM.npcCombatINT = function(svc) {
 	var actions = this.svc.getData("actions");
 	for(var a in actions) {
 		var action = actions[a];
-		if(action.item) {
-			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],"--","--"]);
+		if(action.item && action.item.damage) {
+			var attr = this.svc.getAttribute(action.item.staging.source);
+			var staging = action.item.staging.value + attr.score;
+			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],action.item.damage.text,staging]);
 		}
 		else {
 			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],"--","--"]);
