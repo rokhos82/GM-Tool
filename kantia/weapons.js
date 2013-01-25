@@ -65,7 +65,8 @@ kantia.lists.weapons.melee.all = [
 	"Wood Axe",
 	"Pick-Axe",
 	"Light Club",
-	"War Claws"
+	"War Claws",
+	"Staff"
 ];
 
 kantia.lists.weapons.ranged = {};

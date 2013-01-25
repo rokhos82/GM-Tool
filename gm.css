@@ -239,7 +239,7 @@ table.small tr {
 	margin: 0px;
 }
 
-table.small tr:hover {
+table.small tbody tr:hover {
 	background-color: #777777;
 	color: #aaaaff;
 }
@@ -308,6 +308,7 @@ li.active {
 	background: #aaaaff;
 	border: 1px solid #505050;
 	color: #707070;
+	text-align: left;
 }
 
 .classic ul {

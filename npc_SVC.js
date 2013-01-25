@@ -615,7 +615,7 @@ GM.npcSVC.prototype.addWeaponAction = function(slot) {
 	var item = kantia.weapons[type][name];
 	var skill = this.dat.skills[weapon.skill];
 	var action = new GM.actionDAT(name,Math.floor(skill.rank/3),skill,item);
-	this.dat.actions[name] = action;
+	this.dat.actions[slot + name] = action;
 };
 
 // -------------------------------------------------------------------------------------------------

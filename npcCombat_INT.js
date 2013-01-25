@@ -87,7 +87,21 @@ GM.npcCombatINT = function(svc) {
 		if(action.item && action.item.damage) {
 			var attr = this.svc.getAttribute(action.item.staging.source);
 			var staging = action.item.staging.value + attr.score;
-			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],action.item.damage.text,staging]);
+			var av1 = action.avs[0] ? action.avs[0] : "--";
+			var av2 = action.avs[1] ? action.avs[1] : "--";
+			var av3 = action.avs[2] ? action.avs[2] : "--";
+			var r = t.addRow([action.name,action.actions,av1,av2,av3,action.item.damage.text,staging]);
+			r.setClass("tooltip");
+			var tooltip = "<ul>";
+			var others = action.item.other;
+			var show = false;
+			for(var o in others) {
+				tooltip += "<li>" + o + ": " + others[o] + "</li>";
+				show = true;
+			}
+			tooltip += "</ul>";
+			if(show)
+				r.addTooltip(tooltip,"classic");
 		}
 		else {
 			t.addRow([action.name,action.actions,action.avs[0],action.avs[1],action.avs[2],"--","--"]);

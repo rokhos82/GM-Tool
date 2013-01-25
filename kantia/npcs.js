@@ -97,7 +97,6 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",5),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",5),
@@ -113,7 +112,7 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",4),
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
+		"Melee": new kantia.template.npcSkill("Melee","agility",8),
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
 	},
 	{
@@ -186,7 +185,6 @@ kantia.template.npcs["Human Brute, Expert"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",12),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",8),
@@ -202,7 +200,7 @@ kantia.template.npcs["Human Brute, Expert"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
+		"Melee": new kantia.template.npcSkill("Melee","agility",12),
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
 	},
 	{
@@ -280,7 +278,6 @@ kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",12),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",8),
@@ -296,7 +293,7 @@ kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
 		"Smell": new kantia.template.npcSkill("Smell","perception",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
+		"Melee": new kantia.template.npcSkill("Melee","agility",12),
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
 	},
 	{
@@ -375,7 +372,6 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",6),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",4),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",6),
@@ -391,7 +387,7 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",8),
+		"Melee": new kantia.template.npcSkill("Melee","agility",8),
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
 	},
 	{
@@ -466,7 +462,6 @@ kantia.template.npcs["Human Fighter, Expert"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",8),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",6),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",10),
@@ -482,7 +477,7 @@ kantia.template.npcs["Human Fighter, Expert"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",12),
+		"Melee": new kantia.template.npcSkill("Melee","agility",12),
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
 	},
 	{
@@ -574,7 +569,6 @@ kantia.template.npcs["Human Fighter, Master"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",6,12,10)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",10),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",8),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",6),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",12),
@@ -590,7 +584,7 @@ kantia.template.npcs["Human Fighter, Master"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",6),
-		"Weapon of Choice (Agility)": new kantia.template.npcSkill("Weapon of Choice (Agility)","agility",16),
+		"Melee": new kantia.template.npcSkill("Melee","agility",16),
 		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",16)
 	},
 	{
@@ -684,7 +678,6 @@ kantia.template.npcs["Human Mage, Basic"] = new kantia.template.npc(
 		"perception": new kantia.template.npcAttribute("Perception",10,13,11)
 	},
 	{
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",2),
 		"Climbing": new kantia.template.npcSkill("Climbing","strength",2),
 		"Determine Motivation": new kantia.template.npcSkill("Determine Motivation","reasoning",4),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",4),
@@ -746,7 +739,6 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 	{
 		"Simple Weapons": new kantia.template.npcSkill("Simple Weapons","agility",2),
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",6),
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",2),
 		"Hide": new kantia.template.npcSkill("Hide","special",8),
 		"Move Silently": new kantia.template.npcSkill("Move Silently","special",4),
 		"Resist Fear": new kantia.template.npcSkill("Resist Fear","spirit",2),
@@ -787,7 +779,6 @@ kantia.template.npcs["Kobald, Warrior"] = new kantia.template.npc(
 		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",7),
 		"Archery": new kantia.template.npcSkill("Archery","agility",6),
 		"Crossbow": new kantia.template.npcSkill("Crossbow","perception",6),
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",5),
 		"Throw": new kantia.template.npcSkill("Throw","agility",9),
 		"Resist Fear": new kantia.template.npcSkill("Resist Fear","spirit",6),
 		"Resist Magic": new kantia.template.npcSkill("Resist Magic","spirit",2),
@@ -832,7 +823,6 @@ kantia.template.npcs["Kobald, Sorcerer"] = new kantia.template.npc(
 		"Move Silently": new kantia.template.npcSkill("Move Silently","special",6),
 		"Spot": new kantia.template.npcSkill("Spot","perception",10),
 		"Alchemy": new kantia.template.npcSkill("Alchemy","reasoning",6),
-		"Brawling": new kantia.template.npcSkill("Brawling","agility",3),
 		"Concentration": new kantia.template.npcSkill("Concentration","willpower",8),
 		"Ethereal Accuracy": new kantia.template.npcSkill("Etheral Accuracy","willpower",0),
 		"Melee Weapon": new kantia.template.npcSkill("Melee Weapon","agility",4),
