@@ -507,3 +507,22 @@ GM.npcINT.prototype.refreshMastery = function() {
 		]);
 	}
 };
+
+// -------------------------------------------------------------------------------------------------
+// combatSkillsPopup
+// -------------------------------------------------------------------------------------------------
+GM.npcINT.prototype.combatSkillsPopup = function() {
+	GM.debug.log("CALL: GM.npcINT.combatSkillsPopup","Showing the combat skills popup",2);
+	var combat_dat = {
+	};
+	var popup = this.ui.addPopup();
+	popup.addClass("popup");
+	popup.setOverlayClass("fog");
+	popup.show();
+
+	var p = popup.addPanel("Combat Skills");
+	var skills = this.svc.getLIst("skills");
+	for(var s in skills) {
+		
+	}
+};
