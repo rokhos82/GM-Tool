@@ -241,6 +241,7 @@ table.small tr {
 
 table.small tr:hover {
 	background-color: #777777;
+	color: #aaaaff;
 }
 
 table.small td {
@@ -284,13 +285,13 @@ li.active {
 	position: relative;
 }
 
-.tooltip span {
+.tooltip span.classic {
 	margin-left: -999em;
 	poisition: absolute;
 	display: none;
 }
 
-.tooltip:hover span {
+.tooltip:hover span.classic {
 	border-radius: 5px 5px;
 	box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
 	position: absolute;

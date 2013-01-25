@@ -37,7 +37,11 @@ GM.npcCombatINT = function(svc) {
 
 	for(var a in attr_map) {
 		var attr = attr_map[a];
-		t.addRow([a,attributes[attr].score]);
+		var r = t.addRow([a,attributes[attr].score]);
+		r.setClass("tooltip");
+		var tooltip = "AV: " + attributes[attr].av;
+		tooltip += " <br/>Adj: " + attributes[attr].adjust;
+		r.addTooltip(tooltip,"classic");
 	};
 
 	// Setup the STATS table.
@@ -60,7 +64,13 @@ GM.npcCombatINT = function(svc) {
 
 	var skills = this.svc.getData("skills");
 	for(var s in skills) {
-		t.addRow([s,skills[s].total]);
+		var r = t.addRow([s,skills[s].total]);
+		r.setClass("tooltip");
+		var tooltip = "<ul>";
+		tooltip += "<li>Rank: " + skills[s].rank + "</li>";
+		tooltip += "<li>Adj: " + skills[s].adjust + "</li>";
+		tooltip += "</ul>";
+		r.addTooltip(tooltip,"classic");
 	}
 
 	// Setup the combat actions table.
