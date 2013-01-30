@@ -16,7 +16,6 @@ div.debug {
 	bottom: 0px;
 	right: 0px;
 	width: 600px;
-	height: 150px;
 	overflow: scroll;
 	background-color: #000000;
 	color: #00ff00;
@@ -38,7 +37,7 @@ div.debug input {
 }
 
 div.debug input[type=text] {
-	width: 74%;
+	width: 62%;
 	color: #ff8c00;
 	border-color: #ff8c00;
 }
@@ -49,6 +48,11 @@ div.debug input[type=submit] {
 
 div.debug input[type=button] {
 	width: 12%;
+}
+
+div.debug div {
+	height: 150px;
+	display: none;
 }
 
 .block {

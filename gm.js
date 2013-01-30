@@ -12,6 +12,7 @@ GM.debug.level = 2; // 0 - severe only, 1 - errors, 2 - fine detail
 GM.debug.logFile = [];
 GM.debug.dom = null;
 GM.debug.cmd = null;
+GM.debug.hidden = true;
 
 GM.debug.log = function(ttl,msg,lvl) {
 	GM.debug.logFile.push({
@@ -40,13 +41,19 @@ GM.debug.attachLogView = function(root) {
 	var btn = document.createElement("input");
 	btn.setAttribute("type","button");
 	btn.setAttribute("value","Clear");
-	btn.setAttribute("onclick","GM.debug.clearLog(); return false;"); 
+	btn.setAttribute("onclick","GM.debug.clearLog(); return false;");
+
+	var hide = document.createElement("input");
+	hide.setAttribute("type","button");
+	hide.setAttribute("value","Toggle");
+	hide.setAttribute("onclick","GM.debug.hideLog(); return false;");
 
 	form.setAttribute("onsubmit","GM.debug.codeExec(); return false;");
 	
 	form.appendChild(cmd);
 	form.appendChild(sbt);
 	form.appendChild(btn);
+	form.appendChild(hide);
 	dom.appendChild(form);
 
 	// Build the log file view
@@ -77,6 +84,17 @@ GM.debug.refreshLogView = function() {
 GM.debug.clearLog = function() {
 	GM.debug.logFile = [];
 	GM.debug.refreshLogView();
+};
+
+GM.debug.hideLog = function() {
+	if(GM.debug.hidden) {
+		GM.debug.dom.style.display = "block";
+		GM.debug.hidden = false;
+	}
+	else {
+		GM.debug.dom.style.display = "none";
+		GM.debug.hidden = true;
+	}
 };
 
 GM.debug.codeExec = function() {

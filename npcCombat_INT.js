@@ -54,6 +54,15 @@ GM.npcCombatINT = function(svc) {
 	t.addRow(["Health",stats.health.hitpoints.bludgeon + "B/" + stats.health.hitpoints.wound + "W"]);
 	t.addRow(["Stun/Pain",stats.health.stunpain.threshold]);
 
+	// Setup the defense table.
+	var t = col.addTable();
+	t.addClass("small");
+	t.addRow(["Normal DR",stats.defense.dr]);
+	t.addRow(["No-Agl DR",stats.defense.noagldr]);
+	t.addRow(["Touch DR",stats.defense.touchdr]);
+	t.addRow(["Absorb",stats.defense.absorb]);
+	t.addRow(["Staging",stats.defense.staging]);
+
 	// Setup the skills table.
 	var col = p.addPanel();
 	col.addClass("col");
