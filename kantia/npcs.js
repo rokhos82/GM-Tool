@@ -28,6 +28,8 @@ kantia.template.npcList = {
 		"Kobald, Sorcerer": "Kobald, Sorcerer"
 	},
 	"Animal": {
+		"Dog, Guard": "Dog, Guard",
+		"Panther": "Panther",
 		"Wolf": "Wolf"
 	}
 };
@@ -113,7 +115,8 @@ kantia.template.npcs["Human Brute, Basic"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",6),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Melee": new kantia.template.npcSkill("Melee","agility",8),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",8),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",8)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -201,7 +204,8 @@ kantia.template.npcs["Human Brute, Expert"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
 		"Melee": new kantia.template.npcSkill("Melee","agility",12),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",12),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",12)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -294,7 +298,8 @@ kantia.template.npcs["Human Brute, Master"] = new kantia.template.npc(
 		"Spot": new kantia.template.npcSkill("Spot","perception",8),
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",6),
 		"Melee": new kantia.template.npcSkill("Melee","agility",12),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",12),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",12)
 	},
 	{
 		"Adrenaline": new kantia.template.npcTrait("Adrenaline",1),
@@ -388,7 +393,8 @@ kantia.template.npcs["Human Fighter, Basic"] = new kantia.template.npc(
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
 		"Melee": new kantia.template.npcSkill("Melee","agility",8),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",8)
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",8),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",8)
 	},
 	{
 		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
@@ -478,7 +484,8 @@ kantia.template.npcs["Human Fighter, Expert"] = new kantia.template.npc(
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",4),
 		"Melee": new kantia.template.npcSkill("Melee","agility",12),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",12)
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",12),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",12)
 	},
 	{
 		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
@@ -585,7 +592,8 @@ kantia.template.npcs["Human Fighter, Master"] = new kantia.template.npc(
 		"Street Saavy": new kantia.template.npcSkill("Street Saavy","reasoning",4),
 		"Tracking": new kantia.template.npcSkill("Tracking","perception",6),
 		"Melee": new kantia.template.npcSkill("Melee","agility",16),
-		"Weapon of Choice (Perception)": new kantia.template.npcSkill("Weapon of Choice (Perception)","perception",16)
+		"Aim (PER)": new kantia.template.npcSkill("Aim (PER)","perception",16),
+		"Aim (AGL)": new kantia.template.npcSkill("Aim (AGL)","agility",16)
 	},
 	{
 		"Ambidextrious": new kantia.template.npcTrait("Ambidextrious",1),
@@ -941,5 +949,52 @@ kantia.template.npcs["Panther"] = new kantia.template.npc(
 	"",
 	"",
 	"This jungle cat is a blue-black colored feline that is equally comfortable in trees or on the ground. Panthers are easier than many of the other wild cats to tame, especially if raised from a kitten and treated well.",
+	[]
+);
+
+kantia.template.npcs["Dog, Guard"] = new kantia.template.npc(
+	"Dog, Guard",
+	"Dog",
+	{
+		"strength": new kantia.template.npcAttribute("Strength",5,12,10),
+		"size": new kantia.template.npcAttribute("Size",4,12,8),
+		"agility": new kantia.template.npcAttribute("Agility",8,16,14),
+		"reflexes": new kantia.template.npcAttribute("Reflexes",10,18,16),
+		"constitution": new kantia.template.npcAttribute("Constitution",10,17,15),
+		"fortitude": new kantia.template.npcAttribute("Fortitude",4,12,10),
+		"reasoning": new kantia.template.npcAttribute("Reasoning",2,5,4),
+		"willpower": new kantia.template.npcAttribute("Willpower",2,10,6),
+		"spirit": new kantia.template.npcAttribute("Spirit",2,10,6),
+		"perception": new kantia.template.npcAttribute("Perception",12,20,18)
+	},
+	{
+		"Melee": new kantia.template.npcSkill("Melee","agility",6),
+		"Listen": new kantia.template.npcSkill("Listen","perception",14),
+		"Smell": new kantia.template.npcSkill("Smell","perception",16),
+		"Spot": new kantia.template.npcSkill("Spot","perception",6),
+		"Hide": new kantia.template.npcSkill("Hide",["agility","size"],6),
+		"Move Silently": new kantia.template.npcSkill("Move Silently",["agility","size"],8),
+		"Track": new kantia.template.npcSkill("Track","perception",12),
+		"Resist Fear": new kantia.template.npcSkill("Resist Fear","strength",10),
+		"Resist Magic": new kantia.template.npcSkill("Resist Magic","spirit",6),
+		"Resist Mental": new kantia.template.npcSkill("Resist Mental","willpower",6),
+		"Dodge": new kantia.template.npcSkill("Dodge","reflexes",0)
+	},
+	{
+		"Low Light Vision": new kantia.template.npcTrait("Low Light Vision",1),
+		"Sense of Smell": new kantia.template.npcTrait("Sense of Smell",1),
+		"Combat Experience": new kantia.template.npcTrait("Combat Experience",1),
+		"Fearless": new kantia.template.npcTrait("Fearless",1)
+	},
+	{},
+	[],
+	[],
+	{
+		"melee": ["Bite (Dog)"],
+		"ranged": []
+	},
+	"",
+	"",
+	"Trained guard dogs are common throughout all societies and lands. The stats given are for a large dog, and smaller versions are very common.",
 	[]
 );

@@ -26,8 +26,9 @@ kantia.healthDAT = function(attr,race) {
 		}
 	};
 	
+	var t = Math.ceil((attr.size.score + attr.fortitude.score - 20) / 2) * 5;
 	this.stunpain = {
-		threshold: Math.ceil((attr.size.score + attr.fortitude.score - 20) / 2) * 5,
+		threshold: t < 0 ? 0 : t,
 		current: 0,
 	};
 };

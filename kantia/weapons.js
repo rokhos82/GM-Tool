@@ -48,6 +48,9 @@ kantia.weapon.groups = {
 kantia.lists.weapons = {};
 kantia.lists.weapons.melee = {};
 kantia.lists.weapons.melee.all = [
+	"Bite (Dog)",
+	"Bite (Panther)",
+	"Bite (Wolf)",
 	"Hand Axe",
 	"Short Sword",
 	"Dagger",
@@ -235,6 +238,13 @@ kantia.weapons.melee = {
 		staging: { value: 4, source: "strength" },
 		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
 		other: { "Easy Two Weapon": 1 }
+	},
+	"Bite (Dog)": {
+		difficulty: { base: 8 },
+		range: { text: "Normal" },
+		staging: { value: 8, source: "strength" },
+		damage: { avg: 3, text: "1d6", roll: function() { return kantia.func.d6(1); }},
+		other: {}
 	}
 };
 

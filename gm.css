@@ -204,6 +204,7 @@ div.npc_card {
 	font-family: "Arial Narrow";
 	font-style: normal;
 	font-size: 0.8em;
+	vertical-align: top;
 }
 
 span.name {

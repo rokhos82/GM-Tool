@@ -108,7 +108,12 @@ kantia.race["human"] = new kantia.template.race();
 kantia.race["wolf"] = new kantia.template.race();
 kantia.race["wolf"].defense = {
 	absorb: 1
-}
+};
+
+kantia.race["dog"] = new kantia.template.race();
+kantia.race["dog"].defense = {
+	absorb: 1
+};
 
 kantia.race["dwarf"] = new kantia.template.race();
 kantia.race["dwarf"].attributes.agility = -2;

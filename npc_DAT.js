@@ -2,7 +2,7 @@
 // npcDAT
 // -------------------------------------------------------------------------------------------------
 GM.npcDAT = function(name,template) {
-	this.version = "20130123";
+	this.version = "20130130";
 	GM.debug.log("INIT: GM.npcDAT","Creating GM.npcDAT object - version " + this.version,2);
 	
 	this.name = name;
@@ -108,13 +108,14 @@ GM.npcDAT = function(name,template) {
 	this.actions["Dodge"] = new GM.actionDAT("Dodge","*",this.skills["Dodge"],null);
 };
 
-GM.npcDAT.version = "20130123";
+GM.npcDAT.version = "20130130";
 
 //
 //	Version Change Log
 //		20121115 - base
 //		20130122 - convert old skills to new melee/aim/proficiency system.
 //		20130123 - added an actions field for combat action persistance.
+//		20130130 - correcting a miss calculation of the stun/pain threshold.
 //
 
 GM.npcDAT.upgrade = function(dat) {
@@ -169,6 +170,11 @@ GM.npcDAT.upgrade = function(dat) {
 		dat.actions = {"Dodge": new GM.actionDAT("Dodge","*",dat.skills["Dodge"],null)};
 		dat.version = "20130123";
 		GM.npcDAT.upgrade(dat);
+	}
+	else if(dat.version == "20130123") {
+		var t = dat.stats.health.stunpain.threshold;
+		dat.stats.health.stunpain.threshold = t < 0 ? 0 : t;
+		dat.version = "20130130";
 	}
 	else {
 		GM.debug.log("ERROR: GM.npcDAT.upgrade","npcDAT version not found",0);

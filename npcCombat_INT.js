@@ -10,7 +10,7 @@ GM.npcCombatINT = function(svc) {
 
 	// Setup the name
 	p.addClass("colset");
-	var s = p.addText("Name: " + this.svc.getName());
+	var s = p.addText("Name: " + this.svc.getName() + " (" + this.svc.getTemplate() + ")");
 	s.addClass("name");
 
 	// Setup the attributes table.

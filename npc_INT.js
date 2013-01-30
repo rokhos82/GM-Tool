@@ -523,6 +523,6 @@ GM.npcINT.prototype.combatSkillsPopup = function() {
 	var p = popup.addPanel("Combat Skills");
 	var skills = this.svc.getLIst("skills");
 	for(var s in skills) {
-		
+		p.addCheckBox
 	}
 };
