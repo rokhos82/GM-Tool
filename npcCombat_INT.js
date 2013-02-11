@@ -74,7 +74,7 @@ GM.npcCombatINT = function(svc) {
 	var skills = this.svc.getData("skills");
 	var mask = this.svc.getMask("combatSkills");
 	for(var s in mask) {
-		if(mask[s]) {
+		if(mask[s] && skills[s]) {
 			var r = t.addRow([s,skills[s].total]);
 			r.setClass("tooltip");
 			var tooltip = "<ul>";

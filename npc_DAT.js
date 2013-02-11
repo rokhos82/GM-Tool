@@ -18,7 +18,19 @@ GM.npcDAT = function(name,template) {
 	this.lists.mastery = [];
 
 	this.masks = {};
-	this.masks.combatSkills = {};
+	this.masks.combatSkills = {
+		"Melee": true,
+		"Aim (AGL)": true,
+		"Aim (PER)": true,
+		"Spot": true,
+		"Listen": true,
+		"Smell": true,
+		"Resist Magic": true,
+		"Resist Fear": true,
+		"Resist Mental": true,
+		"Dodge": true,
+		"Feint": true
+	};
 	
 	this.attributes = {};
 	this.skills = {};
