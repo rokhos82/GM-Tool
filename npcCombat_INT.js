@@ -72,14 +72,17 @@ GM.npcCombatINT = function(svc) {
 	t.addHeaderRow(["Skill","AV"]);
 
 	var skills = this.svc.getData("skills");
-	for(var s in skills) {
-		var r = t.addRow([s,skills[s].total]);
-		r.setClass("tooltip");
-		var tooltip = "<ul>";
-		tooltip += "<li>Rank: " + skills[s].rank + "</li>";
-		tooltip += "<li>Adj: " + skills[s].adjust + "</li>";
-		tooltip += "</ul>";
-		r.addTooltip(tooltip,"classic");
+	var mask = this.svc.getMask("combatSkills");
+	for(var s in mask) {
+		if(mask[s]) {
+			var r = t.addRow([s,skills[s].total]);
+			r.setClass("tooltip");
+			var tooltip = "<ul>";
+			tooltip += "<li>Rank: " + skills[s].rank + "</li>";
+			tooltip += "<li>Adj: " + skills[s].adjust + "</li>";
+			tooltip += "</ul>";
+			r.addTooltip(tooltip,"classic");
+		}
 	}
 
 	// Setup the combat actions table.

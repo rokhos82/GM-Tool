@@ -167,32 +167,47 @@ GM.npcINT = function(parent,svc) {
 	var t1 = skills.addTable();
 	t1.addClass("skill_table");
 	t1.addClass("attr_table");
-	t1.addRow(["Skill","Rank","AV"]);
+	t1.addRow(["Skill","Rank","AV","Combat?"]);
 	this.mainframe.addHandler("updateSkill","skill_table1",t1.refreshView,t1,[]);
 	var t2 = skills.addTable();
 	t2.addClass("skill_table");
 	t2.addClass("attr_table");
-	t2.addRow(["Skill","Rank","AV"]);
+	t2.addRow(["Skill","Rank","AV","Combat?"]);
 	this.mainframe.addHandler("updateSkill","skill_table2",t2.refreshView,t2,[]);
 	var skillsList = this.svc.getList("skills");
 	var skills = this.svc.getData("skills");
 	var l = skillsList.length;
 	var shift = Math.ceil(l/2);
+	var mask = this.svc.getMask("combatSkills");
 	for(var i = 0;i < shift;i++) {
 		var name1 = skillsList[i];
 		var skill1 = skills[name1];
-		var r = t1.addRow([skill1.name,new db.connector(skill1,"rank"),new db.view(skill1,"total")]);
+		var cb1 = new ui.checkBox();
+		var conn1 = new db.connector(mask,name1);
+		cb1.setData(conn1);
+		var r = t1.addRow([
+			skill1.name,
+			new db.connector(skill1,"rank"),
+			new db.view(skill1,"total"),
+			cb1
+		]);
+		cb1.refreshView();
 		var c = r.cells[1].children[0];
 		c.setUpdate(this.svc,this.svc.updateSkill,[name1,c]);
 
 		if(i + shift < l) {
 			var name2 = skillsList[i + shift];
 			var skill2 = skills[name2];
+			var cb2 = new ui.checkBox();
+			var conn2 = new db.connector(mask,name2);
+			cb2.setData(conn2);
 			var r = t2.addRow([
 				skill2.name,
 				new db.connector(skill2,"rank"),
-				new db.view(skill2,"total")
+				new db.view(skill2,"total"),
+				cb2
 			]);
+			cb2.refreshView();
 			var c = r.cells[1].children[0];
 			c.setUpdate(this.svc,this.svc.updateSkill,[name2,c]);
 		}

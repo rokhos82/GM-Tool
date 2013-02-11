@@ -2,7 +2,7 @@
 // npcDAT
 // -------------------------------------------------------------------------------------------------
 GM.npcDAT = function(name,template) {
-	this.version = "20130130";
+	this.version = "20130208";
 	GM.debug.log("INIT: GM.npcDAT","Creating GM.npcDAT object - version " + this.version,2);
 	
 	this.name = name;
@@ -16,6 +16,9 @@ GM.npcDAT = function(name,template) {
 	this.lists.hc = [];
 	this.lists.traits = [];
 	this.lists.mastery = [];
+
+	this.masks = {};
+	this.masks.combatSkills = {};
 	
 	this.attributes = {};
 	this.skills = {};
@@ -108,7 +111,7 @@ GM.npcDAT = function(name,template) {
 	this.actions["Dodge"] = new GM.actionDAT("Dodge","*",this.skills["Dodge"],null);
 };
 
-GM.npcDAT.version = "20130130";
+GM.npcDAT.version = "20130208";
 
 //
 //	Version Change Log
@@ -116,6 +119,7 @@ GM.npcDAT.version = "20130130";
 //		20130122 - convert old skills to new melee/aim/proficiency system.
 //		20130123 - added an actions field for combat action persistance.
 //		20130130 - correcting a miss calculation of the stun/pain threshold.
+//		20130208 - added the masks sub-object.
 //
 
 GM.npcDAT.upgrade = function(dat) {
@@ -175,6 +179,15 @@ GM.npcDAT.upgrade = function(dat) {
 		var t = dat.stats.health.stunpain.threshold;
 		dat.stats.health.stunpain.threshold = t < 0 ? 0 : t;
 		dat.version = "20130130";
+	}
+	else if(dat.version == "20130130") {
+		dat.version = "20130208";
+		dat.masks = {};
+		dat.masks.combatSkills = {};
+
+		for(var s in dat.skills) {
+			dat.masks.combatSkills[s] = true;
+		}
 	}
 	else {
 		GM.debug.log("ERROR: GM.npcDAT.upgrade","npcDAT version not found",0);
