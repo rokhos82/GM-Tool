@@ -124,7 +124,8 @@ GM.npcCombatINT = function(svc) {
 };
 
 // -------------------------------------------------------------------------------------------------
-//
+// GM.npcCombatINT.initialize - this function sets the parent interface object and attaches
+//		this interface as a child.
 // -------------------------------------------------------------------------------------------------
 GM.npcCombatINT.prototype.initialize = function(parent) {
 	GM.debug.log("CALL: GM.npcCombatINT.initialize","Attaching interface to parent",2);
