@@ -747,6 +747,7 @@ kantia.template.npcs["Kobald, Common"] = new kantia.template.npc(
 		"Resist Fear": new kantia.template.npcSkill("Resist Fear","spirit",2),
 		"Resist Magic": new kantia.template.npcSkill("Resist Magic","spirit",2),
 		"Resist Mental": new kantia.template.npcSkill("Resist Mental","willpower",2)
+	},
 	{
 		"Psychic Void": "Psychic Void",
 		"Photosensitive": "Photosensitive",
