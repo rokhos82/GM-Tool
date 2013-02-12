@@ -1,0 +1,8 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// npcTemplateManagerSVC
+////////////////////////////////////////////////////////////////////////////////////////////////////
+GM.npcTemplateManagerSVC = function() {
+	GM.debug.log("BEGIN: GM.npcTemplateManagerSVC","Started constructing npcTemplateManagerSVC object",2);
+	this.parent = null;
+	GM.debug.log("FINISH: GM.npcTemplateManagerSVC","Finished constructing npcTemplateManagerSVC object",2);
+};
