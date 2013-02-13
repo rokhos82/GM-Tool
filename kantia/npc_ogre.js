@@ -4,7 +4,7 @@
 var race = "Ogre";
 
 // Ogre Brute, Basic -------------------------------------------------------------------------------
-var name = "Orge Brute, Basic";
+var name = "Ogre Brute, Basic";
 kantia.template.npcs[name] = new kantia.template.npc(
 	name,
 	race,
@@ -91,7 +91,7 @@ kantia.template.npcs[name] = new kantia.template.npc(
 );
 
 // Ogre Brute, Expert ------------------------------------------------------------------------------
-var name = "Orge Brute, Expert";
+var name = "Ogre Brute, Expert";
 kantia.template.npcs[name] = new kantia.template.npc(
 	name,
 	race,
@@ -185,7 +185,7 @@ kantia.template.npcs[name] = new kantia.template.npc(
 );
 
 // Ogre Brute, Master ------------------------------------------------------------------------------
-var name = "Orge Brute, Master"
+var name = "Ogre Brute, Master"
 kantia.template.npcs[name] = new kantia.template.npc(
 	name,
 	race,
