@@ -2,7 +2,7 @@
 // Lukoi NPC Templates
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Lukoi Berserker, Basic ------------------------------------------------------------------------------
+// Lukoi Berserker, Basic --------------------------------------------------------------------------
 kantia.template.npcs["Lukoi Berserker, Basic"] = new kantia.template.npc(
 	"Lukoi Berserker, Basic",
 	"Lukoi",
