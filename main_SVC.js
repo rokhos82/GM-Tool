@@ -242,3 +242,11 @@ GM.mainSVC.prototype.setWidget = function(key,widget) {
 
 	this.ui.setWidget(key,ui);
 };
+
+// -------------------------------------------------------------------------------------------------
+// 
+// -------------------------------------------------------------------------------------------------
+GM.mainSVC.prototype.showTemplateManager = function() {
+	GM.debug.log("CALL: GM.mainSVC.showTemplateManager","Invoking the template manager interface",2);
+	this.managers.templates.invoke(this.ui);
+};
