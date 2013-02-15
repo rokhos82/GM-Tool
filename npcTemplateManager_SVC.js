@@ -35,7 +35,7 @@ GM.npcTemplateManagerSVC.prototype.buildLists = function() {
 	var templates = this.dat.templates.npc;
 	this.lists.templates = [];
 	for(var t in templates) {
-		this.lists.templates[t] = 1;
+		this.lists.templates[t] = t;
 	}
 };
 

@@ -10,7 +10,20 @@ GM.npcTemplateManagerINT = function(svc) {
 	this.ui = new ui.popup("popup","fog");
 
 	this.panel = this.ui.addPanel("Template Manager");
-	var b = this.panel.addButton("Close",new db.link(this,this.hide,[]));
+
+	var p = this.panel.addPanel();
+	var templateList = this.svc.getTemplateList();
+	var cb = p.addComboBox();
+	cb.setSize(10);
+	cb.setOptions(templateList);
+	var ta = p.addTextArea();
+
+	var p = this.panel.addPanel();
+	var b = p.addButton("New");
+	var b = p.addButton("Copy");
+	var b = p.addButton("Edit");
+	var b = p.addButton("Delete");
+	var b = p.addButton("Close",new db.link(this,this.hide,[]));
 
 	this.initialized = false;
 
