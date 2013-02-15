@@ -19,7 +19,7 @@ GM.npcTemplateManagerINT = function(svc) {
 	var ta = p.addTextArea();
 
 	var p = this.panel.addPanel();
-	var b = p.addButton("New");
+	var b = p.addButton("New",new db.link(this,this.newTemplate,[]));
 	var b = p.addButton("Copy");
 	var b = p.addButton("Edit");
 	var b = p.addButton("Delete");
@@ -71,4 +71,15 @@ GM.npcTemplateManagerINT.prototype.show = function(parent) {
 GM.npcTemplateManagerINT.prototype.hide = function() {
 	GM.debug.log("CALL: GM.npcTemplateManagerINT.hide","Closing the template manager interface",2);
 	this.ui.hide();
+};
+
+// -------------------------------------------------------------------------------------------------
+// newTemplate
+// -------------------------------------------------------------------------------------------------
+GM.npcTemplateManagerINT.prototype.newTemplate = function() {
+	GM.debug.log("CALL: GM.npcTemplateManagerINT.newTemplate","Creating a new template",2);
+	var name = prompt("Template Name");
+	if(name) {
+		this.svc.newTemplate(name);
+	}
 };

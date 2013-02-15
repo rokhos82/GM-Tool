@@ -56,8 +56,9 @@ GM.npcTemplateManagerSVC.prototype.newTemplate = function(name) {
 		GM.debug.log("ERROR: GM.npcTemplateManagerSVC.newTemplate","Template of name " + name + " already exists.",0);
 	}
 	else {
-		this.dat.templates.npc[name] = new customNPCDAT(name);
+		this.dat.templates.npc[name] = new GM.customNPCDAT(name);
 		this.buildLists();
+		this.editTemplate(name);
 	}
 };
 
@@ -97,6 +98,7 @@ GM.npcTemplateManagerSVC.prototype.deleteTemplate = function(name) {
 // -------------------------------------------------------------------------------------------------
 GM.npcTemplateManagerSVC.prototype.editTemplate = function(name) {
 	GM.debug.log("CALL: GM.npcTemplateManagerSVC.editTemplate","Invoke the edit interface for " + name,2);
+	this.ui.hide();
 };
 
 // -------------------------------------------------------------------------------------------------
