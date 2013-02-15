@@ -21,6 +21,9 @@ GM.mainSVC = function(root,dat) {
 	this.lists.templates = [];
 	this.activeCampaign = null;
 
+	this.managers = {};
+	this.managers.templates = new GM.npcTemplateManagerSVC(this.dat,this);
+
 	this.widgets = {};
 
 	this.ui = new GM.mainINT(root,this);

@@ -1,6 +1,22 @@
 var GM = {};
 
 GM.utility = {};
+GM.utility.deepCopy = function(source,target) {
+	var target = target || {};
+	for(var i in source) {
+		if(source[i] === null) {
+			target[i] = source[i];
+		}
+		else if(typeof(source[i]) === "object") {
+			target[i] = (source[i].constructor === Array) ? [] : {};
+			GM.utility.deepCopy(source[i],target[i]);
+		}
+		else {
+			target[i] = source[i];
+		}
+	}
+	return target;
+};
 
 GM.settings = {
 	version: "20121115",

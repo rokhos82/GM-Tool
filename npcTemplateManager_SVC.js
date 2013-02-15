@@ -1,28 +1,27 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // npcTemplateManagerSVC
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-GM.npcTemplateManagerSVC = function(dat) {
+GM.npcTemplateManagerSVC = function(dat,parent) {
 	GM.debug.log("BEGIN: GM.npcTemplateManagerSVC","Started constructing npcTemplateManagerSVC object",2);
-	this.parent = null;
+	
+	this.parent = parent;
+	this.mainframe = parent.mainframe.addChildFrame();
 	this.dat = dat;
+
 	this.lists = {};
+	
 	GM.debug.log("FINISH: GM.npcTemplateManagerSVC","Finished constructing npcTemplateManagerSVC object",2);
 };
 
 // -------------------------------------------------------------------------------------------------
-// getTemplates - returns a list of templates and a dictionary of the template objects.
+// getTemplateList - returns a list of templates.
 // -------------------------------------------------------------------------------------------------
-GM.npcTemplateManagerSVC.prototype.getTemplateInfo = function() {
-	GM.debug.log("CALL: GM.npcTemplateManagerSVC.getTemplates","Retrieving template objects from data object",2);
+GM.npcTemplateManagerSVC.prototype.getTemplateList = function() {
+	GM.debug.log("CALL: GM.npcTemplateManagerSVC.getTemplateList","Retrieving template objects from data object",2);
 	if(!this.lists.templates)
 		this.buildLists();
 
-	var ret = {
-		this.list = this.lists.templates;
-		this.dict = {};
-	};
-	
-	return ret;
+	return this.lists.templates;
 };
 
 // -------------------------------------------------------------------------------------------------
@@ -39,32 +38,61 @@ GM.npcTemplateManagerSVC.prototype.buildLists = function() {
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// getTemplate - returns the specified template data object.
 // -------------------------------------------------------------------------------------------------
 GM.npcTemplateManagerSVC.prototype.getTemplate = function(t) {
 	return this.dat.templates.npc[t];
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// newTemplate - Creates a new, blank template given a name.  Also, insures that names are
+//		unique.  Rebuilds the template list after the new template is created.
 // -------------------------------------------------------------------------------------------------
-GM.npcTemplateManagerSVC.prototype.newTemplate = function() {
+GM.npcTemplateManagerSVC.prototype.newTemplate = function(name) {
+	GM.debug.log("CALL: GM.npcTemplateManagerSVC.newTemplate","Creating a new blank NPC template",2);
+	if(this.dat.templates.npc[name]) {
+		GM.debug.log("ERROR: GM.npcTemplateManagerSVC.newTemplate","Template of name " + name + " already exists.",0);
+	}
+	else {
+		this.dat.templates.npc[name] = new customNPCDAT(name);
+		this.buildLists();
+	}
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// copyTemplate - Creates a new template by copying an existing template.  Also, insures that the
+// 		new template name is unique.
 // -------------------------------------------------------------------------------------------------
-GM.npcTemplateManagerSVC.prototype.copyTemplate = function() {
+GM.npcTemplateManagerSVC.prototype.copyTemplate = function(name,copy) {
+	GM.debug.log("CALL: GM.npcTemplateManagerSVC.copyTemplate","Creating template " + name + " from " + copy,2);
+	if(this.dat.templates.npc[copy]) {
+		if(this.dat.templates.npc[name]) {
+			GM.debug.log("ERROR: GM.npcTemplateManagerSVC.copyTemplate","Template of name " + name + " already exists.",0);
+		}
+		else {
+			var c = this.dat.templates.npc[copy];
+			this.dat.templates.npc[name] = GM.utility.deepCopy(c);
+			this.buildLists();
+		}
+	}
+	else {
+		GM.debug.log("ERROR: GM.npcTemplateManagerSVC.copyTemplate","Source template " + copy + " does not exist",0);
+	}
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// deleteTemplate - Removes the template from the data object.  Rebuilds the template lists after
+//		the remove.
 // -------------------------------------------------------------------------------------------------
-GM.npcTemplateManagerSVC.prototype.deleteTemplate = function() {
+GM.npcTemplateManagerSVC.prototype.deleteTemplate = function(name) {
+	GM.debug.log("CALL: GM.npcTemplateManagerSVC.deleteTemplate","Removing template " + name,2);
+	delete this.dat.templates.npc[name];
+	this.buildLists();
 };
 
 // -------------------------------------------------------------------------------------------------
-// 
+// editTemplate
 // -------------------------------------------------------------------------------------------------
-GM.npcTemplateManagerSVC.prototype.editTemplate = function() {
+GM.npcTemplateManagerSVC.prototype.editTemplate = function(name) {
+	GM.debug.log("CALL: GM.npcTemplateManagerSVC.editTemplate","Invoke the edit interface for " + name,2);
 };
