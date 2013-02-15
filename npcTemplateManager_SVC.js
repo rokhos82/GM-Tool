@@ -9,6 +9,8 @@ GM.npcTemplateManagerSVC = function(dat,parent) {
 	this.dat = dat;
 
 	this.lists = {};
+
+	this.ui = new GM.npcTemplateManagerINT(this);
 	
 	GM.debug.log("FINISH: GM.npcTemplateManagerSVC","Finished constructing npcTemplateManagerSVC object",2);
 };

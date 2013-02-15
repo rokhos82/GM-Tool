@@ -1,10 +1,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // npcTemplateManagerINT
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-GM.npcTemplateManagerINT = function() {
+GM.npcTemplateManagerINT = function(svc) {
 	GM.debug.log("BEGIN: GM.npcTemplateManagerINT","Started constructing npcTemplateManagerINT object",2);
-	this.svc = null;
+	
+	this.svc = svc;
 	this.parent = null;
+
+	this.ui = new ui.popup();
+
 	GM.debug.log("END: GM.npcTemplateManagerINT","Finished constructing npcTemplateManagerINT object",2);
 };
 
