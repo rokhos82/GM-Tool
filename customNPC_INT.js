@@ -9,7 +9,13 @@ GM.customNPCINT = function(svc) {
 
 	this.ui = new ui.popup("popup","fog");
 	this.panel = this.ui.addPanel("Editor: " + this.svc.getName());
-	this.panel.addTextArea();
+
+	this.panel.addButton("Close",new db.link(this,this.hide,[]));
+	
+	this.panels = {};
+	this.panels["info"] = this.panel.addPanel("Info");
+	this.panels["stats"] = this.panel.addPanel("Stats");
+	this.panels["skills"] = this.panel.addPanel("Skills");
 
 	GM.debug.log("END: GM.customNPCINT","Finished connstructing a custom NPC interface object",2);
 };
@@ -30,4 +36,5 @@ GM.customNPCINT.prototype.show = function(parent) {
 
 GM.customNPCINT.prototype.hide = function() {
 	GM.debug.log("CALL: GM.customNPCINT.hide","Hiding custom template editor",2);
+	this.ui.hide();
 };

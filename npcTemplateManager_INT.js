@@ -18,12 +18,13 @@ GM.npcTemplateManagerINT = function(svc) {
 	cb.setClass("wide");
 	cb.setSize(10);
 	cb.setOptions(templateList);
+	this.selector = cb;
 	var ta = p.addTextArea();
 
 	var p = this.panel.addPanel();
 	var b = p.addButton("New",new db.link(this,this.newTemplate,[]));
 	var b = p.addButton("Copy");
-	var b = p.addButton("Edit");
+	var b = p.addButton("Edit",new db.link(this,this.editTemplate,[]));
 	var b = p.addButton("Delete");
 	var b = p.addButton("Close",new db.link(this,this.hide,[]));
 
@@ -64,6 +65,7 @@ GM.npcTemplateManagerINT.prototype.show = function(parent) {
 	GM.debug.log("CALL: GM.npcTemplateManagerINT.show","Showing the template manager interface",2);
 	if(!this.initialized)
 		this.initialize(parent);
+	this.selector.setOptions(this.svc.getTemplateList());
 	this.ui.show();
 };
 
@@ -84,4 +86,13 @@ GM.npcTemplateManagerINT.prototype.newTemplate = function() {
 	if(name) {
 		this.svc.newTemplate(name);
 	}
+};
+
+// -------------------------------------------------------------------------------------------------
+// editTemplate
+// -------------------------------------------------------------------------------------------------
+GM.npcTemplateManagerINT.prototype.editTemplate = function() {
+	GM.debug.log("[CALL] GM.npcTemplateManagerINT.editTemplate","Editing a template",2);
+	var name = this.selector.getValue();
+	this.svc.editTemplate(name);
 };
