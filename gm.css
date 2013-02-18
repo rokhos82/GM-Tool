@@ -11,6 +11,27 @@ span {
 	font-family: "Arial";
 }
 
+div.manager {
+}
+
+div.manager div {
+	display: inline;
+	vertical-align: top;
+	margin: 2px;
+}
+
+div.manager textarea {
+	display: inline;
+	vertical-align: top;
+	width: 300px;
+	height: 200px;
+	margin: 2px;
+}
+
+select.wide {
+	width: 200px;
+}
+
 div.debug {
 	position: fixed;
 	bottom: 0px;

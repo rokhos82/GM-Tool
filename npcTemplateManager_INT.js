@@ -12,8 +12,10 @@ GM.npcTemplateManagerINT = function(svc) {
 	this.panel = this.ui.addPanel("Template Manager");
 
 	var p = this.panel.addPanel();
+	p.addClass("manager");
 	var templateList = this.svc.getTemplateList();
 	var cb = p.addComboBox();
+	cb.setClass("wide");
 	cb.setSize(10);
 	cb.setOptions(templateList);
 	var ta = p.addTextArea();
