@@ -11,6 +11,7 @@ GM.npcTemplateManagerSVC = function(dat,parent) {
 	this.lists = {};
 
 	this.ui = new GM.npcTemplateManagerINT(this,this.parent.ui);
+	this.editors = {};
 	
 	GM.debug.log("FINISH: GM.npcTemplateManagerSVC","Finished constructing npcTemplateManagerSVC object",2);
 };
@@ -99,6 +100,10 @@ GM.npcTemplateManagerSVC.prototype.deleteTemplate = function(name) {
 GM.npcTemplateManagerSVC.prototype.editTemplate = function(name) {
 	GM.debug.log("CALL: GM.npcTemplateManagerSVC.editTemplate","Invoke the edit interface for " + name,2);
 	this.ui.hide();
+	if(!this.editors[name]) {
+		this.editors[name] = new GM.customNPCSVC(this.dat.templates.npc[name],this);
+	}
+	this.editors[name].invoke(this.parent.ui);
 };
 
 // -------------------------------------------------------------------------------------------------
