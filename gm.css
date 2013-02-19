@@ -11,6 +11,11 @@ span {
 	font-family: "Arial";
 }
 
+.editor {
+	width: 700px;
+	height: 500px;
+}
+
 div.manager {
 }
 

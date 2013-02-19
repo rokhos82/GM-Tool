@@ -9,6 +9,7 @@ GM.customNPCINT = function(svc) {
 
 	this.ui = new ui.popup("popup","fog");
 	this.panel = this.ui.addPanel("Editor: " + this.svc.getName());
+	this.panel.addClass("editor");
 
 	this.panel.addButton("Close",new db.link(this,this.hide,[]));
 	

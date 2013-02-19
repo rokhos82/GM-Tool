@@ -9,6 +9,7 @@ GM.npcTemplateManagerSVC = function(dat,parent) {
 	this.dat = dat;
 
 	this.lists = {};
+	//this.buildLists();
 
 	this.ui = new GM.npcTemplateManagerINT(this,this.parent.ui);
 	this.editors = {};
