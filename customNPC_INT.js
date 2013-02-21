@@ -14,7 +14,10 @@ GM.customNPCINT = function(svc) {
 	this.panel.addButton("Close",new db.link(this,this.hide,[]));
 	
 	this.panels = {};
-	this.panels["info"] = this.panel.addPanel("Info");
+	var p = this.panel.addPanel("Info");
+	this.panels["info"] = p;
+	p.addTextField("Name",this.svc.getDataConnector("name"));
+
 	this.panels["stats"] = this.panel.addPanel("Stats");
 	this.panels["skills"] = this.panel.addPanel("Skills");
 
