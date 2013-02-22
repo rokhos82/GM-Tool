@@ -25,7 +25,7 @@ GM.customNPCINT = function(svc) {
 	var attributes = this.svc.getData("attributes");
 	for(var a in attributes) {
 		var attr = attributes[a];
-		t.addRow([attr.name,attr.avg,attr.min,attr.max]);
+		t.addRow([attr.name,new db.connector(attr,"avg"),new db.connector(attr,"min"),new db.connector(attr,"max")]);
 	}
 
 	this.panels["stats"] = this.panel.addPanel("Stats");
