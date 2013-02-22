@@ -58,7 +58,7 @@ GM.npcTemplateManagerSVC.prototype.newTemplate = function(name) {
 		GM.debug.log("ERROR: GM.npcTemplateManagerSVC.newTemplate","Template of name " + name + " already exists.",0);
 	}
 	else {
-		this.dat.templates.npc[name] = new GM.customNPCDAT(name);
+		this.dat.templates.npc[name] = new kantia.template.npc(name);
 		this.buildLists();
 		this.editTemplate(name);
 	}

@@ -18,6 +18,16 @@ GM.customNPCINT = function(svc) {
 	this.panels["info"] = p;
 	p.addTextField("Name",this.svc.getDataConnector("name"));
 
+	var p = this.panel.addPanel("Attributes");
+	this.panels["attr"] = p;
+	var t = p.addTable();
+	t.addRow(["Attribute","Avg","Min","Max"]);
+	var attributes = this.svc.getData("attributes");
+	for(var a in attributes) {
+		var attr = attributes[a];
+		t.addRow([attr.name,attr.avg,attr.min,attr.max]);
+	}
+
 	this.panels["stats"] = this.panel.addPanel("Stats");
 	this.panels["skills"] = this.panel.addPanel("Skills");
 

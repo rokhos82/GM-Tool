@@ -35,20 +35,35 @@ kantia.template.npcList = {
 	}
 };
 
+kantia.template.basicAttributes = function() {
+	return {
+		"strength": new kantia.template.npcAttribute("Strength",10,10,10),
+		"size": new kantia.template.npcAttribute("Size",10,10,10),
+		"agility": new kantia.template.npcAttribute("Agility",10,10,10),
+		"reflexes": new kantia.template.npcAttribute("Reflexes",10,10,10),
+		"constitution": new kantia.template.npcAttribute("Constitution",10,10,10),
+		"fortitude": new kantia.template.npcAttribute("Fortitude",10,10,10),
+		"reasoning": new kantia.template.npcAttribute("Reasoning",10,10,10),
+		"willpower": new kantia.template.npcAttribute("Willpower",10,10,10),
+		"spirit": new kantia.template.npcAttribute("Spirit",10,10,10),
+		"perception": new kantia.template.npcAttribute("Perception",10,10,10)
+	};
+};
+
 kantia.template.npc = function(name,race,attributes,skills,traits,masteries,hc,armor,weapons,magic,loot,desc,categories) {
-	this.race = race;
-	this.name = name;
-	this.skills = skills;
-	this.attributes = attributes;
-	this.armor = armor;
-	this.weapons = weapons;
-	this.traits = traits;
-	this.hc = hc;
-	this.categories = categories;
+	this.race = race ? race : "";
+	this.name = name ? name : "";
+	this.skills = skills ? skills : {};
+	this.attributes = attributes ? attributes : kantia.template.basicAttributes();
+	this.armor = armor ? armor : [];
+	this.weapons = weapons ? weapons : [];
+	this.traits = traits ? traits : {};
+	this.hc = hc ? hc : [];
+	this.categories = categories ? categories : [];
 	this.magic = magic;
-	this.description = desc;
-	this.masteries = masteries;
-	this.loot = loot;
+	this.description = desc ? desc : "";
+	this.masteries = masteries ? masteries : {};
+	this.loot = loot ? loot : "";
 };
 
 kantia.template.npcSkill = function(name,attr,rank) {
