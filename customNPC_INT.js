@@ -17,10 +17,13 @@ GM.customNPCINT = function(svc) {
 	var p = this.panel.addPanel("Info");
 	this.panels["info"] = p;
 	p.addTextField("Name",this.svc.getDataConnector("name"));
+	p.addTextField("Race",this.svc.getDataConnector("race"));
 
 	var p = this.panel.addPanel("Attributes");
+	p.addClass("small");
 	this.panels["attr"] = p;
 	var t = p.addTable();
+	//t.addClass("attr_table");
 	t.addRow(["Attribute","Avg","Min","Max"]);
 	var attributes = this.svc.getData("attributes");
 	for(var a in attributes) {
@@ -28,7 +31,12 @@ GM.customNPCINT = function(svc) {
 		t.addRow([attr.name,new db.connector(attr,"avg"),new db.connector(attr,"min"),new db.connector(attr,"max")]);
 	}
 
-	this.panels["stats"] = this.panel.addPanel("Stats");
+	var p = this.panel.addPanel("Stats");
+	this.panels["stats"] = p;
+	var t = p.addTable();
+	t.addRow([]);
+
+
 	this.panels["skills"] = this.panel.addPanel("Skills");
 
 	GM.debug.log("END: GM.customNPCINT","Finished connstructing a custom NPC interface object",2);
@@ -38,12 +46,12 @@ GM.customNPCINT.prototype.initialize = function(parent) {
 	GM.debug.log("CALL: GM.customNPCINT.initialize","Initializing a custom NPC interface object",2);
 	this.parent = parent;
 	this.parent.appendChild(this);
-	this.initialize = true;
+	this.initialized = true;
 };
 
 GM.customNPCINT.prototype.show = function(parent) {
 	GM.debug.log("CALL: GM.customNPCINT.show","Showing custom template editor",2);
-	if(!this.initialized)
+	if(!this.initialized && parent)
 		this.initialize(parent);
 	this.ui.show();
 };
