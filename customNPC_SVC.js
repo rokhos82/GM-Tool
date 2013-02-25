@@ -35,3 +35,8 @@ GM.customNPCSVC.prototype.getDataConnector = function(token,sub) {
 	}
 	return conn;
 };
+
+GM.customNPCSVC.prototype.requestManager = function() {
+	GM.debug.log("CALL: GM.customNPCSVC.requestManager","Requesting the template manager be shown",2);
+	this.parent.invoke();
+};

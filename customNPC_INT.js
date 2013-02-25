@@ -62,4 +62,5 @@ GM.customNPCINT.prototype.show = function(parent) {
 GM.customNPCINT.prototype.hide = function() {
 	GM.debug.log("CALL: GM.customNPCINT.hide","Hiding custom template editor",2);
 	this.ui.hide();
+	this.svc.requestManager();
 };
