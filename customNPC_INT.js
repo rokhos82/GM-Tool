@@ -31,9 +31,13 @@ GM.customNPCINT = function(svc) {
 		t.addRow([attr.name,new db.connector(attr,"avg"),new db.connector(attr,"min"),new db.connector(attr,"max")]);
 	}
 
-	var p = this.panel.addPanel("Traits & HCs");
+	var p = this.panel.addPanel("Traits");
 	p.addClass("small");
 	this.panels["traits"] = p;
+	
+	var p = this.panel.addPanel("HCs");
+	p.addClass("small");
+	this.panels["hcs"] = p;
 
 	var p = this.panel.addPanel("Equipment");
 	this.panels["equipment"] = p;
@@ -45,6 +49,9 @@ GM.customNPCINT = function(svc) {
 	GM.debug.log("END: GM.customNPCINT","Finished connstructing a custom NPC interface object",2);
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.customNPCINT.prototype.initialize = function(parent) {
 	GM.debug.log("CALL: GM.customNPCINT.initialize","Initializing a custom NPC interface object",2);
 	this.parent = parent;
@@ -52,6 +59,9 @@ GM.customNPCINT.prototype.initialize = function(parent) {
 	this.initialized = true;
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.customNPCINT.prototype.show = function(parent) {
 	GM.debug.log("CALL: GM.customNPCINT.show","Showing custom template editor",2);
 	if(!this.initialized && parent)
@@ -59,6 +69,9 @@ GM.customNPCINT.prototype.show = function(parent) {
 	this.ui.show();
 };
 
+// -------------------------------------------------------------------------------------------------
+//
+// -------------------------------------------------------------------------------------------------
 GM.customNPCINT.prototype.hide = function() {
 	GM.debug.log("CALL: GM.customNPCINT.hide","Hiding custom template editor",2);
 	this.ui.hide();
