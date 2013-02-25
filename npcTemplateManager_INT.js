@@ -18,6 +18,7 @@ GM.npcTemplateManagerINT = function(svc) {
 	cb.setClass("wide");
 	cb.setSize(10);
 	cb.setOptions(templateList);
+	cb.addEvent("ondblclick",this,this.editTemplate,[]);
 	this.selector = cb;
 	var ta = p.addTextArea();
 

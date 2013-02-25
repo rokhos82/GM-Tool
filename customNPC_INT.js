@@ -31,11 +31,14 @@ GM.customNPCINT = function(svc) {
 		t.addRow([attr.name,new db.connector(attr,"avg"),new db.connector(attr,"min"),new db.connector(attr,"max")]);
 	}
 
-	var p = this.panel.addPanel("Stats");
-	this.panels["stats"] = p;
-	var t = p.addTable();
-	t.addRow([]);
+	var p = this.panel.addPanel("Traits & HCs");
+	p.addClass("small");
+	this.panels["traits"] = p;
 
+	var p = this.panel.addPanel("Equipment");
+	this.panels["equipment"] = p;
+	var sp = p.addPanel("Armor");
+	var sp = p.addPanel("Weapons");
 
 	this.panels["skills"] = this.panel.addPanel("Skills");
 
