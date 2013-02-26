@@ -14,6 +14,8 @@ GM.customNPCINT = function(svc) {
 	this.panel.addButton("Close",new db.link(this,this.hide,[]));
 	
 	this.panels = {};
+	this.lists = {};
+
 	var p = this.panel.addPanel("Info");
 	this.panels["info"] = p;
 	p.addTextField("Name",this.svc.getDataConnector("name"));
@@ -34,10 +36,22 @@ GM.customNPCINT = function(svc) {
 	var p = this.panel.addPanel("Traits");
 	p.addClass("small");
 	this.panels["traits"] = p;
+	var cb = p.addComboBox();
+	cb.setOptions(kantia.traits);
+	cb.setMultiselect(true);
+	p.addButton("Add");
+	var l = p.addList();
+	this.lists["traits"] = l;
+	var traits = this.svc.getData("traits");
+	for(var t in traits) {
+		l.addItem(t);
+	}
 	
 	var p = this.panel.addPanel("HCs");
 	p.addClass("small");
 	this.panels["hcs"] = p;
+	p.addComboBox();
+	p.addButton("Add");
 
 	var p = this.panel.addPanel("Equipment");
 	this.panels["equipment"] = p;
