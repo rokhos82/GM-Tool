@@ -126,3 +126,22 @@ GM.keyBindings = function(event) {
 	event.altKey;
 	event.metaKey;
 };
+
+// Helper Objects //////////////////////////////////////////////////////////////////////////////////
+GM.objects = {};
+GM.objects.roll = function(type,roll,adjust) {
+	this.type = type;
+	this.roll = roll;
+	this.adjust = adjust;
+	this.total = roll + adjust;
+
+
+};
+
+GM.objects.roll.status = {
+	"crit": 0x01,
+	"ace": 0x02,
+	"fumble": 0x04,
+	"success": 0x08,
+	"failure": 0x00
+};
