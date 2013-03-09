@@ -8,6 +8,9 @@ GM.mainControlINT = function(parent,svc) {
 	this.svc = svc;
 	this.mainframe = this.svc.mainframe;
 
+	this.popups = {};
+	this.popups.dice = new GM.diceControlINT(this);
+
 	this.ui = new ui.panel("Controls");
 
 	// Build the controls panel
@@ -22,6 +25,7 @@ GM.mainControlINT = function(parent,svc) {
 	var b = p.addButton("NPCs");
 	var b = p.addButton("Armor");
 	var b = p.addButton("Weapons");
+	var b = p.addButton("Mass Dice",new db.link(this,this.showPopup,["dice"]));
 
 	var p = this.ui.addPanel("Campaign Selector");
 	var cb = p.addComboBox("Campaigns",this.svc.getCampaigns().list,new db.local(""));
@@ -144,4 +148,9 @@ GM.mainControlINT.prototype.refreshView = function() {
 GM.mainControlINT.prototype.reset = function() {
 	GM.debug.log("GM.mainControlINT.reset","Reseting widget interface",2);
 	this.selector.setOptions(null);
+};
+
+GM.mainControlINT.prototype.showPopup = function(key) {
+	GM.debug.log("GM.mainControlINT.showPopup","Showing popup for key: " + key,2);
+	this.popups[key].invoke();
 };
