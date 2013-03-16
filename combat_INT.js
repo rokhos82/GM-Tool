@@ -20,6 +20,7 @@ GM.combatINT = function(parent,svc) {
 	var l = new db.local("");
 	this.groups.dropdown = this.groups.control.addComboBox(null,null,l);
 	this.groups.control.addButton("Activate",new db.link(this,this.activateGroup,[]));
+	this.groups.list = this.panel.addPanel("Init List");
 	this.groups.panels = {};
 
 	this.initialized = false;
