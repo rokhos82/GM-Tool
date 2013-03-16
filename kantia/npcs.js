@@ -18,6 +18,11 @@ kantia.template.npcList = {
 		"Lukoi Fighter, Expert": "Lukoi Fighter, Expert",
 		"Lukoi Fighter, Master": "Lukoi Fighter, Master"
 	},
+	"Ogre": {
+		"Ogre Brute, Basic": "Ogre Brute, Basic",
+		"Ogre Brute, Expert": "Ogre Brute, Expert",
+		"Ogre Brute, Master": "Ogre Brute, Master"
+	},
 	"Troll": {
 		"Troll Brute, Basic": "Troll Brute, Basic",
 		"Troll Brute, Expert": "Troll Brute, Expert",
