@@ -109,3 +109,7 @@ GM.diceControlINT.prototype.rollDice = function() {
 	this.elements.results.refreshView();
 	GM.debug.log("INFO: GM.diceControlINT.rollDice","Results are: " + this.data.results,2)
 };
+
+GM.diceControlINT.prototype.changeDieType = function() {
+	GM.debug.log("CALL: Gm.diceControlINT.changeDieType","Changing die type",2);
+}
