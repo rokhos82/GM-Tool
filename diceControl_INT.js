@@ -39,6 +39,7 @@ GM.diceControlINT = function(parent) {
 	
 	var sp = p.addPanel("Results");
 	var ta = sp.addTextArea(new db.connector(this.data,"results"));
+	ta.setSize(21,50);
 	this.elements.results = ta;
 
 	this.refreshView();
@@ -85,25 +86,37 @@ GM.diceControlINT.prototype.rollDice = function() {
 	
 	var multi = 0;
 	if(this.data.die === "d100")
-		multi = 101;
+		multi = 100;
 	else if(this.data.die === "d20")
-		multi = 21;
+		multi = 20;
 
 	this.data.results = "";
 	var adj = parseInt(this.data.adjust);
 	var tav = parseInt(this.data.tav);
 	for(var i = 0;i < this.data.quantity;i++) {
-		var r = Math.floor(Math.random()*multi);
+		var r = Math.floor(Math.random()*multi) + 1;
 		var f = r + adj;
 		if(f < 10)
-			this.data.results += "0" + f + "(" + r + ")";
+			this.data.results += "0" + f;
 		else
-			this.data.results += f + "(" + r + ")";
+			this.data.results += f;
 
-		if(f >= tav)
-			this.data.results += "! ";
-		else
-			this.data.results += " ";
+		var success = (f >= tav);
+
+		if(r == 99 || r == 88 || r == 77 || r == 66 || r == 55 || r == 44 || r == 33 || r == 22 || r == 11) {
+			this.data.results += " crit";
+		}
+		else if(r == 100) {
+			this.data.results += " ACE";
+		}
+		else if(r == 1) {
+			this.data.results += " crit failure"
+		}
+
+		if(success)
+			this.data.results += " SUCCESS!";
+
+		this.data.results += "\n";
 	}
 	
 	this.elements.results.refreshView();

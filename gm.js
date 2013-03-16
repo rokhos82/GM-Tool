@@ -126,3 +126,38 @@ GM.keyBindings = function(event) {
 	event.altKey;
 	event.metaKey;
 };
+
+// Helper Objects //////////////////////////////////////////////////////////////////////////////////
+GM.objects = {};
+
+GM.objects.roll = function(type,roll,adjust,tav) {
+	this.type = type;
+	this.roll = roll;
+	this.adjust = adjust;
+	this.total = roll + adjust;
+	this.tav = tav;
+
+	this.status = 0;
+	if(parseInt(roll/11) === roll/11)
+		this.status += GM.objects.roll.status.crit;
+	if(this.total >= tav)
+		this.status += GM.objects.roll.status.success;
+	if(roll === 1)
+		this.status += GM.objects.roll.status.fumble;
+	if(roll === 100)
+		this.status += GM.objects.roll.status.ace;
+};
+
+GM.objects.rollEvent = function(actor,target,rolls) {
+	this.actor = actor;
+	this.target = target;
+	this.rolls = rolls;
+};
+
+GM.objects.roll.status = {
+	"crit": 0x01,
+	"ace": 0x02,
+	"fumble": 0x04,
+	"success": 0x08,
+	"failure": 0x10
+};
