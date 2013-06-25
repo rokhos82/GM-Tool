@@ -27,6 +27,9 @@ GM.mainSVC = function(root,dat) {
 	this.loadLocalStorage();
 	this.ui.initialize();
 
+	this.managers = {};
+	this.managers.templates = new GM.npcTemplateManagerSVC(this.dat,this);
+
 	GM.debug.log("END: GM.mainSVC","Done initializing mainSVC object",2);
 };
 
@@ -45,6 +48,14 @@ GM.mainSVC.prototype.loadLocalStorage = function() {
 			if(data.version != GM.mainDAT.version) {
 				GM.debug.log("WARNING: GM.mainSVC","Data object is out of date, upgrading it",1);
 				GM.mainDAT.upgrade(data);
+			}
+
+			var temps = data.templates;
+			for(var c in temps) {
+				var cat = temps[c];
+				for(var t in cat) {
+					this.dat.templates[c][t] = cat[t];
+				}
 			}
 
 			var camps = data.campaigns;
@@ -238,4 +249,12 @@ GM.mainSVC.prototype.setWidget = function(key,widget) {
 	this.widgets[key] = svc;
 
 	this.ui.setWidget(key,ui);
+};
+
+// -------------------------------------------------------------------------------------------------
+// 
+// -------------------------------------------------------------------------------------------------
+GM.mainSVC.prototype.showTemplateManager = function() {
+	GM.debug.log("CALL: GM.mainSVC.showTemplateManager","Invoking the template manager interface",2);
+	this.managers.templates.invoke(this.ui);
 };

@@ -22,7 +22,7 @@ GM.mainControlINT = function(parent,svc) {
 	var b = p.addButton("Export",new db.link(this,this.exportDataPopup,[]));
 
 	var p = this.ui.addPanel("Tools");
-	var b = p.addButton("NPCs");
+	var b = p.addButton("NPCs",new db.link(this.svc,this.svc.showTemplateManager,[]));
 	var b = p.addButton("Armor");
 	var b = p.addButton("Weapons");
 	var b = p.addButton("Mass Dice",new db.link(this,this.showPopup,["dice"]));

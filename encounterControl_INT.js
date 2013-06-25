@@ -16,6 +16,8 @@ GM.encounterControlINT = function(parent,svc) {
 	var grps = this.ui.addPanel("Groups");
 	this.groups = grps.addRadioSet("groups");
 	this.popups = {};
+
+	var svc = new GM.combatSVC(this.svc);
 	this.addPopup("combat",new GM.combatINT(this,this.svc));
 
 	this.mainframe.addHandler("clearWidgets","ECI" + this.svc.getName(),this.detach,this,[]);
