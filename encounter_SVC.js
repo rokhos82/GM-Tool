@@ -139,6 +139,9 @@ GM.encounterSVC.prototype.selectGroup = function(key) {
 	this.ui.setActiveGroup(this.activeGroup.ui);
 };
 
+// -------------------------------------------------------------------------------------------------
+// 
+// -------------------------------------------------------------------------------------------------
 GM.encounterSVC.prototype.groupCombatInterface = function(key) {
 	GM.debug.log("CALL: GM.encounterSVC.groupCombatInterface","Requesting the combat interface of a group",2);
 	var name = null;
