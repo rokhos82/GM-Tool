@@ -18,6 +18,12 @@ GM.utility.deepCopy = function(source,target) {
 	return target;
 };
 
+GM.utility.extend = function(child, parent) {
+	var f = function() {};
+	f.prototype = parent.prototype
+	child.prototype = new f();
+};
+
 GM.settings = {
 	version: "20121115",
 	localStorageToken: "gm-tool.data"
