@@ -24,11 +24,6 @@ GM.utility.extend = function(child, parent) {
 	child.prototype = new f();
 };
 
-GM.utility.inherit = function(child,parent) {
-	GM.utility.deepCopy(parent,child);
-	GM.utility.extend(child,parent);
-};
-
 GM.utility.destroy = function() {
 	this.destroyFlag = 1;
 	for(var o in this) {
