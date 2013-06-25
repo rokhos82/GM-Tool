@@ -24,6 +24,21 @@ GM.utility.extend = function(child, parent) {
 	child.prototype = new f();
 };
 
+GM.utility.inherit = function(child,parent) {
+	GM.utility.deepCopy(parent,child);
+	GM.utility.extend(child,parent);
+};
+
+GM.utility.destroy = function() {
+	this.destroyFlag = 1;
+	for(var o in this) {
+		if(this[o].destroy && typeof(this[o].destroy) == "function" && !this[o].destroyFlag) {
+			this[o].destroy();
+			delete this[o];
+		}
+	}
+};
+
 GM.settings = {
 	version: "20121115",
 	localStorageToken: "gm-tool.data"

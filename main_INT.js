@@ -4,4 +4,4 @@
 GM.mainINT = function() {
 };
 
-GM.utility.extend(GM.mainINT,GM.baseINT);
+GM.utility.inherit(GM.mainINT,GM.baseINT);
