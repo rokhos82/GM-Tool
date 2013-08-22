@@ -1,3 +1,4 @@
+
 var root = document.getElementById("root");
 
 GM.debug.attachLogView(root);

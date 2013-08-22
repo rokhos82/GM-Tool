@@ -11,4 +11,10 @@ GM.mainDAT = function() {
 
 GM.mainDAT.version = "20130624";
 GM.mainDAT.upgrade = function(obj) {
+	if(obj.version == "20130624") {
+		// We are done
+	}
+	else {
+		// Something is wrong, version not supported.
+	}
 };
