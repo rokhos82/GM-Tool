@@ -39,7 +39,9 @@ GM.settings = {
 	localStorageToken: "gm-tool.data"
 };
 
-GM.debug = {};
+
+GM.debug = new lib.debug();
+/*GM.debug = {};
 GM.debug.level = 2; // 0 - severe only, 1 - errors, 2 - fine detail
 GM.debug.logFile = [];
 GM.debug.dom = null;
@@ -148,7 +150,7 @@ GM.debug.stringify = function(object) {
 
 GM.debug.stringifyData = function(svc) {
 	GM.debug.stringify(svc.dat);
-};
+};*/
 
 // Key Bindings ////////////////////////////////////////////////////////////////////////////////////
 GM.keyBindings = function(event) {
