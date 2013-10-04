@@ -40,7 +40,7 @@ GM.settings = {
 };
 
 
-GM.debug = new lib.debug();
+GM.debug = new lib.debug(2);
 /*GM.debug = {};
 GM.debug.level = 2; // 0 - severe only, 1 - errors, 2 - fine detail
 GM.debug.logFile = [];
