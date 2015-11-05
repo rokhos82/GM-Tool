@@ -36,4 +36,11 @@ gm.directives.dashboard = gm.app.directive("dashboardPanel",function(){
         restrict: "E",
         templateUrl: "template/dashboard-panel.html"
     };
-})
+});
+
+gm.directives.npc = gm.app.directive("npcPanel",function(){
+    return {
+        restrict: "E",
+        templateUrl: "template/npc-panel.html"
+    };
+});
