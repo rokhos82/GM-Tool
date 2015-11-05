@@ -19,10 +19,14 @@ gm.controllers.main = gm.app.controller("mainCtl",["$scope",function($scope) {
     $scope.states = gm.states;
 }]);
 gm.controllers.dashboard = gm.app.controller("dashboardCtl",["$scope",function($scope) {
-    $scope.news = {
+    $scope.news = [{
         title: "Test News Alert",
         text: "In the event of an actual news alert the text for said alert would be inserted here.  Since this is a test alert, there will not be much text here"
-    };
+    },
+    {
+        title: "Another News Alert",
+        text: "Howmany levels can we go!"
+    }];
     $scope.greeting = "Welcome to the GM-Tool!";
 }]);
 gm.controllers.npc = gm.app.controller("npcCtl",["$scope",function($scope) {

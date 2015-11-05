@@ -1,7 +1,7 @@
-<div class="alert alert-dismissable alert-info">
+<div class="alert alert-dismissable alert-info" ng-repeat="n in news">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<strong>{{news.title}}</strong>
-	<p>{{news.text}}</p>
+	<strong>{{n.title}}</strong>
+	<p>{{n.text}}</p>
 </div>
 <div class="jumbotron">
     <h2>{{greeting}}</h2> This tool is designed to be used with The Chronicles System role playing game system.  Hopefully, I will be able to make it generic enough to work with other systems though.
