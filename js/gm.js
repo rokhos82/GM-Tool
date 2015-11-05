@@ -34,13 +34,13 @@ gm.directives = {};
 gm.directives.dashboard = gm.app.directive("dashboardPanel",function(){
     return {
         restrict: "E",
-        templateUrl: "template/dashboard-panel.html"
+        templateUrl: "templates/dashboard-panel.html"
     };
 });
 
 gm.directives.npc = gm.app.directive("npcPanel",function(){
     return {
         restrict: "E",
-        templateUrl: "template/npc-panel.html"
+        templateUrl: "templates/npc-panel.html"
     };
 });
