@@ -22,12 +22,12 @@ gm.controllers.dashboard = gm.app.controller("dashboardCtl",["$scope",function($
     $scope.news = [{
         title: "Test News Alert",
         text: "In the event of an actual news alert the text for said alert would be inserted here.  Since this is a test alert, there will not be much text here",
-        type: "info"
+        type: 0
     },
     {
         title: "Another News Alert",
         text: "Howmany levels can we go!",
-        type: "warning"
+        type: 1
     }];
     $scope.greeting = "Welcome to the GM-Tool!";
 }]);
