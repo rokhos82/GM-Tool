@@ -1,0 +1,40 @@
+// Campaign Data Structure
+{
+	name: "Campaign 1",
+	description: "blah blah blah",
+	chapters: [],
+	players: [],
+	notes: []
+}
+
+// Campaign Chapter Data Structure
+{
+	name: "Chapter 1 - Zombie Cows!?",
+	description: "But they only want to eat cows....",
+	scenes: [],
+	notes: []
+}
+
+// Campaign Chapter Scene Data Structure
+{
+	name: "We Meet the Villian...moooooooo....",
+	hook: "",
+	notes: []
+}
+
+// Notes Data Structure
+{
+	name: "Title of Note",
+	type: "pc-note",
+	text: "",
+	timestamp: "20151104 0819"
+}
+
+// Player Character Data Structure
+{
+	name: "",
+	race: "",
+	notes: []
+}
+
+// Non-Player Character Data Structure
