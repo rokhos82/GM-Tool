@@ -50,3 +50,10 @@ gm.directives.npc = gm.app.directive("npcPanel",function(){
         templateUrl: "templates/npc-panel.html"
     };
 });
+
+gm.directives.footer = gm.app.directive("siteFooter",function(){
+    return {
+        restrict: "E",
+        templateUrl: "templates/site-footer.html"
+    };
+});

@@ -35,9 +35,11 @@
 		</nav>
 			<div class="container-fluid" ng-show="state === states.dashboard" ng-controller="dashboardCtl">
 			    <dashboard-panel></dashboard-panel>
+			    <site-footer></site-footer>
 			</div>
 			<div class="container-fluid" ng-show="state === states.npcs" ng-controller="npcCtl">
 			    <npc-panel></npc-panel>
+			    <site-footer></site-footer>
 			</div>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
