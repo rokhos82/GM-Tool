@@ -29,3 +29,11 @@ gm.controllers.npc = gm.app.controller("npcCtl",["$scope",function($scope) {
     
     $scope.thresholds = gm.thresholds;
 }]);
+
+gm.directives = {};
+gm.directives.dashboard = gm.app.directive("dashboardPanel",function(){
+    return {
+        restrict: "E",
+        templateUrl: "template/dashboard-panel.html"
+    };
+})
