@@ -16,8 +16,14 @@ gm.app = new angular.module("gm-tool",[]);
 gm.controllers = {};
 gm.controllers.main = gm.app.controller("mainCtl",["$scope",function($scope) {
     $scope.greeting = "Welcome to the GM-Tool!";
-    $scope.state = gm.states.npcs;
+    $scope.state = gm.states.dashboard;
     $scope.states = gm.states;
+}]);
+gm.controllers.dashboard = gm.app.controller("dashboardCtl",["$scope",function($scope) {
+    $scope.news = {
+        title: "Test News Alert",
+        text: "In the event of an actual news alert the text for said alert would be inserted here.  Since this is a test alert, there will not be much text here"
+    };
 }]);
 gm.controllers.npc = gm.app.controller("npcCtl",["$scope",function($scope) {
     $scope.list = {
