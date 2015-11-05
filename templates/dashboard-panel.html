@@ -1,4 +1,4 @@
-<div class="alert alert-dismissable alert-info" ng-repeat="n in news">
+<div class="alert alert-dismissable" ng-class="{alert-info:n.type === 'info',alert-warning:n.type === 'warning'}" ng-repeat="n in news">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<strong>{{n.title}}</strong>
 	<p>{{n.text}}</p>
