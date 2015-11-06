@@ -24,6 +24,11 @@
         </div>
     </div>
     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div ng-repeat="n in news" class="alert alert-dismissable" ng-class="{'alert-info':n.type == 0,'alert-warning':n.type == 1}">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{n.title}}</strong>
+            <p>{{n.text}}</p>
+        </div>
         <h3>Planned features:</h3>
         <ul>
         	<li>Campaign Manager - this will give GMs a centralized location to store information about their campaigns such as NPC lists, story arcs, etc.</li>
@@ -40,10 +45,5 @@
         </ul>
     </div>
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-        <div ng-repeat="n in news" class="alert alert-dismissable" ng-class="{'alert-info':n.type == 0,'alert-warning':n.type == 1}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{n.title}}</strong>
-            <p>{{n.text}}</p>
-        </div>
     </div>
 </div>
