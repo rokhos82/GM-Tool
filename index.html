@@ -31,11 +31,27 @@
 		                <li ng-class="{active:state === states.npcs}"><a href="#" ng-click="state = states.npcs"><span class="glyphicon glyphicon-user"></span> NPCs</a></li>
 		            </ul>
 		            <ul class="nav navbar-nav navbar-right">
-		            	<li><a href="#"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>
+		            	<li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>
 		            </ul>
 		        </div>
 		    </div>
 		</nav>
+			<div id="loginModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Login</h4>
+					    </div>
+					    <div class="modal-body">
+					        <p>Login form goes here!</p>
+					    </div>
+					    <div class="modal-footer">
+					        <button type="button" class="btn btn-primary" data-dismiss="modal">Login</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					    </div>
+					</div>
+				</div>
+			</div>
 			<div class="container" ng-show="state === states.dashboard" ng-controller="dashboardCtl">
 			    <dashboard-panel></dashboard-panel>
 			    <site-footer></site-footer>
@@ -48,5 +64,7 @@
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/angular.min.js"></script>
 		<script type="text/javascript" src="js/gm.js"></script>
+		<script type="text/javascript" src="js/gm.npcs.js"></script>
+		<script type="text/javascript" src="js/gm.ctl.js"></script>
 	</body>
 </html>

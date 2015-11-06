@@ -1,8 +1,12 @@
-<div class="jumbotron">
-    <h2>{{greeting}}</h2> This tool is designed to be used with The Chronicles System role playing game system.  Hopefully, I will be able to make it generic enough to work with other systems though.
+<div class="row">
+    <div ng-repeat="n in news" class="alert alert-dismissable" ng-class="{'alert-info':n.type == 0,'alert-warning':n.type == 1}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{n.title}}</strong>
+        <p>{{n.text}}</p>
+    </div>
 </div>
 <div class="row">
-    <div class="col-lg-2 col-md-3 col-sm-5 col-xs-6">
+    <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
         <div class="panel panel-default">
         	<div class="panel-heading">Acitve Campaigns</div>
         	<div class="panel-body">
@@ -23,12 +27,7 @@
         	</div>
         </div>
     </div>
-    <div class="col-lg-10 col-md-9 col-sm-7 col-xs-6">
-        <div ng-repeat="n in news" class="alert alert-dismissable" ng-class="{'alert-info':n.type == 0,'alert-warning':n.type == 1}">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{n.title}}</strong>
-            <p>{{n.text}}</p>
-        </div>
+    <div class="col-lg-9 col-md-9 col-sm-7 col-xs-12">
         <h3>Planned features:</h3>
         <ul>
         	<li>Campaign Manager - this will give GMs a centralized location to store information about their campaigns such as NPC lists, story arcs, etc.</li>
