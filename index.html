@@ -10,7 +10,7 @@
 	</head>
 	<body ng-app="gm-tool" ng-controller="mainCtl">
 		<nav class="navbar navbar-default navbar-fixed-top">
-		    <div class="container-fluid">
+		    <div class="container">
 		        <div class="navbar-header">
 		            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
 		                <span class="icon-bar"></span>
@@ -22,16 +22,16 @@
 		        <div class="collapse navbar-collapse" id="mainNavBar">
 		            <ul class="nav navbar-nav">
 		                <li ng-class="{active:state === states.dashboard}"><a href="#" ng-click="state = states.dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-		                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Campaigns <span class="caret"></span></a>
+		                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-book"></span> Campaigns <span class="caret"></span></a>
 		                    <ul class="dropdown-menu">
 		                        <li><a href="#">Campaign 1</a></li>
 		                        <li><a href="#">Campaign 2</a></li>
 		                    </ul>
 		                </li>
-		                <li ng-class="{active:state === states.npcs}"><a href="#" ng-click="state = states.npcs">NPCs</a></li>
+		                <li ng-class="{active:state === states.npcs}"><a href="#" ng-click="state = states.npcs"><span class="glyphicon glyphicon-user"></span> NPCs</a></li>
 		            </ul>
 		            <ul class="nav navbar-nav navbar-right">
-		            	<li><a href="#"><span class="glyphicon glyphicon-login"> Login</span></a></li>
+		            	<li><a href="#"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>
 		            </ul>
 		        </div>
 		    </div>
